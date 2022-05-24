@@ -1,19 +1,18 @@
 version: '3'
 services:
-    php-apache-environment:
-        container_name: php-apache
-        image: php:8.1-apache
+    app:
+        build: .
+        container_name: app
         volumes:
-            - ./public/vhosts.conf:/etc/apache2/sites-enabled/vhosts.conf
-            - .:/var/www/html
+            - .:/home/pavel
         ports:
-            - 8000:80  
+            - 8000:8090
+        depends_on:
+            - mysql_    
 
-    mysql:
+    mysql_:
         image: mysql:8.0
-        container_name: mysql
-        volumes:
-            - db_data:/var/lib/mysql
+        container_name: mysql_
         restart: always
         ports:
             - "3309:3306"
@@ -23,11 +22,11 @@ services:
             MYSQL_USER: admin
             MYSQL_PASSWORD: password
 
-    phpmyadmin:
+    phpmyadmin_:
         image: phpmyadmin/phpmyadmin
-        container_name: phpmyadmin
+        container_name: phpmyadmin_
         depends_on:
-            -   mysql
+            -   mysql_
         restart: always
         ports:
             - "8081:80"
@@ -37,4 +36,3 @@ services:
 
 volumes:
     db_data: {}
-
