@@ -11,4 +11,9 @@ class PageController
     {
         return View::view('index.twig');
     }
+    
+    public static function about()
+    {
+        return View::view('about.twig');
+    }
 }

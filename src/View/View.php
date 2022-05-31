@@ -20,5 +20,6 @@ class View
         $twig   = new Environment($loader);
 
         echo $twig->render($template);
+        exit();
     }
 }
