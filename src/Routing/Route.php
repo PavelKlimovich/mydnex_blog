@@ -35,7 +35,8 @@ class Route
             // TODO :: Add return error not found.
             $params = 'null';
 
-            return call_user_func(array($class, $action)); 
+            $objectController = new $class();
+            return $objectController->$action(); 
         } 
 
     }

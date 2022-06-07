@@ -5,21 +5,19 @@ namespace Src\View;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
-class View
+abstract class View
 {
-    /**
-     * Return Twig template.
-     *
-     * @param  string  $template
-     * @return void
-     */
+    protected $twig;
 
-    public static function view(string $template)
+    public function __construct()
     {
         $loader = new FilesystemLoader('../app/Views');
-        $twig   = new Environment($loader);
+        $this->twig   = new Environment($loader);
+    }
 
-        echo $twig->render($template);
+    public function render(string $template, array $params = [])
+    {
+        echo $this->twig->render($template, $params);
         exit();
     }
 }

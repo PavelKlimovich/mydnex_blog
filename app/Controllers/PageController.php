@@ -2,18 +2,15 @@
 
 namespace App\Controllers;
 
-use Src\View\View;
-
-
-class PageController
+class PageController extends Controller
 {
-    public static function index()
+    public function index()
     {
-        return View::view('index.twig');
+        return $this->render('index.twig');
     }
     
-    public static function about()
+    public function about()
     {
-        return View::view('about.twig');
+        return $this->render('about.twig');
     }
 }
