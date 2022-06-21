@@ -2,11 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Models\User;
+
 class PageController extends Controller
 {
     public function index()
     {
-        return $this->render('index.twig');
+        $user = new User();
+        $users = $user->all();
+        return $this->render('index.twig',['users' => $users]);
     }
     
     public function about()
