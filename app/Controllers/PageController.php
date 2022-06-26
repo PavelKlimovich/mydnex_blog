@@ -18,4 +18,9 @@ class PageController extends Controller
     {
         return $this->render('about.twig');
     }
+
+    public function blog()
+    {
+        return $this->render('blog.twig');
+    }
 }
