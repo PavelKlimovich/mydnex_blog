@@ -10,14 +10,14 @@ abstract class Model
     public string $table;
 
     public function __construct() {
-        $this->db = new DB();
+        $this->db = DB::getInstance();
     }
 
     public function all()
     {
-        $users =  $this->db->getInstance()->query("SELECT * FROM {$this->table}");
+        $tables = $this->db->getPDO()->query("SELECT * FROM {$this->table}");
 
-        return $users->fetchAll();
+        return $tables->fetchAll();
     }
     
 }

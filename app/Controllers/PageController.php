@@ -10,6 +10,7 @@ class PageController extends Controller
     {
         $user = new User();
         $users = $user->all();
+
         return $this->render('index.twig',['users' => $users]);
     }
     
