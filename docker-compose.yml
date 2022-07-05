@@ -14,13 +14,16 @@ services:
         image: mysql:8.0
         container_name: mysql_
         restart: always
-        ports:
-            - "3309:3306"
         environment:
-            MYSQL_ROOT_PASSWORD: password
-            MYSQL_DATABASE: root
-            MYSQL_USER: admin
-            MYSQL_PASSWORD: password
+            MYSQL_ROOT_PASSWORD: 'root'
+            MYSQL_DATABASE: 'app'
+            MYSQL_USER: 'admin'
+            MYSQL_PASSWORD: 'root'
+            MYSQL_ROOT_HOST: '%' 
+        ports:
+        - '3306:3306'
+        expose:
+        - '3306'
 
     phpmyadmin_:
         image: phpmyadmin/phpmyadmin
@@ -31,7 +34,7 @@ services:
         ports:
             - "8081:80"
         environment:
-            PMA_HOST: mysql
+            PMA_HOST: mysql_
             UPLOAD_LIMIT: 900M
 
 volumes:
