@@ -4,11 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 
-
 class UserSeeder
 {
-    public string $table = 'users';
-
     public function __construct()
     {
        $this->run();
@@ -17,10 +14,16 @@ class UserSeeder
     public function run()
     {   
         $user = new User();
+        
         $user->insert([
-            'name'  => 'Pavel Klimovich',
-            'creat' => '2',
-            'test'  => '2',
+            'firstname'  => 'Pavel',
+            'lastname'   => 'Klimovich',
+            'email'      => 'pavelklimovich@hotmail.fr',
+            'password'   => 'password',
+            'verified'   => 0,
+            'role'       => 'admin',
+            'created_at' => date("Y-m-d"),
+            'updated_at' => date("Y-m-d"),
         ]);
     }
 }

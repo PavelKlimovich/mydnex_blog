@@ -16,7 +16,6 @@ class ExecuteMigrate
     }
 
 
-
     public function create($sgl)
     {
         $this->db->getPDO()->query($sgl);
