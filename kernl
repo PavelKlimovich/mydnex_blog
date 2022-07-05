@@ -1,0 +1,25 @@
+#!/usr/bin/php
+<?php
+
+require './vendor/autoload.php';
+
+define('DIR',realpath("./"));
+
+use Src\Console\Console;
+
+$kernel = new Console();
+$kernel->run($argv);
+
+
+exit(0);
+
+//echo "Are you sure you want to do this?  Type 'yes' to continue: ";
+//$handle = fopen ("php://stdin","r");
+//$line = fgets($handle);
+//if(trim($line) != 'yes'){
+//    echo "ABORTING!\n";
+//    exit;
+//}
+//echo "\n";
+//echo "Thank you, continuing...\n";
+?>

@@ -2,28 +2,18 @@
 
 namespace Src\Database;
 
-use Dotenv\Dotenv;
+use Config\App;
 
 class DB
 {
   private static $_instance;
-  private $host;
-  private $dbName;
-  private $username;
-  private $password;
   private $pdo;
 
   private function __construct()
   {
-    $env = Dotenv::createImmutable("../", '.env');
-    $env->load();
+    $config = new App();
 
-    $this->host = $_ENV['DB_HOST'];
-    $this->dbName = $_ENV['DB_DATABASE'];
-    $this->username = $_ENV['DB_USERNAME'];
-    $this->password = $_ENV['DB_PASSWORD'];
-
-    $this->pdo = new \PDO('mysql:host=' . $this->host . ';dbname=' . $this->dbName . ';charset=utf8', $this->username, $this->password);
+    $this->pdo = new \PDO('mysql:host=' . $config->getDbHost() . ';dbname=' . $config->getDbName()  . ';charset=utf8', $config->getDbUsername() , $config->getDbPassword() );
     $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
   }
 

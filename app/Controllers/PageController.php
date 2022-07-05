@@ -3,15 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\User;
+use Src\Database\DB;
 
 class PageController extends Controller
 {
     public function index()
     {
-        $user = new User();
-        $users = $user->all();
-
-        return $this->render('index.twig',['users' => $users]);
+        return $this->render('index.twig');
     }
     
     public function about()
