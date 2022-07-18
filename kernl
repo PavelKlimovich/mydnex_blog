@@ -1,0 +1,16 @@
+#!/usr/bin/php
+<?php
+
+require './vendor/autoload.php';
+
+define('DIR',realpath("./"));
+
+use Src\Console\Console;
+
+$kernel = new Console();
+$kernel->run($argv);
+
+
+exit(0);
+
+?>
