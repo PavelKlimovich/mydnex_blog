@@ -1,19 +1,65 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+{% extends 'layouts/app.twig' %}
 
-    <!-- Style-->
-    <link rel="stylesheet" href="css/app.css">
+{% block content %}
 
-</head>
-<body>
-  
-   <h1 class="m-5">Register</h1> 
+    <main class="auth-page" style="height: 100vh; width: 100%;">
+        <div class="row m-0">
+            <div class="col-6 p-0">
+                <div class="img d-flex align-self-stretch align-items-center">
+                    <img class="img-fluid" style="height:100vh;" src="images/bg_connection.jpg" alt="">
+                </div>
+            </div>
+            <div class="col-5 mt-5">
+                <div class="row justify-content-start pt-5">
+                    <div class="wrap-contact100 mt-4">
+                        <form class="contact100-form validate-form" method="POST">          
+                            <div class="wrap-input100 validate-input">
+                                <span class="label-input100">NOM</span>
+                                <input id="name" type="text" class="input100 " name="name" value="" required="" autocomplete="name" autofocus="" placeholder="Votre Nom...">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 validate-input">
+                                <span class="label-input100">Prenom</span>
+                                <input class="input100" type="text" name="firsname" placeholder="Votre Prenom..." required="">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 validate-input">
+                                <span class="label-input100">Email</span>
+                                <input id="email" type="email" class="input100 " name="email" value="" required="" autocomplete="email" placeholder="Adresse Email ...">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 validate-input">
+                                <span class="label-input100">Mot de passe</span>
+                                <input type="password" class="input100 " name="password" required="" autocomplete="new-password" placeholder="Mot de passe">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="wrap-input100 validate-input">
+                                <span class="label-input100">Confirmation de mot passe</span>
+                                <input class="input100" id="password-confirm" type="password" name="password_confirmation" required="" autocomplete="new-password" placeholder="Confirmation Mot de passe">
+                                <span class="focus-input100"></span>
+                            </div>
+                            <div class="form-check">
+                                <fieldset class="form-group boolean optional user_rgpd">
+                                    <div class="form-check"><input name="rgpd" type="hidden" value="0">
+                                        <input class="form-check-input boolean optional" type="checkbox" required="" value="1" name="rgbd" id="rgpd">
+                                        <label class="form-check-label boolean optional" for="user_rgpd">J'ai lu et j'accepte les <a target="_blank" href="">mentions légales</a>.</label>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <div class="container-contact100-form-btn mt-3">
+                                <div class="wrap-contact100-form-btn">
+                                    <div class="contact100-form-bgbtn"></div>
+                                    <button class="contact100-form-btn">S'INSCRIRE</button>
+                                </div>
+                            </div> 
+                        </form>
+                        <div class="text-center m-3">
+                            <a id="link-cnx" href="/login">SE CONNECTER</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <script src="js/app.js"></script>
-</body>
-</html>
+{% endblock %}

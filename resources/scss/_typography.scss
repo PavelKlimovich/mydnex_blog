@@ -1,0 +1,400 @@
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+margin-top: 0;
+margin-bottom: 0.5rem;
+font-weight: 500;
+line-height: 1.2; }
+    
+h1, .h1 {
+font-size: 2.5rem; }
+    
+h2, .h2 {
+font-size: 2.5rem; }
+
+h3, .h3 {
+font-size: 1.75rem; }
+
+h4, .h4 {
+font-size: 1.5rem; }
+
+h5, .h5 {
+font-size: 1.25rem; }
+
+h6, .h6 {
+font-size: 1rem; }
+
+
+
+hr {
+-webkit-box-sizing: content-box;
+box-sizing: content-box;
+height: 0;
+overflow: visible; }
+
+p {
+margin-top: 0;
+margin-bottom: 1rem; }
+
+.lead {
+font-size: 20px;
+line-height: 1.7em;
+font-weight: 300; }
+
+ol,
+ul,
+dl {
+margin-top: 0;
+margin-bottom: 1rem; }
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+margin-bottom: 0; }
+
+blockquote {
+margin: 0 0 1rem; }
+
+b,
+strong {
+  font-weight: bolder; }
+
+small {
+  font-size: 80%; }
+
+
+
+
+
+
+
+
+  /*---------------------------------------------*/
+
+input {
+    outline: none;
+    border: none;
+  }
+  
+  input[type=number] {
+    -moz-appearance: textfield;
+    appearance: none;
+    -webkit-appearance: none;
+  }
+  
+  input[type=number]::-webkit-outer-spin-button,
+  input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+  }
+  
+  textarea {
+    outline: none;
+    border: none;
+  }
+  
+  textarea:focus,
+  input:focus {
+    border-color: transparent !important;
+  }
+  
+  input:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+  
+  input:focus:-moz-placeholder {
+    color: transparent;
+  }
+  
+  input:focus::-moz-placeholder {
+    color: transparent;
+  }
+  
+  input:focus:-ms-input-placeholder {
+    color: transparent;
+  }
+  
+  textarea:focus::-webkit-input-placeholder {
+    color: transparent;
+  }
+  
+  textarea:focus:-moz-placeholder {
+    color: transparent;
+  }
+  
+  textarea:focus::-moz-placeholder {
+    color: transparent;
+  }
+  
+  textarea:focus:-ms-input-placeholder {
+    color: transparent;
+  }
+  
+  input::-webkit-input-placeholder {
+    color: #cccccc;
+  }
+  
+  input:-moz-placeholder {
+    color: #cccccc;
+  }
+  
+  input::-moz-placeholder {
+    color: #cccccc;
+  }
+  
+  input:-ms-input-placeholder {
+    color: #cccccc;
+  }
+  
+  textarea::-webkit-input-placeholder {
+    color: #cccccc;
+  }
+  
+  textarea:-moz-placeholder {
+    color: #cccccc;
+  }
+  
+  textarea::-moz-placeholder {
+    color: #cccccc;
+  }
+  
+  textarea:-ms-input-placeholder {
+    color: #cccccc;
+  }
+  
+  /*---------------------------------------------*/
+  
+  button {
+    outline: none !important;
+    border: none;
+    background: transparent;
+  }
+  
+  button:hover {
+    cursor: pointer;
+  }
+  
+  iframe {
+    border: none !important;
+  }
+  
+  /*//////////////////////////////////////////////////////////////////
+  [ Contact ]*/
+  
+  .container-contact100 {
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .wrap-contact100 {
+    background: #fff;
+    border-radius: 2px;
+    position: relative;
+  }
+  
+  .show-wrap-contact100 {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  /*==================================================================
+  [ Form ]*/
+  
+  .contact100-form {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  .contact100-form-title {
+    display: block;
+    width: 100%;
+    font-family: "Pippons";
+    font-size: 39px;
+    color: #333333;
+    line-height: 1.2;
+    text-align: left;
+    padding-bottom: 64px;
+  }
+  
+  /*------------------------------------------------------------------
+  [ Input ]*/
+  
+  .wrap-input100 {
+    width: 100%;
+    position: relative;
+    border-bottom: 2px solid #dbdbdb;
+    margin-bottom: 45px;
+  }
+  
+  .label-input100 {
+    font-family: "Poppins";
+    font-size: 16px;
+    color: $primary;
+    line-height: 1.2;
+    padding-left: 2px;
+  }
+  
+  .input100 {
+    display: block;
+    width: 100%;
+    background: transparent;
+    font-family: "Poppins";
+    font-size: 22px;
+    color: #555555;
+    line-height: 1.2;
+    padding: 0 2px;
+  }
+  
+  .focus-input100 {
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+  
+  .focus-input100::before {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    transition: all 0.4s;
+    background: #fcd307;
+    background: linear-gradient(45deg, #FCAA07, #fcd307);
+  }
+  
+  /*---------------------------------------------*/
+  
+  input.input100 {
+    height: 50px;
+  }
+  
+  textarea.input100 {
+    min-height: 140px;
+    padding-top: 13px;
+    padding-bottom: 13px;
+  }
+  
+  .input100:focus + .focus-input100::before {
+    width: 100%;
+  }
+  
+  .has-val.input100 + .focus-input100::before {
+    width: 100%;
+  }
+  
+  /*------------------------------------------------------------------
+  [ Button ]*/
+  
+  .container-contact100-form-btn {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .wrap-contact100-form-btn {
+    display: block;
+    position: relative;
+    z-index: 1;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+  
+  .contact100-form-bgbtn {
+    position: absolute;
+    z-index: -1;
+    width: 300%;
+    height: 100%;
+    background: #df2351;
+    background: linear-gradient(-135deg, #FCAA07, #fcd307, #FCAA07, #fcd307);
+    top: 0;
+    left: -100%;
+    transition: all 0.4s;
+  }
+  
+  .contact100-form-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 20px;
+    min-width: 244px;
+    height: 50px;
+    font-family: "Poppins";
+    font-size: 16px;
+    color: #fff;
+    line-height: 1.2;
+  }
+  
+  .wrap-contact100-form-btn:hover .contact100-form-bgbtn {
+    left: 0;
+  }
+  
+  /*==================================================================
+  [ Contact more ]*/
+  
+  .contact100-more {
+    font-family: Poppins-Medium;
+    font-size: 16px;
+    color: #fff;
+    position: fixed;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 212px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: #39b54a;
+    padding: 0 20px;
+    top: 50%;
+    left: calc((100% - 640px) / 2);
+    transform: translate(-50%, -50%);
+  }
+  
+  .contact100-more i {
+    font-size: 20px;
+    margin-right: 10px;
+  }
+  
+  @media (max-width: 1200px) {
+  
+    .contact100-map {
+      width: calc(100% - 440px);
+    }
+  
+    .contact100-more {
+      left: calc((100% - 440px) / 2);
+    }
+  }
+  
+  @media (max-width: 768px) {
+
+    .contact100-map {
+      display: none;
+    }
+  
+    .contact100-more {
+      position: absolute;
+      background-color: transparent;
+      color: #39b54a;
+      bottom: 0px;
+      top: auto;
+      left: 50%;
+      z-index: 10;
+    }
+  }
