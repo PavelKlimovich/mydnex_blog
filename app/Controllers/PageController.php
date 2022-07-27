@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use Src\Database\DB;
 
 class PageController extends Controller
 {
@@ -21,4 +19,5 @@ class PageController extends Controller
     {
         return $this->render('article.twig');
     }
+
 }

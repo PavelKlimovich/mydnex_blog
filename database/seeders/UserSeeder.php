@@ -15,7 +15,7 @@ class UserSeeder
     {   
         $user = new User();
         
-        $user->insert([
+        $user->create([
             'firstname'  => 'Pavel',
             'lastname'   => 'Klimovich',
             'email'      => 'pavelklimovich@hotmail.fr',
