@@ -1,4 +1,14 @@
 $theme-colors: (
-  "primary": #143858,
-  "danger": #ff4136
+  "primary": #ffb400,
+  "danger": #ff4136,
+  "dark": #3c3535,
 );
+
+:root {
+  --color-highlight-primary: #FFEF7E;
+  --color-highlight-secondary: #B7F9E9;
+
+}
+
+$primary: #ffb400;
+$dark: #3c3535;

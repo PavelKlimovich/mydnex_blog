@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Src\Model\Model;
+
 class User extends Model
 {
-    public string $table = 'users';
+    public string $table = 'user';
 }
