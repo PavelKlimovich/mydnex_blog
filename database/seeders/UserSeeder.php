@@ -30,11 +30,11 @@ class UserSeeder
     
 
         for ($i=0; $i < 5; $i++) { 
-            $user->insert([
+            $user->create([
                 'firstname'  => $faker->firstName(),
                 'lastname'   => $faker->lastName(),
                 'email'      => $faker->email(),
-                'password'   => $faker->password(),
+                'password'   => 'password',
                 'verified'   => 1,
                 'role'       => 'user',
                 'created_at' => date("Y-m-d"),
