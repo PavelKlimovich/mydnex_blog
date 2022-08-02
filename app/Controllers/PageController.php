@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Models\User;
-use Src\Database\DB;
 
 class PageController extends Controller
 {
@@ -12,13 +10,14 @@ class PageController extends Controller
         return $this->render('index.twig');
     }
     
-    public function about()
-    {
-        return $this->render('about.twig');
-    }
-
     public function blog()
     {
         return $this->render('blog.twig');
     }
+
+    public function article()
+    {
+        return $this->render('article.twig');
+    }
+
 }

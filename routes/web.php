@@ -11,8 +11,8 @@ use App\Controllers\PageController;
 */
 
 Route::get('/', PageController::class, 'index');
-Route::get('/about', PageController::class, 'about');
-Route::get('/blog', PageController::class, 'blog');
+Route::get('/articles', PageController::class, 'blog');
+Route::get('/article', PageController::class, 'article');
 
 
 

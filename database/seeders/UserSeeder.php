@@ -14,10 +14,10 @@ class UserSeeder
 
     public function run()
     {   
-        $user  = new User();
         $faker = Factory::create();
-
-        $user->insert([
+        $user = new User();
+        
+        $user->create([
             'firstname'  => 'Pavel',
             'lastname'   => 'Klimovich',
             'email'      => 'pavelklimovich@hotmail.fr',
