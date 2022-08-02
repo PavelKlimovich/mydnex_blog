@@ -29,16 +29,30 @@ class Route
         } else {
             $request = "/";
         }
-
+        
+        
         if ($request === $route) {
-
-            // TODO :: Add return error not found.
-            $params = 'null';
-
             $objectController = new $class();
             return $objectController->$action(); 
         } 
+        
+        preg_match_all("/(?<={).+?(?=})/", $route, $paramMatches);
+        $param = implode(",", $paramMatches[0]);
 
+        if (strpos($route, $param)) {
+            $param = explode("/", $request);
+            $param = end($param);
+
+            $route = explode("/", $route);
+
+            foreach ($route as $item) {
+                if(str_contains($request, $item)){
+                    $objectController = new $class();
+                    return $objectController->$action($param);
+                }
+            }
+        }
+    
     }
 
     public static function abord(){

@@ -40,6 +40,15 @@ abstract class Model
     {
         return $this->request("SELECT * FROM {$this->table}")->fetchAll();
     }
+    /**
+     * Return all entities in the model.
+     *
+     * @return array
+     */
+    public function first(int $start, int $finish): array
+    {
+        return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll();
+    }
     
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Post;
+use Src\Routing\Route;
 
 class PageController extends Controller
 {
@@ -12,12 +14,24 @@ class PageController extends Controller
     
     public function blog()
     {
-        return $this->render('blog.twig');
+        $post = new Post();
+        $posts = $post->first(0,5);
+
+        return $this->render('blog.twig',['posts' => $posts]);
     }
 
-    public function article()
+    public function article($param)
     {
-        return $this->render('article.twig');
+        if (!empty($param)) {
+            $post = new Post();
+            $post = $post->where('slug','=', $param);
+
+            if ($post){
+                return $this->render('article.twig',['post' => $post[0]]);
+            }
+        }
+
+        Route::abord();
     }
 
 }
