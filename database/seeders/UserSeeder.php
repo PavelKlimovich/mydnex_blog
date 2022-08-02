@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use App\Models\User;
 
 class UserSeeder
@@ -13,9 +14,10 @@ class UserSeeder
 
     public function run()
     {   
+        $faker = Factory::create();
         $user = new User();
         
-        $user->insert([
+        $user->create([
             'firstname'  => 'Pavel',
             'lastname'   => 'Klimovich',
             'email'      => 'pavelklimovich@hotmail.fr',
@@ -25,5 +27,20 @@ class UserSeeder
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
         ]);
+    
+
+        for ($i=0; $i < 5; $i++) { 
+            $user->insert([
+                'firstname'  => $faker->firstName(),
+                'lastname'   => $faker->lastName(),
+                'email'      => $faker->email(),
+                'password'   => $faker->password(),
+                'verified'   => 1,
+                'role'       => 'user',
+                'created_at' => date("Y-m-d"),
+                'updated_at' => date("Y-m-d"),
+            ]);
+        }
+
     }
 }
