@@ -20,4 +20,10 @@ abstract class View
         echo $this->twig->render($template, $params);
         exit();
     }
+
+    public function redirect(string $route)
+    {
+        header('Location:' .$route);
+        exit();
+    }
 }

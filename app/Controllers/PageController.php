@@ -14,10 +14,17 @@ class PageController extends Controller
     
     public function blog()
     {
+        session_start();
+        $auth = false;
+
+        if (isset($_SESSION['auth'])) {
+            $auth = true;
+        }
+
         $post = new Post();
         $posts = $post->first(0,5);
 
-        return $this->render('blog.twig',['posts' => $posts]);
+        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth]);
     }
 
     public function article($param)
