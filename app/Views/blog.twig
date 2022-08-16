@@ -65,7 +65,7 @@
                                                     <h1 class="fw-bold lh-1"><span class='card__title'>{{ post['title'] }}</span></h1>
                                                 </a>
                                                 <p class="lead">{{ post['content'] }}</p>
-                                                <a href="#">Lire</a>
+                                                <a href="/article/{{ post['slug'] }}">Lire</a>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                                 <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post['title'] }}</span></h1>
                                             </a>
                                             <p class="lead">{{ post['content'] }}</p>
-                                            <a href="#">Lire</a>
+                                            <a href="/article/{{ post['slug'] }}">Lire</a>
                                         </div>
                                     </div>
                                 {% endif %}

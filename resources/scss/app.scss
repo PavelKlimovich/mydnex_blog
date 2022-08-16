@@ -340,19 +340,13 @@ body::-webkit-scrollbar {
     &::after {
       content: '';
       position: absolute;
-      bottom: -0.125rem;
+      bottom: -0.225rem;
       left: -0.5rem;
       right: -0.5rem;
-      height: 0.75rem;
-  
-      // Position the line behind the text so that
-      // it is still easily readable
+      height: 1rem;
       z-index: -1;
-  
-      // The SVG is added as an SVG background image
       background-image: url('../../public/images/underline.svg');
       background-repeat: no-repeat;
-  
       background-size: cover;
     }
   }
@@ -374,8 +368,6 @@ body::-webkit-scrollbar {
   border-bottom: 2px solid $dark;
   padding-bottom: 1px;
 }
-
-
 
 .wrapper {
   display: inline-flex;
