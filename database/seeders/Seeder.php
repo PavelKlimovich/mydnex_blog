@@ -11,8 +11,8 @@ class Seeder
 {
     public function __construct() {
         new UserSeeder();
-        new PostSeeder();
         new CategorySeeder();
+        new PostSeeder();
         new CommentSeeder();
     }
 }

@@ -53,6 +53,9 @@
                 </div>
             </div>
         </section>
+         {% for comment in comments %}
+                <p>{{comment['message']}}</p>
+         {% endfor %}
     </main>
 
     <footer class="pt-5 mt-5">

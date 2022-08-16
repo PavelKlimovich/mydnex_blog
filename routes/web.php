@@ -13,6 +13,7 @@ use App\Controllers\PageController;
 Route::get('/', PageController::class, 'index');
 Route::post('/', PageController::class, 'contact');
 Route::get('/blog', PageController::class, 'blog');
+Route::get('/blog/{slug}', PageController::class, 'category');
 Route::get('/article/{slug}', PageController::class, 'article');
 
 
