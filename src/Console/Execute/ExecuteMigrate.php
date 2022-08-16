@@ -10,14 +10,36 @@ class ExecuteMigrate
 
     public function __construct() {
         $this->db = DB::getInstance();
-
-        $sgl = file_get_contents(DIR.'/database/migrations/db.sql');
-        self::create($sgl);
     }
 
 
-    public function create($sgl)
+    public function create()
     {
+        $sgl = file_get_contents(DIR.'/database/migrations/db.sql');
         $this->db->getPDO()->query($sgl);
+    }
+
+
+    public function fresh()
+    {
+        $tables = $this->db->getAllTablesName();
+        $this->deleteTable($tables);
+        $this->create();
+    }
+
+
+    public function deleteTable(array $tables): void 
+    {
+        try{
+            foreach($tables as $table){
+                $sql =  "DROP TABLE `".$table."`";
+                $this->db->getPDO()->query($sql);
+            }
+
+        }catch(\Exception $e){
+            var_dump($e);
+            die();
+        }
+        
     }
 }

@@ -31,4 +31,20 @@ class DB
   {
     return $this->pdo;
   }
+
+  public function getAllTablesName()
+  {
+    $sql = "SHOW TABLES";
+    $statement = $this->pdo->prepare($sql);
+    $statement->execute();
+    $tables = $statement->fetchAll();
+    $dbTablesList = array();
+    
+    foreach($tables as $table){
+      $dbTablesList[] = $table[0];
+    }
+
+    return $dbTablesList;
+  }
+
 }

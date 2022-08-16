@@ -71,12 +71,21 @@ class Console extends Printer
         switch ($this->getFirstArgument()) {
             case 'seed':
                 new ExecuteSeeder();
-                self::getSuccess('[Success] oui seed !!! ', true);
+                self::getSuccess('[Success] Addition to the database is successful ! ', true);
                 die();
                 break;
+                
             case 'migrate':
-                new ExecuteMigrate();
-                self::getSuccess('[Success] oui migrate!!! ', true);
+                $migration = new ExecuteMigrate();
+                $migration->create();
+                self::getSuccess('[Success] Database is created ! ', true);
+                die();
+                break;
+
+            case 'migrate:fresh':
+                $migration = new ExecuteMigrate();
+                $migration->fresh();
+                self::getSuccess('[Success] Database is refreshed !', true);
                 die();
                 break;
 
