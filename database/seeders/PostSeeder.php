@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Faker\Factory;
 use App\Models\Post;
 use Src\Helpers\Str;
+use App\Models\Category;
 
 class PostSeeder
 {
@@ -17,6 +18,8 @@ class PostSeeder
     {   
         $faker = Factory::create();
         $post  = new Post();
+        $category = new Category();
+        $categories = $category->all();
     
         for ($i=0; $i < 15; $i++) { 
 
@@ -29,7 +32,7 @@ class PostSeeder
                 'content'       => $faker->paragraph(5),
                 'image'         => $faker->imageUrl(640, 480, 'animals', true),
                 'user_id'       => 1,
-                'category_id'   => random_int(1, 5),
+                'category_id'   => (int)$categories[random_int(1, count($categories))]['id'],
                 'created_at'    => date("Y-m-d"),
                 'updated_at'    => date("Y-m-d"),
             ]);

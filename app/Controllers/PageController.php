@@ -2,10 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Models\Category;
 use App\Models\Post;
-use PhpParser\Node\Expr\AssignOp\Mod;
 use Src\Mailer\Mail;
 use Src\Routing\Route;
+use App\Models\Comment;
+use PhpParser\Node\Expr\AssignOp\Mod;
 
 class PageController extends Controller
 {
@@ -20,7 +22,7 @@ class PageController extends Controller
 
         $post = new Post();
         $posts = $post->first(0,3);
-
+        
         return $this->render('index.twig',['posts' => $posts,'auth' => $auth]);
     }
     
@@ -35,8 +37,29 @@ class PageController extends Controller
 
         $post = new Post();
         $posts = $post->first(0,5);
+        $category = new Category();
+        $categories = $category->all();
 
-        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth]);
+        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
+    }
+
+    public function category($param)
+    {
+        session_start();
+        $auth = false;
+
+        if (isset($_SESSION['auth'])) {
+            $auth = true;
+        }
+
+        $post = new Post();
+        $category = new Category();
+        $category = $category->where('slug','=', $param);
+        $posts = $post->where('category_id','=', $category[0]['id']);
+        $category = new Category();
+        $categories = $category->all();
+
+        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
     }
 
     public function article($param)
@@ -50,10 +73,12 @@ class PageController extends Controller
 
         if (!empty($param)) {
             $post = new Post();
+            $comment = new Comment();
             $post = $post->where('slug','=', $param);
+            $comments = $comment->where('post_id','=',$post[0]['id']);
 
             if ($post){
-                return $this->render('article.twig',['post' => $post[0],'auth' => $auth]);
+                return $this->render('article.twig',['post' => $post[0], 'auth' => $auth, 'comments'=> $comments]);
             }
         }
 
