@@ -10,6 +10,7 @@ class App {
     private $dbName;
     private $dbUsername;
     private $dbPassword;
+    private $getMailFrom;
 
     public function __construct() {
         
@@ -20,6 +21,7 @@ class App {
         $this->dbName = $_ENV['DB_DATABASE'];
         $this->dbUsername = $_ENV['DB_USERNAME'];
         $this->dbPassword = $_ENV['DB_PASSWORD'];
+        $this->getMailFrom = $_ENV['EMAIL_FROM'];
     }
 
     public function getDbHost()
@@ -40,6 +42,11 @@ class App {
     public function getDbPassword()
     {
         return $this->dbPassword;
+    }
+
+    public function getMailFrom()
+    {
+        return $this->getMailFrom;
     }
 
 }

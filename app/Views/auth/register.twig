@@ -12,42 +12,45 @@
             <div class="col-5 mt-5">
                 <div class="row justify-content-start pt-5">
                     <div class="wrap-contact100 mt-4">
-                        <form class="contact100-form validate-form" method="POST">          
+                        <form class="contact100-form validate-form" method="POST"> 
+                            {% if error %}
+                               <p>{{ error }}</p> 
+                            {% endif %}         
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">NOM</span>
-                                <input id="name" type="text" class="input100 " name="name" value="" required="" autocomplete="name" autofocus="" placeholder="Votre Nom...">
+                                <input id="lastname" type="text" class="input100 " name="lastname" value=""  autocomplete="lastname" autofocus="" placeholder="Votre Nom...">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">Prenom</span>
-                                <input class="input100" type="text" name="firsname" placeholder="Votre Prenom..." required="">
+                                <input class="input100" type="text" name="firstname" placeholder="Votre Prenom..." >
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">Email</span>
-                                <input id="email" type="email" class="input100 " name="email" value="" required="" autocomplete="email" placeholder="Adresse Email ...">
+                                <input id="email" type="email" class="input100 " name="email" value=""  autocomplete="email" placeholder="Adresse Email ...">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">Mot de passe</span>
-                                <input type="password" class="input100 " name="password" required="" autocomplete="new-password" placeholder="Mot de passe">
+                                <input type="password" class="input100 " name="password"  autocomplete="new-password" placeholder="Mot de passe">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">Confirmation de mot passe</span>
-                                <input class="input100" id="password-confirm" type="password" name="password_confirmation" required="" autocomplete="new-password" placeholder="Confirmation Mot de passe">
+                                <input class="input100" id="password-confirm" type="password" name="password_confirmation"  autocomplete="new-password" placeholder="Confirmation Mot de passe">
                                 <span class="focus-input100"></span>
                             </div>
                             <div class="form-check">
                                 <fieldset class="form-group boolean optional user_rgpd">
-                                    <div class="form-check"><input name="rgpd" type="hidden" value="0">
-                                        <input class="form-check-input boolean optional" type="checkbox" required="" value="1" name="rgbd" id="rgpd">
+                                    <div class="form-check">
+                                        <input class="form-check-input boolean optional" type="checkbox" name="rgpd" id="rgpd">
                                         <label class="form-check-label boolean optional" for="user_rgpd">J'ai lu et j'accepte les <a target="_blank" href="">mentions légales</a>.</label>
                                     </div>
                                 </fieldset>
                             </div>
                             <div class="container-contact100-form-btn mt-5">
-                                <button type="button" class="button">S'INSCRIRE</button>
+                                <button type="submit" class="button">S'INSCRIRE</button>
                             </div> 
                         </form>
                         <div class="text-center m-3">
