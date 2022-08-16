@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Database\Seeders\PostSeeder;
 use Database\Seeders\UserSeeder;
+use Database\Seeders\CommentSeeder;
 use Database\Seeders\CategorySeeder;
 
 class Seeder
@@ -12,5 +13,6 @@ class Seeder
         new UserSeeder();
         new PostSeeder();
         new CategorySeeder();
+        new CommentSeeder();
     }
 }
