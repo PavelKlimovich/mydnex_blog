@@ -4,8 +4,9 @@
 CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `slug` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL,
-  `updates_at` timestamp NOT NULL
+  `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -62,28 +63,6 @@ CREATE TABLE `post` (
 
 -- --------------------------------------------------------
 
---
--- Structure de la table `post_tags`
---
-
-CREATE TABLE `post_tags` (
-  `post_id` int(11) NOT NULL,
-  `tag_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `tag`
---
-
-CREATE TABLE `tag` (
-  `id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- --------------------------------------------------------
 
 --
@@ -125,12 +104,6 @@ ALTER TABLE `post`
   ADD PRIMARY KEY (`id`);
 
 --
--- Index pour la table `tag`
---
-ALTER TABLE `tag`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Index pour la table `user`
 --
 ALTER TABLE `user`
@@ -159,13 +132,7 @@ ALTER TABLE `message`
 ALTER TABLE `post`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT pour la table `tag`
---
-ALTER TABLE `tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
---
 -- AUTO_INCREMENT pour la table `user`
 --
 ALTER TABLE `user`
