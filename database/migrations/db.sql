@@ -53,7 +53,7 @@ CREATE TABLE `post` (
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `image` text NOT NULL,
+  `image` longtext NOT NULL,
   `content` longtext NOT NULL,
   `user_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,

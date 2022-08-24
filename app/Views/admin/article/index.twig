@@ -1,0 +1,38 @@
+{% extends 'layouts/admin.twig' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5">
+         <div class="col-10">
+            <h1>Mes Articles</h1>
+        </div>
+         <div class="col-2">
+            <button type="button" onclick="location.href='/admin/ajouter-aticle'" class="btn btn-success">Ajouter un article</button>
+        </div>
+    </div>
+    <div class='row mt-5'>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Titre</th>
+                    <th scope="col">Action</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+              {% for post in posts %}
+                    <tr>
+                        <th scope="row">{{ post['id'] }}</th>
+                        <td>{{ post['title'] }}</td>
+                        <td><button type="button" onclick="location.href='/admin/modifier-aricle/{{ post['slug'] }}'" class="btn bg-primary">Modifier</button></td>
+                        <td><button type="button" onclick="location.href='/blog'" class="btn bg-danger">Supprimer</button></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

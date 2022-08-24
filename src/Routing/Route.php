@@ -1,6 +1,8 @@
 <?php
 
 namespace Src\Routing;
+
+use Closure;
 class Route
 {
     public static function get($route, $class, $action)
@@ -42,9 +44,9 @@ class Route
         if (strpos($route, $param)) {
             $param = explode("/", $request);
             $param = end($param);
-
+            
             $route = explode("/", $route);
-
+            
             foreach ($route as $item) {
                 if(str_contains($request, $item)){
                     $objectController = new $class();
@@ -60,4 +62,5 @@ class Route
         require '../app/Views/errors/404.php';
         exit();
     }
+
 }

@@ -1,0 +1,49 @@
+{% extends 'layouts/admin.twig' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5">
+         <div class="col-10">
+            <h1>Modifier un article</h1>
+        </div>
+    </div>
+    <div class='row mt-5'>
+
+        <div class="row form-group">
+            <div class="col col-md-3">
+                <label for="content" class=" form-control-label">Contenu</label>
+            </div>
+            <div class="col-12 col-md-9">
+                <textarea name="content" id="editor"></textarea>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../../ckeditor/build/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'), {
+
+                licenseKey: '',
+
+
+
+            })
+            .then(editor => {
+                window.editor = editor;
+
+
+
+
+            })
+            .catch(error => {
+                console.error('Oops, something went wrong!');
+                console.error(
+                    'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:'
+                );
+                console.warn('Build id: c53qtmpu3qjy-ygaw59wn4xql');
+                console.error(error);
+            });
+    </script>
+{% endblock %}

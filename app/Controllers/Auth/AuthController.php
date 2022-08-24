@@ -21,7 +21,7 @@ class AuthController extends Controller
 
     public function auth()
     {
-        if (isset($_POST['email']) || isset($_POST['password'])  ) {
+        if (empty($_POST['email']) || empty($_POST['password'])  ) {
             $error = 'Email ou le mot de passe est vide ! ';
             return $this->render('auth/login.twig',['error' => $error]);
         }
