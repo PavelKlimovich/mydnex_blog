@@ -14,7 +14,7 @@
                     <div class="wrap-contact100 mt-4">
                         <form class="contact100-form validate-form" method="POST"> 
                             {% if error %}
-                               <p>{{ error }}</p> 
+                               <p>{{ error |raw  }}</p> 
                             {% endif %}         
                             <div class="wrap-input100 validate-input">
                                 <span class="label-input100">NOM</span>

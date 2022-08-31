@@ -13,7 +13,7 @@
             <div class="row form-group">
                 {% if error %}
                     <div class="col-12 p-1">
-                        <p>{{ error }}</p> 
+                        <p>{{ error |raw  }}</p> 
                     </div>
                 {% endif %}  
                 <div class="col-12 m-3">
@@ -23,7 +23,7 @@
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Categorie</label>
                     <select class="form-select form-select-lg mb-3" name='category_id'>
-                        <option selected="">Veuillez selectionner la categorie</option>
+                        <option selected="" value=''>Veuillez selectionner la categorie</option>
                         {% for category in categories %}
                             <option value="{{ category['id'] }}">{{ category['name'] }}</option>
                         {% endfor %}
@@ -55,24 +55,14 @@
     <script>
         ClassicEditor
             .create(document.querySelector('#editor'), {
-
                 licenseKey: '',
-
-
-
             })
             .then(editor => {
                 window.editor = editor;
-
-
-
-
             })
             .catch(error => {
                 console.error('Oops, something went wrong!');
-                console.error(
-                    'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:'
-                );
+                console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
                 console.warn('Build id: c53qtmpu3qjy-ygaw59wn4xql');
                 console.error(error);
             });

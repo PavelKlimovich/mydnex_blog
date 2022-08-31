@@ -13,6 +13,10 @@ abstract class View
     {
         $loader = new FilesystemLoader('../app/Views');
         $this->twig   = new Environment($loader);
+
+        $this->addSessionError();
+        $this->addAuthSession('admin');
+        $this->addAuthSession('auth');
     }
 
     public function render(string $template, array $params = [])
@@ -26,4 +30,21 @@ abstract class View
         header('Location:' .$route);
         exit();
     }
+
+
+    public function addAuthSession(string $session)
+    {
+        if (isset($_SESSION[$session])) {
+            $this->twig->addGlobal($session, $_SESSION[$session]);
+        }
+    }
+
+    public function addSessionError()
+    {
+        if (isset($_SESSION['error_delay']) && $_SESSION['error_delay'] == '1') {
+            $_SESSION['error_delay'] = '0';
+            $this->twig->addGlobal('error', $_SESSION['error']);
+        } 
+    }
+
 }

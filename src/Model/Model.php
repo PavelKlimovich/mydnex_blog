@@ -117,7 +117,7 @@ abstract class Model
      */
 	public function delete(string $id): object
     {
-        $sql = "DELETE FROM $this->table WHERE $id ";
+        $sql = "DELETE FROM $this->table WHERE `id` = $id";
         return $this->request($sql);
     }   
     

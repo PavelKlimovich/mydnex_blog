@@ -8,40 +8,65 @@
             <h1>Modifier un article</h1>
         </div>
     </div>
-    <div class='row mt-5'>
-
-        <div class="row form-group">
-            <div class="col col-md-3">
-                <label for="content" class=" form-control-label">Contenu</label>
+   <div class='row mt-5'>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="row form-group">
+                {% if error %}
+                    <div class="col-12 p-1">
+                        <p>{{ error |raw  }}</p> 
+                    </div>
+                {% endif %}  
+                <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Titre</label>
+                    <input class="form-control form-control-lg" type="text" placeholder="Titre" name="title" value='{{ post['title'] }}'>
+                </div>
+                <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Categorie</label>
+                    <select class="form-select form-select-lg mb-3" name='category_id'>
+                        <option selected="">Veuillez selectionner la categorie</option>
+                        {% for category in categories %}
+                            {% if category['id'] == post['category_id'] %}
+                                <option selected value="{{ category['id'] }}">{{ category['name'] }}</option>
+                            {% endif %}  
+                            <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Description</label>
+                    <textarea class="form-control form-control-lg" placeholder="Description" name="description">{{ post['description'] }}</textarea>
+                </div>
+                <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Contenu</label>
+                    <textarea name="content" id="editor">{{ post['content'] }}</textarea>
+                </div>
+                <div class="col-4 m-3">
+                    <label for="content" class="form-control-label">Image actuelle</label>
+                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" width="250">
+                </div>
+                <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Nouvelle image</label>
+                    <input type="file" class="form-control form-control-sm" name='image' accept="image/*"/>
+                </div>
+                <div class="col-12 m-3">
+                    <button type="submit"  class="btn btn-success">Modifier</button>
+                </div>
             </div>
-            <div class="col-12 col-md-9">
-                <textarea name="content" id="editor"></textarea>
-            </div>
-        </div>
+        </form>    
     </div>
 </div>
 <script src="../../ckeditor/build/ckeditor.js"></script>
     <script>
         ClassicEditor
             .create(document.querySelector('#editor'), {
-
                 licenseKey: '',
-
-
-
             })
             .then(editor => {
                 window.editor = editor;
-
-
-
-
             })
             .catch(error => {
                 console.error('Oops, something went wrong!');
-                console.error(
-                    'Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:'
-                );
+                console.error('Please, report the following error on https://github.com/ckeditor/ckeditor5/issues with the build id and the error stack trace:');
                 console.warn('Build id: c53qtmpu3qjy-ygaw59wn4xql');
                 console.error(error);
             });

@@ -3,6 +3,8 @@
 namespace Src\Routing;
 
 use Closure;
+use Src\Middleware\MiddlewareBuilder as Middleware;
+
 class Route
 {
     public static function get($route, $class, $action)
@@ -37,27 +39,34 @@ class Route
             $objectController = new $class();
             return $objectController->$action(); 
         } 
-        
+
         preg_match_all("/(?<={).+?(?=})/", $route, $paramMatches);
         $param = implode(",", $paramMatches[0]);
 
-        if (strpos($route, $param)) {
-            $param = explode("/", $request);
-            $param = end($param);
-            
-            $route = explode("/", $route);
-            
-            foreach ($route as $item) {
-                if(str_contains($request, $item)){
+        if (!empty($param)) {
+            if (strpos($route, $param)) {
+                $route = str_replace("/{".$param."}", "", $route);
+                $param = explode("/", $request);
+                $param = end($param);
+                $request = str_replace("/".$param, "", $request);
+              
+                if($request === $route){
                     $objectController = new $class();
                     return $objectController->$action($param);
                 }
             }
         }
-    
     }
 
-    public static function abord(){
+    public static function middleware($name , Closure $closure)
+    {
+       $middleware = new Middleware();
+       $middleware->init($name);
+       $closure();
+    }
+
+    public static function abord()
+    {
         http_response_code(404);
         require '../app/Views/errors/404.php';
         exit();

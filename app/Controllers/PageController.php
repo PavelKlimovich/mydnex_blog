@@ -2,56 +2,36 @@
 
 namespace App\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
 use Src\Mailer\Mail;
 use Src\Routing\Route;
 use App\Models\Comment;
+use App\Models\Category;
+use Src\Validator\Validator;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
 class PageController extends Controller
 {
     public function index()
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
         $posts = $post->first(0,3);
         
-        return $this->render('index.twig',['posts' => $posts,'auth' => $auth]);
+        return $this->render('index.twig',['posts' => $posts]);
     }
     
     public function blog()
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
         $posts = $post->first(0,5);
         $category = new Category();
         $categories = $category->all();
 
-        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
+        return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
     }
 
     public function category($param)
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
         $category = new Category();
         $category = $category->where('slug','=', $param);
@@ -59,18 +39,11 @@ class PageController extends Controller
         $category = new Category();
         $categories = $category->all();
 
-        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
+        return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
     }
 
     public function article($param)
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         if (!empty($param)) {
             $post = new Post();
             $comment = new Comment();
@@ -78,7 +51,7 @@ class PageController extends Controller
             $comments = $comment->where('post_id','=',$post[0]['id']);
 
             if ($post){
-                return $this->render('article.twig',['post' => $post[0], 'auth' => $auth, 'comments'=> $comments]);
+                return $this->render('article.twig',['post' => $post[0], 'comments'=> $comments]);
             }
         }
 
@@ -87,23 +60,12 @@ class PageController extends Controller
 
     public function contact()
     {
-        if (empty($_POST['lastname']) ) {
-            $error = 'Nom n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
-        if (empty($_POST['firstname']) ) {
-            $error = 'Prénom n\'est pas renseigné!';
-            return $this->render('index.twig',['error' => $error]);
-        }
-        if (empty($_POST['email']) ) {
-            $error = 'Email n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
-
-        if (empty($_POST['message']) ) {
-            $error = 'Message n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
+        Validator::create([
+            "lastname" => 'Nom n\'est pas renseigné !',
+            "firstname" => 'Prénom n\'est pas renseigné !',
+            "email" => 'Email n\'est pas renseigné !',
+            "message" => 'Message n\'est pas renseigné',
+        ]);
 
         $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
         $mail->send();

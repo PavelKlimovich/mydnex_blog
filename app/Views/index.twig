@@ -22,6 +22,11 @@
                         <li class="nav-item"><a href="/register" class="nav-link">Inscription</a></li>
                     </ul> 
                 {% endif %}
+                {% if admin %}
+                    <ul class="navbar-nav ">
+                        <li class="nav-item"><a href="/dashboard" class="nav-link">Admin</a></li>
+                    </ul> 
+                {% endif %}
             </div>
         </div>
 	</nav>
@@ -166,7 +171,7 @@
                             <form class="contact100-form validate-form" method="POST">
                                 {% if error %}
                                     <div class="col-12 p-1">
-                                        <p>{{ error }}</p> 
+                                        <p>{{ error |raw  }}</p> 
                                     </div>
                                 {% endif %}  
                                 <div class="col-6 p-1">
