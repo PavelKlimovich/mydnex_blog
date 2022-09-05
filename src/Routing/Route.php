@@ -7,6 +7,7 @@ use Src\Middleware\MiddlewareBuilder as Middleware;
 
 class Route
 {
+
     public static function get($route, $class, $action)
     {
         if (strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') !== 0) {
@@ -16,6 +17,7 @@ class Route
         self::on($route, $class, $action);
     }
 
+    
     public static function post($route, $class, $action)
     {
         if (strcasecmp($_SERVER['REQUEST_METHOD'], 'POST') !== 0) {
@@ -24,6 +26,7 @@ class Route
 
         self::on($route, $class, $action);
     }
+
 
     public static function on($url, $class, $action)
     {
@@ -58,12 +61,14 @@ class Route
         }
     }
 
+
     public static function middleware($name , Closure $closure)
     {
        $middleware = new Middleware();
        $middleware->init($name);
        $closure();
     }
+
 
     public static function abord()
     {
