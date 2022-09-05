@@ -136,14 +136,14 @@
                             <span class="badge text-primary">New</span>
                             <p class="badge text-dark ">12 juin 2022</p>
                         </div>
-                        <a href="/article/{{ post['slug'] }}" class="link-none-decoration">
-                            <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post['title'] }}</span></h1>
+                        <a href="/article/{{ post.slug }}" class="link-none-decoration">
+                            <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
                         </a>    
-                        <p class="lead">{{ post['content'] }}</p>
-                        <a href="/article/{{ post['slug'] }}">Lire</a>
+                        <p class="lead">{{ post.content }}</p>
+                        <a href="/article/{{ post.slug }}">Lire</a>
                     </div>
                     <div class="col-lg-4">
-                        <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" >
+                        <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" >
                     </div>
                 </div>
             </div>

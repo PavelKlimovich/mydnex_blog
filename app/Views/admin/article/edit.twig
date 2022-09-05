@@ -18,31 +18,31 @@
                 {% endif %}  
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Titre</label>
-                    <input class="form-control form-control-lg" type="text" placeholder="Titre" name="title" value='{{ post['title'] }}'>
+                    <input class="form-control form-control-lg" type="text" placeholder="Titre" name="title" value='{{ post.title }}'>
                 </div>
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Categorie</label>
                     <select class="form-select form-select-lg mb-3" name='category_id'>
                         <option selected="">Veuillez selectionner la categorie</option>
                         {% for category in categories %}
-                            {% if category['id'] == post['category_id'] %}
-                                <option selected value="{{ category['id'] }}">{{ category['name'] }}</option>
+                            {% if category.id == post.category_id %}
+                                <option selected value="{{ category.id }}">{{ category.name }}</option>
                             {% endif %}  
-                            <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+                            <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
                     </select>
                 </div>
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Description</label>
-                    <textarea class="form-control form-control-lg" placeholder="Description" name="description">{{ post['description'] }}</textarea>
+                    <textarea class="form-control form-control-lg" placeholder="Description" name="description">{{ post.description }}</textarea>
                 </div>
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Contenu</label>
-                    <textarea name="content" id="editor">{{ post['content'] }}</textarea>
+                    <textarea name="content" id="editor">{{ post.content }}</textarea>
                 </div>
                 <div class="col-4 m-3">
                     <label for="content" class="form-control-label">Image actuelle</label>
-                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" width="250">
+                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" width="250">
                 </div>
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Nouvelle image</label>

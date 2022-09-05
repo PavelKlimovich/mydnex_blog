@@ -20,6 +20,7 @@ CREATE TABLE `comment` (
   `message` mediumtext NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

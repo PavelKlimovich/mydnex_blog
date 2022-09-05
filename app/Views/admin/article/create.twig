@@ -25,7 +25,7 @@
                     <select class="form-select form-select-lg mb-3" name='category_id'>
                         <option selected="" value=''>Veuillez selectionner la categorie</option>
                         {% for category in categories %}
-                            <option value="{{ category['id'] }}">{{ category['name'] }}</option>
+                            <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
                     </select>
                 </div>

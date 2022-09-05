@@ -17,7 +17,8 @@ class MiddlewareBuilder
     public function getList()
     {
         return [
-            "admin" => "App\Middlewares\AdminMiddleware"
+            "admin" => "App\Middlewares\AdminMiddleware",
+            "auth"  => "App\Middlewares\AuthMiddleware"
         ];
     }
 }

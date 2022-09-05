@@ -5,10 +5,7 @@
 <div class="container">
     <div class="row mt-5">
          <div class="col-10">
-            <h1>Mes Articles</h1>
-        </div>
-         <div class="col-2">
-            <button type="button" onclick="location.href='/admin/ajouter-article'" class="btn btn-success">Ajouter un article</button>
+            <h1>Demande de validation</h1>
         </div>
     </div>
     <div class='row mt-5'>
@@ -16,20 +13,20 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Titre</th>
+                    <th scope="col">Message</th>
                     <th scope="col">Action</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
-                {% for post in posts %}
+              {% for comment in comments %}
                     <tr>
-                        <th scope="row">{{ post.id }}</th>
-                        <td>{{ post.title }}</td>
-                        <td><button type="button" onclick="location.href='/admin/modifier-article/{{ post.slug }}'" class="btn bg-primary">Modifier</button></td>
+                        <th scope="row">{{ comment.id }}</th>
+                        <td>{{ comment.message }}</td>
+                        <td><button type="button" onclick="location.href='/admin/valider-commentaire/{{ comment.id }}'" class="btn bg-primary">Valider</button></td>
                         <td>
-                            <form method="POST" action="/adminv/supprimer-article" enctype="multipart/form-data">
-                                <input name="id" type="hidden" value="{{ post.id }}">
+                            <form method="POST" action="/admin/supprimer-commentaire">
+                                <input name="id" type="hidden" value="{{ comment.id }}">
                                 <button type="submit" class="btn bg-danger">Supprimer</button>
                             </form>
                         </td>

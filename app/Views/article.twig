@@ -43,24 +43,63 @@
                                         <span class="badge text-primary">New</span>
                                         <p class="badge text-dark ">12 juin 2022</p>
                                     </div>
-                                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" height="350">
+                                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" height="350">
                                 </div>
                             </div>
                             <div class="col-8 p-4 mt-4">
                                 <div class="col-12 text-left p-2">
-                                    <h1 class="fw-bold lh-1">{{ post['title'] }}</h1>
-                                    <p class="lead">{{ post['content'] |raw  }}</p>
+                                    <h1 class="fw-bold lh-1">{{ post.title }}</h1>
+                                    <p class="lead">{{ post.content |raw  }}</p>
                                     
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="mb-5">
+                    <div class="bg-light">
+                        <div class="card-body">
+                            {% if auth %}
+                                <h3>Les commentaire !</h3>
+                                {% if success %}
+                                    <div class="col-12 p-1">
+                                        <p>{{ success |raw  }}</p> 
+                                    </div>
+                                {% endif %}  
+                                {% if error %}
+                                    <div class="col-12 p-1">
+                                        <p>{{ error |raw  }}</p> 
+                                    </div>
+                                {% endif %}  
+                                <form class="mb-4 mt-4" method="POST" action='/store-comment'>
+                                    <textarea class="form-control" rows="3" placeholder="Laisser un commentaire !" name='comment' required></textarea>
+                                    <input name="post_id" type="hidden" value="{{ post.id }}">
+                                    <button type="submit" class="btn bg-primary mt-2">Envoyer</button>
+                                </form>
+                            {% else %} 
+                                <div class="row">
+                                    <div class="fw-bold col-8">
+                                        <h4>Vous devez vous connecter pour laisser un commentaire !</h4>
+                                        <a href="/login" class='mt-2'>Se connecter</a>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% for comment in comments %}
+                                {% if comment.verified == 1 %}
+                                    <div class="d-flex mt-4">
+                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+                                        <div class="ms-3">
+                                            <div class="fw-bold">{{ comment.user_id }}</div>
+                                            {{ comment.message }}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-         {% for comment in comments %}
-                <p>{{comment['message']}}</p>
-         {% endfor %}
     </main>
 
     <footer class="pt-5 mt-5">

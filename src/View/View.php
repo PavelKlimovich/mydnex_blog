@@ -14,6 +14,7 @@ abstract class View
         $loader = new FilesystemLoader('../app/Views');
         $this->twig   = new Environment($loader);
 
+        $this->addSessionSuccess();
         $this->addSessionError();
         $this->addAuthSession('admin');
         $this->addAuthSession('auth');
@@ -44,6 +45,14 @@ abstract class View
         if (isset($_SESSION['error_delay']) && $_SESSION['error_delay'] == '1') {
             $_SESSION['error_delay'] = '0';
             $this->twig->addGlobal('error', $_SESSION['error']);
+        } 
+    }
+
+    public function addSessionSuccess()
+    {
+        if (isset($_SESSION['success_delay']) && $_SESSION['success_delay'] == '1') {
+            $_SESSION['success_delay'] = '0';
+            $this->twig->addGlobal('success', $_SESSION['success']);
         } 
     }
 

@@ -15,7 +15,7 @@ class PageController extends Controller
     public function index()
     {
         $post = new Post();
-        $posts = $post->first(0,3);
+        $posts = $post->select(0,3);
         
         return $this->render('index.twig',['posts' => $posts]);
     }
@@ -23,9 +23,9 @@ class PageController extends Controller
     public function blog()
     {
         $post = new Post();
-        $posts = $post->first(0,5);
+        $posts = $post->select(0,5);
         $category = new Category();
-        $categories = $category->all();
+        $categories = $category->all()->get();
 
         return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
     }
@@ -34,10 +34,10 @@ class PageController extends Controller
     {
         $post = new Post();
         $category = new Category();
-        $category = $category->where('slug','=', $param);
-        $posts = $post->where('category_id','=', $category[0]['id']);
+        $category = $category->where('slug','=', $param)->first();
+        $posts = $post->where('category_id','=', $category->id)->get();
         $category = new Category();
-        $categories = $category->all();
+        $categories = $category->all()->get();
 
         return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
     }
@@ -47,11 +47,11 @@ class PageController extends Controller
         if (!empty($param)) {
             $post = new Post();
             $comment = new Comment();
-            $post = $post->where('slug','=', $param);
-            $comments = $comment->where('post_id','=',$post[0]['id']);
-
+            $post = $post->where('slug','=', $param)->first();
+            $comments = $comment->where('post_id','=', $post->id)->get();
+   
             if ($post){
-                return $this->render('article.twig',['post' => $post[0], 'comments'=> $comments]);
+                return $this->render('article.twig',['post' => $post, 'comments'=> $comments]);
             }
         }
 

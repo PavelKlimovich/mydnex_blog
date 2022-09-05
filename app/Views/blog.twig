@@ -43,7 +43,7 @@
                             <ul class="ul-none-decoration">
                                 <li><a class="nav-link fw-bold" href="/blog">Tous les articles</a></li>
                                 {% for category in categories %}
-                                    <li><a class="nav-link fw-bold" href="/blog/{{ category['slug'] }}">{{ category['name'] }}</a></li>
+                                    <li><a class="nav-link fw-bold" href="/blog/{{ category.slug }}">{{ category.name }}</a></li>
                                 {% endfor %}
                             </ul>
                         </nav>
@@ -54,7 +54,7 @@
                                 {% if key == 0 %}
                                     <div class="col-12">
                                         <div class="col-12" >
-                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" height="350">
+                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" height="350">
                                         </div>
                                         <div class="col-12 m-3">
                                             <div class="col-12 text-left mt-3 p-2">
@@ -62,29 +62,29 @@
                                                 <p class="badge text-dark ">12 juin 2022</p>
                                             </div>
                                             <div class="col-12 text-left p-2">
-                                                <a href="/article/{{ post['slug'] }}" class="link-none-decoration">
-                                                    <h1 class="fw-bold lh-1"><span class='card__title'>{{ post['title'] }}</span></h1>
+                                                <a href="/article/{{ post.slug }}" class="link-none-decoration">
+                                                    <h1 class="fw-bold lh-1"><span class='card__title'>{{ post.title }}</span></h1>
                                                 </a>
-                                                <p class="lead">{{ post['description'] }}</p>
-                                                <a href="/article/{{ post['slug'] }}">Lire</a>
+                                                <p class="lead">{{ post.description }}</p>
+                                                <a href="/article/{{ post.slug }}">Lire</a>
                                             </div>
                                         </div>
                                     </div>
                                     {% elseif key > 0 %}
                                      <div class="col-6 p-4 mt-4">
                                         <div class="col-12">
-                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post['image'] }}" alt="" >
+                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" >
                                         </div>
                                         <div class="col-12 text-left mt-3 p-2">
                                             <span class="badge text-primary">New</span>
                                             <p class="badge text-dark ">12 juin 2022</p>
                                         </div>
                                         <div class="col-12 text-left p-2">
-                                            <a href="/article/{{ post['slug'] }}" class="link-none-decoration">
-                                                <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post['title'] }}</span></h1>
+                                            <a href="/article/{{ post.slug }}" class="link-none-decoration">
+                                                <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
                                             </a>
-                                            <p class="lead">{{ post['description'] }}</p>
-                                            <a href="/article/{{ post['slug'] }}">Lire</a>
+                                            <p class="lead">{{ post.description }}</p>
+                                            <a href="/article/{{ post.slug }}">Lire</a>
                                         </div>
                                     </div>
                                 {% endif %}

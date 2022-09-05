@@ -19,10 +19,9 @@ class PostSeeder
         $faker = Factory::create();
         $post  = new Post();
         $category = new Category();
-        $categories = $category->all();
+        $categories = $category->all()->get();
     
         for ($i=0; $i < 15; $i++) { 
-
             $title = $faker->sentence($nbWords = 6, $variableNbWords = true);
 
             $post->create([
@@ -32,7 +31,7 @@ class PostSeeder
                 'content'       => $faker->paragraph(5),
                 'image'         => $faker->imageUrl(640, 480, 'animals', true),
                 'user_id'       => 1,
-                'category_id'   => (int)$categories[random_int(1, count($categories))]['id'],
+                'category_id'   => $categories->where('id','=',random_int(1, count($categories)))->id,
                 'created_at'    => date("Y-m-d"),
                 'updated_at'    => date("Y-m-d"),
             ]);

@@ -8,9 +8,16 @@ abstract class Model
 {
     public $db;
     public string $table;
+    public $request;
 
-    public function __construct() {
+    public function __construct($array = null) {
         $this->db = DB::getInstance();
+
+        if (!is_null($array)) {
+            foreach(get_object_vars($this) as $attrName => $attrValue){
+                $this->{$attrName} = $array[$attrName];
+            }
+        }
     }
 
 
@@ -34,20 +41,24 @@ abstract class Model
     /**
      * Return all entities in the model.
      *
-     * @return array
+     * @return mixed
      */
-    public function all(): array
+    public function all()
     {
-        return $this->request("SELECT * FROM {$this->table}")->fetchAll();
+        $this->request = $this->request("SELECT * FROM {$this->table}")->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this;
     }
+
+
     /**
      * Return all entities in the model.
      *
      * @return array
      */
-    public function first(int $start, int $finish): array
+    public function select(int $start, int $finish): array
     {
-        return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll();
+        return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll(\PDO::FETCH_CLASS, $this::class);
     }
     
 
@@ -136,17 +147,32 @@ abstract class Model
 
 
     /**
-     * Return the funded element.
+     * Undocumented function
      *
      * @param string $culumn
      * @param string $operator
      * @param string $value
-     * @return array||bool
+     * @return mixed
      */
-    public function where(string $culumn, string $operator, string $value): array | bool
+    public function where(string $culumn, string $operator, string $value)
     {
         $sql = "SELECT * FROM $this->table WHERE $culumn $operator '".$value."'";
-        return $this->request($sql)->fetchAll();
+        $this->request = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this;
+    }
+
+
+    public function first()
+    {
+        return $this->request[0];
+    }
+
+    
+    public function get()
+    {
+        return $this->request;
     }
 
 }
+
