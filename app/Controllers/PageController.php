@@ -30,11 +30,22 @@ class PageController extends Controller
         return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
     }
 
+    public function blogAjax($request = null)
+    {
+        $post = new Post();
+        $posts = $post->select($request ,$request + 5);
+        
+        return $this->render('data.twig',['posts' => $posts]);
+    }
+
     public function category($param)
     {
         $post = new Post();
         $category = new Category();
         $category = $category->where('slug','=', $param)->first();
+        if (empty($category)) {
+            Route::abord();
+        }
         $posts = $post->where('category_id','=', $category->id)->get();
         $category = new Category();
         $categories = $category->all()->get();
@@ -48,11 +59,14 @@ class PageController extends Controller
             $post = new Post();
             $comment = new Comment();
             $post = $post->where('slug','=', $param)->first();
-            $comments = $comment->where('post_id','=', $post->id)->get();
-   
-            if ($post){
-                return $this->render('article.twig',['post' => $post, 'comments'=> $comments]);
+
+            if (empty($post)){
+                Route::abord();
             }
+
+            $comments = $comment->where('post_id','=', $post->id)->get();
+
+            return $this->render('article.twig',['post' => $post, 'comments'=> $comments]);
         }
 
         Route::abord();

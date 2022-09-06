@@ -133,8 +133,8 @@
                 <div class="row p-4 align-items-center rounded-3 border shadow-lg">
                     <div class="col-lg-7 m-5 ">
                     <div class="col-12 text-left">
-                            <span class="badge text-primary">New</span>
-                            <p class="badge text-dark ">12 juin 2022</p>
+                            <span class="badge text-primary">{{ post.category().name }}</span>
+                            <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
                         </div>
                         <a href="/article/{{ post.slug }}" class="link-none-decoration">
                             <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>

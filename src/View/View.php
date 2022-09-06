@@ -13,6 +13,7 @@ abstract class View
     {
         $loader = new FilesystemLoader('../app/Views');
         $this->twig   = new Environment($loader);
+        $this->twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone('Europe/Paris'); 
 
         $this->addSessionSuccess();
         $this->addSessionError();

@@ -22,6 +22,7 @@ class App {
         $this->dbUsername = $_ENV['DB_USERNAME'];
         $this->dbPassword = $_ENV['DB_PASSWORD'];
         $this->getMailFrom = $_ENV['EMAIL_FROM'];
+   
     }
 
     public function getDbHost()

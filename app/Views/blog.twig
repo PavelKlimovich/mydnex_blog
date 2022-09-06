@@ -3,7 +3,7 @@
 {% block content %}
  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container">
-            <a class="navbar-brand" href="/"> <img src="images/logo_black.png" width='55'></img> </a>  
+            <a class="navbar-brand" href="/"> <img src="../images/logo_black.png" width='55'></img> </a>  
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
@@ -49,48 +49,11 @@
                         </nav>
                     </div>
                     <div class="col-10">
-                        <div class="row">
-                             {% for key,post in posts %}
-                                {% if key == 0 %}
-                                    <div class="col-12">
-                                        <div class="col-12" >
-                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" height="350">
-                                        </div>
-                                        <div class="col-12 m-3">
-                                            <div class="col-12 text-left mt-3 p-2">
-                                                <span class="badge text-primary">New</span>
-                                                <p class="badge text-dark ">12 juin 2022</p>
-                                            </div>
-                                            <div class="col-12 text-left p-2">
-                                                <a href="/article/{{ post.slug }}" class="link-none-decoration">
-                                                    <h1 class="fw-bold lh-1"><span class='card__title'>{{ post.title }}</span></h1>
-                                                </a>
-                                                <p class="lead">{{ post.description }}</p>
-                                                <a href="/article/{{ post.slug }}">Lire</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% elseif key > 0 %}
-                                     <div class="col-6 p-4 mt-4">
-                                        <div class="col-12">
-                                            <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" >
-                                        </div>
-                                        <div class="col-12 text-left mt-3 p-2">
-                                            <span class="badge text-primary">New</span>
-                                            <p class="badge text-dark ">12 juin 2022</p>
-                                        </div>
-                                        <div class="col-12 text-left p-2">
-                                            <a href="/article/{{ post.slug }}" class="link-none-decoration">
-                                                <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
-                                            </a>
-                                            <p class="lead">{{ post.description }}</p>
-                                            <a href="/article/{{ post.slug }}">Lire</a>
-                                        </div>
-                                    </div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    </div>
+                        {{ include('data.twig') }}
+
+                        <div id="results"><!-- results appear here --></div>
+                        <div class="ajax-loading"><img src="../images/loading.gif" /></div>
+                    </div> 
                 </div>
             </div>
         </section>
@@ -115,4 +78,51 @@
         </div>
         </div>
     </footer>
+     <script>
+
+        var page = 5;
+
+        $(window).scroll(function() { //detect page scroll
+            if(($(document).height() - ($(window).height() + $(window).scrollTop())) / $(document).height()===0) { //if user scrolled from top to bottom of the page
+                page+5;
+                load_more(page); //load content   
+            }
+        });    
+
+        function load_more(page){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                        url: '/bb/' + page,
+                        type: "get",
+                        beforeSend: function()
+                        {
+                            $('.ajax-loading').show();
+                        }
+                        
+                    })
+                    .done(function(data)
+                    {
+                    console.log(data);
+                        if(data == ""){
+                            //notify user if nothing to load
+                            $('.ajax-loading').html("Je n'ai plus d'articles disponible pour vous!");
+                            document.querySelector("#footer").style.display="block";
+                    
+                            return;
+                        }
+                        $('.ajax-loading').hide(); //hide loading animation once data is received
+                        $("#results").append(data); //append data into #results element          
+                    })
+                    .fail(function(jqXHR, ajaxOptions, thrownError)
+                    {
+                        //  alert('No response from server');
+                    });
+        }
+</script>
 {% endblock %}
+
+  

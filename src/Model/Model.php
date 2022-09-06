@@ -60,7 +60,34 @@ abstract class Model
     {
         return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll(\PDO::FETCH_CLASS, $this::class);
     }
-    
+
+    /**
+     * Return all entities in the model.
+     *
+     * @return object
+     */
+    public function queryJoin(string $table, string $value)
+    {
+        $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
+        $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this->$table[0];
+    }
+
+
+    /**
+     * Return all entities in the model.
+     *
+     * @return object
+     */
+    public function queryJoinAll(string $table, string $value)
+    {
+        $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
+        $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this->$table;
+    }
+
 
     /**
      * Insert new records into the database.
@@ -165,7 +192,9 @@ abstract class Model
 
     public function first()
     {
-        return $this->request[0];
+        if ($this->request) {
+            return $this->request[0];
+        }
     }
 
     
