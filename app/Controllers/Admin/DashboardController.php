@@ -6,7 +6,12 @@ use App\Controllers\Controller;
 
 class DashboardController extends Controller
 {
-    public function index()
+    /**
+     * Return admin page.
+     *
+     * @return mixed
+     */
+    public function index(): mixed
     {
         return $this->render('admin/dashboard.twig');
     }

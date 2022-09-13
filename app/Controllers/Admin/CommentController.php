@@ -11,11 +11,11 @@ class CommentController extends Controller
 {
 
      /**
-      * Undocumented function
+      * Return comment index page.
       *
-      * @return void
+      * @return mixed
       */
-    public function index()
+    public function index(): mixed
     { 
         $comment = new Comment();
         $comments = $comment->where('verified', '=', 0)->get();
@@ -25,11 +25,12 @@ class CommentController extends Controller
 
 
      /**
-      * Undocumented function
+      * Valide selected comment.
       *
-      * @return void
+      * @param string $id
+      * @return mixed
       */
-    public function valide($id)
+    public function valide(string $id): mixed
     { 
         $comment = new Comment();
         $thisComment = $comment->where('id', '=', $id)->first();
@@ -52,12 +53,12 @@ class CommentController extends Controller
     }
 
 
-     /**
-      * Undocumented function
-      *
-      * @return void
-      */
-    public function store()
+    /**
+     * Store selected comment.
+     *
+     * @return void
+     */
+    public function store(): mixed
     { 
         Validator::create(
             [
@@ -86,11 +87,11 @@ class CommentController extends Controller
 
 
     /** 
-     * Undocumented function
+     * Delete selected comment.
      *
-     * @return void
+     * @return mixed
      */
-    public function delete()
+    public function delete(): mixed
     { 
         $comment = new Comment();
         $comment->delete($_POST['id']);

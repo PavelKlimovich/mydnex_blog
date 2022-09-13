@@ -11,26 +11,37 @@ use App\Controllers\Controller;
 class AuthController extends Controller
 {
 
-    public function login()
+    /**
+     * Return login page.
+     *
+     * @return mixed
+     */
+    public function login(): mixed
     {
         return $this->render('auth/login.twig');
     }
 
-
-    public function register()
+    /**
+     * Return register page.
+     *
+     * @return mixed
+     */
+    public function register(): mixed
     {
         return $this->render('auth/register.twig');
     }
 
-
-    public function auth()
+    /**
+     * Verifed auth.
+     *
+     * @return mixed
+     */
+    public function auth(): mixed
     {
-        Validator::create(
-            [
-            "email" => 'Email ou le mot de passe est vide !',
-            "password" => 'Mot de passe n\'est pas renseigné !',
-            ]
-        );
+        Validator::create([
+                "email" => 'Email ou le mot de passe est vide !',
+                "password" => 'Mot de passe n\'est pas renseigné !',
+            ]);
 
         $user =  new User();
         $email = (string)$_POST['email'];
@@ -62,31 +73,41 @@ class AuthController extends Controller
         return $this->redirect($_ENV['APP_URL'].'/blog');
     }
 
-
-    public function dashboard()
+    /**
+     * Return dashboard page.
+     *
+     * @return mixed
+     */
+    public function dashboard(): mixed
     {
         return $this->redirect($_ENV['APP_URL'].'/dashboard');
     }
 
-
-    public function logout()
+    /**
+     * Logout auth.
+     *
+     * @return mixed
+     */
+    public function logout(): mixed
     {
         session_destroy();
         return $this->redirect($_ENV['APP_URL'].'/');
     }
 
-
-    public function store()
+    /**
+     * Store new user.
+     *
+     * @return mixed
+     */
+    public function store(): mixed
     {
-        Validator::create(
-            [
+        Validator::create([
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
             "email" => 'Email n\'est pas renseigné !',
             "password" => 'Mot de passe n\'est pas renseigné !',
             "password_confirmation" => 'Mot de passe n\'est pas renseigné !',
-            ]
-        );
+        ]);
 
         if ($_POST['password'] !== $_POST['password_confirmation']) {
             $_SESSION['error'] = 'Mot de passe n\'est pas renseigné !' ;    
@@ -113,8 +134,7 @@ class AuthController extends Controller
             return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $userObject->create(
-            [
+        $userObject->create([
             'firstname'  => (string)$_POST['firstname'],
             'lastname'   => (string)$_POST['lastname'],
             'email'      => (string)$_POST['email'],
@@ -123,8 +143,7 @@ class AuthController extends Controller
             'role'       => 'user',
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
-            ]
-        );
+        ]);
 
         $_SESSION['auth'] = true;
        

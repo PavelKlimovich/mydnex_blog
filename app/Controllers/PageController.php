@@ -8,11 +8,16 @@ use Src\Routing\Route;
 use App\Models\Comment;
 use App\Models\Category;
 use Src\Validator\Validator;
-use PhpParser\Node\Expr\AssignOp\Mod;
 
 class PageController extends Controller
 {
-    public function index()
+
+    /**
+     * Return index page.
+     *
+     * @return mixed
+     */
+    public function index(): mixed
     {
         $post = new Post();
         $posts = $post->select(0, 3);
@@ -20,7 +25,13 @@ class PageController extends Controller
         return $this->render('index.twig', ['posts' => $posts]);
     }
     
-    public function blog()
+
+    /**
+     * Return blog page.
+     *
+     * @return mixed
+     */
+    public function blog(): mixed
     {
         $post = new Post();
         $posts = $post->select(0, 5);
@@ -30,7 +41,13 @@ class PageController extends Controller
         return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
-    public function blogAjax($request = null)
+    /**
+     * Return blog articl block.
+     *
+     * @param int|null $request
+     * @return mixed
+     */
+    public function blogAjax(int $request = null): mixed
     {
         $post = new Post();
         $posts = $post->select($request, $request + 5);
@@ -38,7 +55,13 @@ class PageController extends Controller
         return $this->render('data.twig', ['posts' => $posts]);
     }
 
-    public function category($param)
+    /**
+     * Return category page.
+     *
+     * @param string $param
+     * @return mixed
+     */
+    public function category($param): mixed
     {
         $post = new Post();
         $category = new Category();
@@ -53,7 +76,13 @@ class PageController extends Controller
         return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
-    public function article($param)
+    /**
+     * Return post page.
+     *
+     * @param string $param
+     * @return void
+     */
+    public function article($param): mixed
     {
         if (!empty($param)) {
             $post = new Post();
@@ -72,7 +101,12 @@ class PageController extends Controller
         Route::abord();
     }
 
-    public function contact()
+    /**
+     * Send contact mail.
+     *
+     * @return mixed
+     */
+    public function contact(): mixed
     {
         Validator::create(
             [

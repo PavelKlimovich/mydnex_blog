@@ -26,6 +26,8 @@ abstract class Model
     /**
      * Prepare query request before send him.
      *
+     * @param string $sql
+     * @param array|null $attributes
      * @return object
      */
     public function request(string $sql, array $attributes = null): object

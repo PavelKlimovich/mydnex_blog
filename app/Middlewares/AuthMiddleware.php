@@ -9,7 +9,12 @@ class AuthMiddleware
         $this->redirectTo();
     }
 
-    public function redirectTo()
+    /**
+     * Verify if user have access.
+     *
+     * @return void
+     */
+    public function redirectTo(): void
     {
         if (!$_SESSION['auth']) {
             header('Location:' .$_SERVER['HTTP_REFERER']);

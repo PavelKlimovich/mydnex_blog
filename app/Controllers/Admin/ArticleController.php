@@ -12,11 +12,11 @@ class ArticleController extends Controller
 {
 
     /**
-     * Undocumented function
+     * Return article index page.
      *
-     * @return void
+     * @return mixed
      */
-    public function index()
+    public function index(): mixed
     { 
         $post = new Post();
         $posts = $post->all()->get();
@@ -25,11 +25,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Return article crete page.
      *
-     * @return void
+     * @return mixed
      */
-    public function create()
+    public function create(): mixed
     {
         $category = new Category();
         $categories = $category->all()->get();
@@ -38,11 +38,11 @@ class ArticleController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Store new Post.
      *
-     * @return void
+     * @return mixed
      */
-    public function store()
+    public function store(): mixed
     {
         $category = new Category();
         $categories = $category->all()->get();
@@ -88,12 +88,12 @@ class ArticleController extends Controller
     }
 
     /**
-     * Undocumented function
+     * Return article edit page.
      *
-     * @param  [type] $slug
-     * @return void
+     * @param string $slug
+     * @return mixed
      */
-    public function edit($slug)
+    public function edit(string $slug): mixed
     {
         $post = new Post();
         $post = $post->where('slug', '=', $slug)->first();
@@ -105,12 +105,12 @@ class ArticleController extends Controller
 
 
     /**
-     * Undocumented function
+     * Update selected Post.
      *
-     * @param  [type] $slug
-     * @return void
+     * @param string $slug
+     * @return mixed
      */
-    public function update($slug)
+    public function update(string $slug): mixed
     {
         Validator::create(
             [
@@ -151,11 +151,11 @@ class ArticleController extends Controller
 
 
     /**
-     * Undocumented function
+     * Delete selected Post.
      *
-     * @return void
+     * @return mixed
      */
-    public function delete()
+    public function delete(): mixed
     {
         $post = new Post();
         $post->delete($_POST['id']);
