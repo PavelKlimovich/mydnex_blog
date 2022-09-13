@@ -4,17 +4,28 @@ namespace Src\Middleware;
 
 class MiddlewareBuilder
 {
-    public function init($name)
+
+    /**
+     * Check if middleware exist and init her.
+     *
+     * @param string $name
+     * @return void
+     */
+    public function init(string $name): void
     {
         if(array_key_exists($name, $this->getList())){
             $middlewares = $this->getList();
             new $middlewares[$name]();
         }
-        
     }
 
 
-    public function getList()
+    /**
+     * Return all middlewares.
+     *
+     * @return array
+     */
+    public function getList(): array
     {
         return [
             "admin" => "App\Middlewares\AdminMiddleware",

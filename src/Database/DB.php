@@ -17,8 +17,13 @@ class DB
     $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
   }
 
-  
-  public static function getInstance()
+
+  /**
+   * Return this Database instance.
+   *
+   * @return object
+   */
+  public static function getInstance(): object
   {
     if (is_null(self::$_instance)) {
       self::$_instance = new DB();
@@ -27,12 +32,24 @@ class DB
     return self::$_instance;
   }
   
+
+  /**
+   * Return property PDO.
+   *
+   * @return void
+   */
   public function getPDO()
   {
     return $this->pdo;
   }
 
-  public function getAllTablesName()
+
+  /**
+   * Return all table names.
+   *
+   * @return array
+   */
+  public function getAllTablesName(): array
   {
     $sql = "SHOW TABLES";
     $statement = $this->pdo->prepare($sql);

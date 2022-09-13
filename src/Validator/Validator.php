@@ -4,7 +4,14 @@ namespace Src\Validator;
 
 class Validator
 {
-    public static function create(array $list)
+    
+    /**
+     * Check this list entities. 
+     *
+     * @param array $list
+     * @return mixed
+     */
+    public static function create(array $list): mixed
     {
         $errors = '';
         foreach ($list as $key => $value) {

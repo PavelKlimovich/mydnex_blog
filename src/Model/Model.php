@@ -6,6 +6,7 @@ use Src\Database\DB;
 
 abstract class Model
 {
+
     public $db;
     public string $table;
     public $request;
@@ -43,7 +44,7 @@ abstract class Model
      *
      * @return mixed
      */
-    public function all()
+    public function all(): mixed
     {
         $this->request = $this->request("SELECT * FROM {$this->table}")->fetchAll(\PDO::FETCH_CLASS, $this::class);
 
@@ -61,12 +62,13 @@ abstract class Model
         return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll(\PDO::FETCH_CLASS, $this::class);
     }
 
+
     /**
-     * Return all entities in the model.
+     * Return first entity in the model.
      *
      * @return object
      */
-    public function queryJoin(string $table, string $value)
+    public function queryJoin(string $table, string $value): object
     {
         $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
         $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
@@ -78,9 +80,9 @@ abstract class Model
     /**
      * Return all entities in the model.
      *
-     * @return object
+     * @return mixed
      */
-    public function queryJoinAll(string $table, string $value)
+    public function queryJoinAll(string $table, string $value): mixed
     {
         $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
         $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
@@ -126,7 +128,7 @@ abstract class Model
      * @param  array $values
      * @return bool
      */
-    public function update(int $id, array $values)
+    public function update(int $id, array $values): bool
     {
         $insert_values = [];
 
@@ -174,14 +176,14 @@ abstract class Model
 
 
     /**
-     * Undocumented function
+     * Execute query and return entities into the database.
      *
      * @param string $culumn
      * @param string $operator
      * @param string $value
      * @return mixed
      */
-    public function where(string $culumn, string $operator, string $value)
+    public function where(string $culumn, string $operator, string $value): mixed
     {
         $sql = "SELECT * FROM $this->table WHERE $culumn $operator '".$value."'";
         $this->request = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
@@ -190,15 +192,24 @@ abstract class Model
     }
 
 
-    public function first()
+    /**
+     * Return first query element.
+     *
+     * @return object
+     */
+    public function first(): object
     {
         if ($this->request) {
             return $this->request[0];
         }
     }
 
-    
-    public function get()
+    /**
+     * Return all query elements.
+     *
+     * @return array
+     */
+    public function get(): array
     {
         return $this->request;
     }

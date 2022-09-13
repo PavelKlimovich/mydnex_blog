@@ -7,7 +7,7 @@ use Src\Middleware\MiddlewareBuilder as Middleware;
 
 class Route
 {
-
+   
     public static function get($route, $class, $action)
     {
         if (strcasecmp($_SERVER['REQUEST_METHOD'], 'GET') !== 0) {
@@ -62,7 +62,14 @@ class Route
     }
 
 
-    public static function middleware($name , Closure $closure)
+    /**
+     * Init widdleware.
+     *
+     * @param string $name
+     * @param Closure $closure
+     * @return void
+     */
+    public static function middleware($name , Closure $closure): void
     {
        $middleware = new Middleware();
        $middleware->init($name);
@@ -70,7 +77,12 @@ class Route
     }
 
 
-    public static function abord()
+    /**
+     * Return error 400.
+     *
+     * @return mixed
+     */
+    public static function abord(): mixed
     {
         http_response_code(404);
         require '../app/Views/errors/404.php';

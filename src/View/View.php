@@ -9,6 +9,9 @@ abstract class View
 {
     protected $twig;
 
+    /**
+     * Init this class.
+     */
     public function __construct()
     {
         $loader = new FilesystemLoader('../app/Views');
@@ -21,27 +24,54 @@ abstract class View
         $this->addAuthSession('auth');
     }
 
-    public function render(string $template, array $params = [])
+
+    /**
+     * Return twig view.
+     *
+     * @param string $template
+     * @param array $params
+     * @return mixed
+     */
+    public function render(string $template, array $params = []): mixed
     {
         echo $this->twig->render($template, $params);
         exit();
     }
 
-    public function redirect(string $route)
+
+    /**
+     * Redirect to url.
+     *
+     * @param string $route
+     * @return mixed
+     */
+    public function redirect(string $route): mixed
     {
         header('Location:' .$route);
         exit();
     }
 
 
-    public function addAuthSession(string $session)
+    /**
+     * Add to twig class auth global variable.
+     *
+     * @param string $session
+     * @return void
+     */
+    public function addAuthSession(string $session): void
     {
         if (isset($_SESSION[$session])) {
             $this->twig->addGlobal($session, $_SESSION[$session]);
         }
     }
 
-    public function addSessionError()
+
+    /**
+     * Add to twig class error global variable.
+     *
+     * @return void
+     */
+    public function addSessionError(): void
     {
         if (isset($_SESSION['error_delay']) && $_SESSION['error_delay'] == '1') {
             $_SESSION['error_delay'] = '0';
@@ -49,7 +79,13 @@ abstract class View
         } 
     }
 
-    public function addSessionSuccess()
+
+    /**
+     * Add to twig class success global variable.
+     *
+     * @return void
+     */
+    public function addSessionSuccess(): void
     {
         if (isset($_SESSION['success_delay']) && $_SESSION['success_delay'] == '1') {
             $_SESSION['success_delay'] = '0';
