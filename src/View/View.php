@@ -28,8 +28,8 @@ abstract class View
     /**
      * Return twig view.
      *
-     * @param string $template
-     * @param array $params
+     * @param  string $template
+     * @param  array  $params
      * @return mixed
      */
     public function render(string $template, array $params = []): mixed
@@ -42,7 +42,7 @@ abstract class View
     /**
      * Redirect to url.
      *
-     * @param string $route
+     * @param  string $route
      * @return mixed
      */
     public function redirect(string $route): mixed
@@ -55,7 +55,7 @@ abstract class View
     /**
      * Add to twig class auth global variable.
      *
-     * @param string $session
+     * @param  string $session
      * @return void
      */
     public function addAuthSession(string $session): void

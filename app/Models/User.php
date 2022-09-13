@@ -16,9 +16,9 @@ class User extends Model
      */
     public function isAdmin(): bool
     {
-       if ($this->role === 'admin'){
+        if (isset($this->role) && $this->role === 'admin') {
             return true;
-       }
-       return false;
+        }
+        return false;
     }
 }

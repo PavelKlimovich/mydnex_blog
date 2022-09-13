@@ -8,7 +8,8 @@ class ExecuteMigrate
 {
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = DB::getInstance();
     }
 
@@ -41,7 +42,7 @@ class ExecuteMigrate
     /**
      * Delete table in database.
      *
-     * @param array $tables
+     * @param  array $tables
      * @return void
      */
     public function deleteTable(array $tables): void 

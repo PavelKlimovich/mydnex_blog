@@ -31,7 +31,7 @@ class Route
     public static function on($url, $class, $action)
     {
         if (!empty($_SERVER['REQUEST_URI'])) {
-            $route = preg_replace("/(^\/)|(\/$)/","", $url);
+            $route = preg_replace("/(^\/)|(\/$)/", "", $url);
             $request =  preg_replace("/(^\/)|(\/$)/", "", $_SERVER['REQUEST_URI']);
         } else {
             $request = "/";
@@ -53,7 +53,7 @@ class Route
                 $param = end($param);
                 $request = str_replace("/".$param, "", $request);
               
-                if($request === $route){
+                if($request === $route) {
                     $objectController = new $class();
                     return $objectController->$action($param);
                 }
@@ -65,15 +65,15 @@ class Route
     /**
      * Init widdleware.
      *
-     * @param string $name
-     * @param Closure $closure
+     * @param  string  $name
+     * @param  Closure $closure
      * @return void
      */
     public static function middleware($name , Closure $closure): void
     {
-       $middleware = new Middleware();
-       $middleware->init($name);
-       $closure();
+        $middleware = new Middleware();
+        $middleware->init($name);
+        $closure();
     }
 
 
@@ -85,7 +85,7 @@ class Route
     public static function abord(): mixed
     {
         http_response_code(404);
-        require '../app/Views/errors/404.php';
+        include '../app/Views/errors/404.php';
         exit();
     }
 

@@ -12,6 +12,8 @@ Route::get('/register', AuthController::class, 'register');
 Route::post('/register', AuthController::class, 'store');
 
 
-Route::middleware('auth', function(){
-    Route::post('/store-comment', CommentController::class, 'store');
-});
+Route::middleware(
+    'auth', function () {
+        Route::post('/store-comment', CommentController::class, 'store');
+    }
+);

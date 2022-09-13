@@ -7,17 +7,19 @@ use Src\Console\Printer\Colors;
 
 class Printer
 {
-
-    public function __construct() {
+    public $string;
+    
+    public function __construct()
+    {
         $this->string = new Colors();
     }
     
     /**
      * Print colored string
      *
-     * @param string $text
-     * @param string $color
-     * @param string $bgColor
+     * @param  string $text
+     * @param  string $color
+     * @param  string $bgColor
      * @return void
      */
     public function print(string $text, string $color, string $bgColor): void
@@ -29,8 +31,8 @@ class Printer
     /**
      * Print Error message.
      *
-     * @param string $text
-     * @param boolean $bool
+     * @param  string  $text
+     * @param  boolean $bool
      * @return void
      */
     public function getError(string $text, bool $bool): void
@@ -45,8 +47,8 @@ class Printer
     /**
      * Print Success message.
      *
-     * @param string $text
-     * @param boolean $bool
+     * @param  string  $text
+     * @param  boolean $bool
      * @return void
      */
     public function getSuccess(string $text, bool $bool): void
@@ -61,8 +63,8 @@ class Printer
     /**
      * Print Success message.
      *
-     * @param string $text
-     * @param boolean $bool
+     * @param  string  $text
+     * @param  boolean $bool
      * @return void
      */
     public function getWarning(string $text, bool $bool): void

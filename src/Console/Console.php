@@ -15,7 +15,7 @@ class Console extends Printer
     /**
      * Run console.
      *
-     * @param array $argv
+     * @param  array $argv
      * @return void
      */
     public function run($argv): void
@@ -32,7 +32,7 @@ class Console extends Printer
     /**
      * Store arguments.
      *
-     * @param array $argv
+     * @param  array $argv
      * @return void
      */
     function storeArguments($argv): void
@@ -69,29 +69,29 @@ class Console extends Printer
     function executeCommand(): void
     {
         switch ($this->getFirstArgument()) {
-            case 'seed':
-                new ExecuteSeeder();
-                self::getSuccess('[Success] Addition to the database is successful ! ', true);
-                die();
+        case 'seed':
+            new ExecuteSeeder();
+            self::getSuccess('[Success] Addition to the database is successful ! ', true);
+            die();
                 break;
                 
-            case 'migrate':
-                $migration = new ExecuteMigrate();
-                $migration->create();
-                self::getSuccess('[Success] Database is created ! ', true);
-                die();
+        case 'migrate':
+            $migration = new ExecuteMigrate();
+            $migration->create();
+            self::getSuccess('[Success] Database is created ! ', true);
+            die();
                 break;
 
-            case 'migrate:fresh':
-                $migration = new ExecuteMigrate();
-                $migration->fresh();
-                self::getSuccess('[Success] Database is refreshed !', true);
-                die();
+        case 'migrate:fresh':
+            $migration = new ExecuteMigrate();
+            $migration->fresh();
+            self::getSuccess('[Success] Database is refreshed !', true);
+            die();
                 break;
 
-            default:
-                self::getError('[ERROR] Invalid argument !!! ', true);
-                exit(0);
+        default:
+            self::getError('[ERROR] Invalid argument !!! ', true);
+            exit(0);
                 break;
         }
 

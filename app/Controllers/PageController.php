@@ -15,42 +15,42 @@ class PageController extends Controller
     public function index()
     {
         $post = new Post();
-        $posts = $post->select(0,3);
+        $posts = $post->select(0, 3);
         
-        return $this->render('index.twig',['posts' => $posts]);
+        return $this->render('index.twig', ['posts' => $posts]);
     }
     
     public function blog()
     {
         $post = new Post();
-        $posts = $post->select(0,5);
+        $posts = $post->select(0, 5);
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
+        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     public function blogAjax($request = null)
     {
         $post = new Post();
-        $posts = $post->select($request ,$request + 5);
+        $posts = $post->select($request, $request + 5);
         
-        return $this->render('data.twig',['posts' => $posts]);
+        return $this->render('data.twig', ['posts' => $posts]);
     }
 
     public function category($param)
     {
         $post = new Post();
         $category = new Category();
-        $category = $category->where('slug','=', $param)->first();
+        $category = $category->where('slug', '=', $param)->first();
         if (empty($category)) {
             Route::abord();
         }
-        $posts = $post->where('category_id','=', $category->id)->get();
+        $posts = $post->where('category_id', '=', $category->id)->get();
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('blog.twig',['posts' => $posts, 'categories' => $categories]);
+        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     public function article($param)
@@ -58,15 +58,15 @@ class PageController extends Controller
         if (!empty($param)) {
             $post = new Post();
             $comment = new Comment();
-            $post = $post->where('slug','=', $param)->first();
+            $post = $post->where('slug', '=', $param)->first();
 
-            if (empty($post)){
+            if (empty($post)) {
                 Route::abord();
             }
 
-            $comments = $comment->where('post_id','=', $post->id)->get();
+            $comments = $comment->where('post_id', '=', $post->id)->get();
 
-            return $this->render('article.twig',['post' => $post, 'comments'=> $comments]);
+            return $this->render('article.twig', ['post' => $post, 'comments'=> $comments]);
         }
 
         Route::abord();
@@ -74,12 +74,14 @@ class PageController extends Controller
 
     public function contact()
     {
-        Validator::create([
+        Validator::create(
+            [
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
             "email" => 'Email n\'est pas renseigné !',
             "message" => 'Message n\'est pas renseigné',
-        ]);
+            ]
+        );
 
         $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
         $mail->send();

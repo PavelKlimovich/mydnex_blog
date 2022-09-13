@@ -4,7 +4,8 @@ namespace Config;
 
 use Dotenv\Dotenv;
 
-class App {
+class App
+{
 
     private $dbHost;
     private $dbName;
@@ -12,7 +13,8 @@ class App {
     private $dbPassword;
     private $getMailFrom;
 
-    public function __construct() {
+    public function __construct()
+    {
         
         $env = Dotenv::createImmutable(DIR);
         $env->load();

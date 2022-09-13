@@ -4,8 +4,9 @@ namespace App\Middlewares;
 
 class AdminMiddleware
 {
-    public function __construct() {
-       $this->redirectTo();
+    public function __construct()
+    {
+        $this->redirectTo();
     }
 
     public function redirectTo()

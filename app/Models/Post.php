@@ -13,21 +13,21 @@ class Post extends Model
     /**
      * Add to this Post her category.
      *
-     * @return object
+     * @return object|null
      */
-    public function category(): object
+    public function category(): ?object
     {
-        return $this->queryJoin('category', $this->category_id);
+        return isset($this->category_id) ? $this->queryJoin('category', $this->category_id) : null ;
     }
 
     
     /**
      * Add to this Post her author.
      *
-     * @return object
+     * @return object|null
      */
-    public function user(): object
+    public function user(): ?object
     {
-        return $this->queryJoin('user', $this->user_id);
+        return isset($this->user_id) ? $this->queryJoin('user', $this->user_id) : null ;
     }
 }

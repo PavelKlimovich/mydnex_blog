@@ -9,7 +9,8 @@ use Database\Seeders\CategorySeeder;
 
 class Seeder
 {
-    public function __construct() {
+    public function __construct()
+    {
         new UserSeeder();
         new CategorySeeder();
         new PostSeeder();

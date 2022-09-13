@@ -25,10 +25,12 @@ class AuthController extends Controller
 
     public function auth()
     {
-        Validator::create([
+        Validator::create(
+            [
             "email" => 'Email ou le mot de passe est vide !',
             "password" => 'Mot de passe n\'est pas renseigné !',
-        ]);
+            ]
+        );
 
         $user =  new User();
         $email = (string)$_POST['email'];
@@ -76,13 +78,15 @@ class AuthController extends Controller
 
     public function store()
     {
-        Validator::create([
+        Validator::create(
+            [
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
             "email" => 'Email n\'est pas renseigné !',
             "password" => 'Mot de passe n\'est pas renseigné !',
             "password_confirmation" => 'Mot de passe n\'est pas renseigné !',
-        ]);
+            ]
+        );
 
         if ($_POST['password'] !== $_POST['password_confirmation']) {
             $_SESSION['error'] = 'Mot de passe n\'est pas renseigné !' ;    
@@ -109,7 +113,8 @@ class AuthController extends Controller
             return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $userObject->create([
+        $userObject->create(
+            [
             'firstname'  => (string)$_POST['firstname'],
             'lastname'   => (string)$_POST['lastname'],
             'email'      => (string)$_POST['email'],
@@ -118,7 +123,8 @@ class AuthController extends Controller
             'role'       => 'user',
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
-        ]);
+            ]
+        );
 
         $_SESSION['auth'] = true;
        

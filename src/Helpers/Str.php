@@ -8,8 +8,8 @@ class Str
     /**
      * Convert string to slug.
      *
-     * @param string $text
-     * @param string $divider
+     * @param  string $text
+     * @param  string $divider
      * @return string
      */
     public static function slugify(string $text, string $divider = '-'): string

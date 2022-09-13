@@ -11,7 +11,8 @@ abstract class Model
     public string $table;
     public $request;
 
-    public function __construct($array = null) {
+    public function __construct($array = null)
+    {
         $this->db = DB::getInstance();
 
         if (!is_null($array)) {
@@ -29,7 +30,7 @@ abstract class Model
      */
     public function request(string $sql, array $attributes = null): object
     {
-        if($attributes !== null){
+        if($attributes !== null) {
             $query = $this->db->getPDO()->prepare($sql);
             $query->execute($attributes);
             return $query;
@@ -94,7 +95,7 @@ abstract class Model
     /**
      * Insert new records into the database.
      *
-     * @param  array  $values
+     * @param  array $values
      * @return bool
      */
     public function create(array $values): bool
@@ -122,12 +123,12 @@ abstract class Model
 
 
      /**
-     * Update the selected records into the database.
-     *
-     * @param  int $id
-     * @param  array $values
-     * @return bool
-     */
+      * Update the selected records into the database.
+      *
+      * @param  int   $id
+      * @param  array $values
+      * @return bool
+      */
     public function update(int $id, array $values): bool
     {
         $insert_values = [];
@@ -152,10 +153,10 @@ abstract class Model
     /**
      * Delete element with element id in DB.
      *
-     * @param string $id
+     * @param  string $id
      * @return object
      */
-	public function delete(string $id): object
+    public function delete(string $id): object
     {
         $sql = "DELETE FROM $this->table WHERE `id` = $id";
         return $this->request($sql);
@@ -165,7 +166,7 @@ abstract class Model
     /**
      * Return the funded element with id.
      *
-     * @param string $id
+     * @param  string $id
      * @return array||bool
      */
     public function find(string $id): array | bool
@@ -178,9 +179,9 @@ abstract class Model
     /**
      * Execute query and return entities into the database.
      *
-     * @param string $culumn
-     * @param string $operator
-     * @param string $value
+     * @param  string $culumn
+     * @param  string $operator
+     * @param  string $value
      * @return mixed
      */
     public function where(string $culumn, string $operator, string $value): mixed
@@ -199,9 +200,7 @@ abstract class Model
      */
     public function first(): object
     {
-        if ($this->request) {
-            return $this->request[0];
-        }
+        return $this->request[0];
     }
 
     /**

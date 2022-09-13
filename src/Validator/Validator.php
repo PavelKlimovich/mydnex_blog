@@ -8,10 +8,10 @@ class Validator
     /**
      * Check this list entities. 
      *
-     * @param array $list
-     * @return mixed
+     * @param  array $list
+     * @return void
      */
-    public static function create(array $list): mixed
+    public static function create(array $list): void
     {
         $errors = '';
         foreach ($list as $key => $value) {

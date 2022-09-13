@@ -15,9 +15,9 @@ class Comment extends Model
      *
      * @return object
      */
-    public function user(): object
+    public function user(): ?object
     {
-        return $this->queryJoin('user', $this->user_id);
+        return  isset($this->user_id) ? $this->queryJoin('user', $this->user_id) : null ;
     }
 
 }
