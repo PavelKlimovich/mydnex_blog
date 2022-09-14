@@ -12,26 +12,28 @@ class CommentSeeder
 {
     public function __construct()
     {
-       $this->run();
+        $this->run();
     }
 
     public function run()
     {   
         $faker = Factory::create();
-        $category = new Comment();
+        $comment = new Comment();
         $user = new User();
         $post = new Post();
-        $users = $user->all();
-        $posts = $post->all();
+        $users = $user->all()->get();
+        $posts = $post->all()->get();
 
         for ($i=0; $i < 25; $i++) { 
-            $category->create([
+            $comment->create(
+                [
                 'message'    => $faker->sentence($nbWords = 6, $variableNbWords = true),
-                'user_id'    => (int)$users[random_int(1, count($users))]['id'],
-                'post_id'    => (int)$posts[random_int(1, count($posts))]['id'],
+                'user_id'    => $user->where('id', '=', random_int(1, count($users)))->first()->id,
+                'post_id'    => $post->where('id', '=', random_int(1, count($posts)))->first()->id,
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
-            ]);
+                ]
+            );
         }
     }
 }

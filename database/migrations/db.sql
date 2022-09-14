@@ -20,6 +20,7 @@ CREATE TABLE `comment` (
   `message` mediumtext NOT NULL,
   `user_id` int(11) NOT NULL,
   `post_id` int(11) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -53,7 +54,7 @@ CREATE TABLE `post` (
   `title` varchar(255) NOT NULL,
   `slug` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `image` text NOT NULL,
+  `image` longtext NOT NULL,
   `content` longtext NOT NULL,
   `user_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,

@@ -1,0 +1,41 @@
+<div class="row">
+        {% for key,post in posts %}
+        {% if key == 0 %}
+            <div class="col-12">
+                <div class="col-12" >
+                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" height="350">
+                </div>
+                <div class="col-12 m-3">
+                    <div class="col-12 text-left mt-3 p-2">
+                        <span class="badge text-primary">{{ post.category().name }}</span>
+                        <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                    </div>
+                    <div class="col-12 text-left p-2">
+                        <a href="/article/{{ post.slug }}" class="link-none-decoration">
+                            <h1 class="fw-bold lh-1"><span class='card__title'>{{ post.title }}</span></h1>
+                        </a>
+                        <p class="lead">{{ post.description }}</p>
+                        <a href="/article/{{ post.slug }}">Lire</a>
+                    </div>
+                </div>
+            </div>
+            {% elseif key > 0 %}
+                <div class="col-6 p-4 mt-4">
+                <div class="col-12">
+                    <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" >
+                </div>
+                <div class="col-12 text-left mt-3 p-2">
+                    <span class="badge text-primary">{{ post.category().name }}</span>
+                    <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                </div>
+                <div class="col-12 text-left p-2">
+                    <a href="/article/{{ post.slug }}" class="link-none-decoration">
+                        <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
+                    </a>
+                    <p class="lead">{{ post.description }}</p>
+                    <a href="/article/{{ post.slug }}">Lire</a>
+                </div>
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>

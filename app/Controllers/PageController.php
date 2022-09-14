@@ -2,108 +2,120 @@
 
 namespace App\Controllers;
 
-use App\Models\Category;
 use App\Models\Post;
 use Src\Mailer\Mail;
 use Src\Routing\Route;
 use App\Models\Comment;
-use PhpParser\Node\Expr\AssignOp\Mod;
+use App\Models\Category;
+use Src\Validator\Validator;
 
 class PageController extends Controller
 {
-    public function index()
+
+    /**
+     * Return index page.
+     *
+     * @return mixed
+     */
+    public function index(): mixed
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
-        $posts = $post->first(0,3);
+        $posts = $post->select(0, 3);
         
-        return $this->render('index.twig',['posts' => $posts,'auth' => $auth]);
+        return $this->render('index.twig', ['posts' => $posts]);
     }
     
-    public function blog()
+
+    /**
+     * Return blog page.
+     *
+     * @return mixed
+     */
+    public function blog(): mixed
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
-        $posts = $post->first(0,5);
+        $posts = $post->select(0, 5);
         $category = new Category();
-        $categories = $category->all();
+        $categories = $category->all()->get();
 
-        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
+        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
-    public function category($param)
+    /**
+     * Return blog articl block.
+     *
+     * @param int|null $request
+     * @return mixed
+     */
+    public function blogAjax(int $request = null): mixed
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
-        }
-
         $post = new Post();
-        $category = new Category();
-        $category = $category->where('slug','=', $param);
-        $posts = $post->where('category_id','=', $category[0]['id']);
-        $category = new Category();
-        $categories = $category->all();
-
-        return $this->render('blog.twig',['posts' => $posts,'auth' => $auth,'categories' => $categories]);
+        $posts = $post->select($request, $request + 5);
+        
+        return $this->render('data.twig', ['posts' => $posts]);
     }
 
-    public function article($param)
+    /**
+     * Return category page.
+     *
+     * @param string $param
+     * @return mixed
+     */
+    public function category($param): mixed
     {
-        session_start();
-        $auth = false;
-
-        if (isset($_SESSION['auth'])) {
-            $auth = true;
+        $post = new Post();
+        $category = new Category();
+        $category = $category->where('slug', '=', $param)->first();
+        if (empty($category)) {
+            Route::abord();
         }
+        $posts = $post->where('category_id', '=', $category->id)->get();
+        $category = new Category();
+        $categories = $category->all()->get();
 
+        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
+    }
+
+    /**
+     * Return post page.
+     *
+     * @param string $param
+     * @return void
+     */
+    public function article($param): mixed
+    {
         if (!empty($param)) {
             $post = new Post();
             $comment = new Comment();
-            $post = $post->where('slug','=', $param);
-            $comments = $comment->where('post_id','=',$post[0]['id']);
+            $post = $post->where('slug', '=', $param)->first();
 
-            if ($post){
-                return $this->render('article.twig',['post' => $post[0], 'auth' => $auth, 'comments'=> $comments]);
+            if (empty($post)) {
+                Route::abord();
             }
+
+            $comments = $comment->where('post_id', '=', $post->id)->get();
+
+            return $this->render('article.twig', ['post' => $post, 'comments'=> $comments]);
         }
 
         Route::abord();
     }
 
-    public function contact()
+    /**
+     * Send contact mail.
+     *
+     * @return mixed
+     */
+    public function contact(): mixed
     {
-        if (empty($_POST['lastname']) ) {
-            $error = 'Nom n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
-        if (empty($_POST['firstname']) ) {
-            $error = 'Prénom n\'est pas renseigné!';
-            return $this->render('index.twig',['error' => $error]);
-        }
-        if (empty($_POST['email']) ) {
-            $error = 'Email n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
-
-        if (empty($_POST['message']) ) {
-            $error = 'Message n\'est pas renseigné !';
-            return $this->render('index.twig',['error' => $error]);
-        }
+        Validator::create(
+            [
+            "lastname" => 'Nom n\'est pas renseigné !',
+            "firstname" => 'Prénom n\'est pas renseigné !',
+            "email" => 'Email n\'est pas renseigné !',
+            "message" => 'Message n\'est pas renseigné',
+            ]
+        );
 
         $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
         $mail->send();

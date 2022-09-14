@@ -9,7 +9,7 @@ class UserSeeder
 {
     public function __construct()
     {
-       $this->run();
+        $this->run();
     }
 
     public function run()
@@ -17,7 +17,8 @@ class UserSeeder
         $faker = Factory::create();
         $user = new User();
         
-        $user->create([
+        $user->create(
+            [
             'firstname'  => 'Pavel',
             'lastname'   => 'Klimovich',
             'email'      => 'pavelklimovich@hotmail.fr',
@@ -26,11 +27,13 @@ class UserSeeder
             'role'       => 'admin',
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
-        ]);
+            ]
+        );
     
 
         for ($i=0; $i < 5; $i++) { 
-            $user->create([
+            $user->create(
+                [
                 'firstname'  => $faker->firstName(),
                 'lastname'   => $faker->lastName(),
                 'email'      => $faker->email(),
@@ -39,7 +42,8 @@ class UserSeeder
                 'role'       => 'user',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
-            ]);
+                ]
+            );
         }
 
     }

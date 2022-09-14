@@ -8,26 +8,43 @@ class ExecuteMigrate
 {
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = DB::getInstance();
     }
 
 
-    public function create()
+    /**
+     * Init database.
+     *
+     * @return void
+     */
+    public function create(): void
     {
         $sgl = file_get_contents(DIR.'/database/migrations/db.sql');
         $this->db->getPDO()->query($sgl);
     }
 
 
-    public function fresh()
+    /**
+     * Delete all tables in database and init new empty tables.
+     *
+     * @return void
+     */
+    public function fresh(): void
     {
         $tables = $this->db->getAllTablesName();
         $this->deleteTable($tables);
         $this->create();
     }
 
-
+    
+    /**
+     * Delete table in database.
+     *
+     * @param  array $tables
+     * @return void
+     */
     public function deleteTable(array $tables): void 
     {
         try{
@@ -40,6 +57,5 @@ class ExecuteMigrate
             var_dump($e);
             die();
         }
-        
     }
 }

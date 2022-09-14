@@ -2,110 +2,139 @@
 
 namespace App\Controllers\Auth;
 
+use Dotenv\Dotenv;
 use Src\Auth\Auth;
 use App\Models\User;
-use Dotenv\Dotenv;
+use Src\Validator\Validator;
 use App\Controllers\Controller;
 
 class AuthController extends Controller
 {
-    public function login()
+
+    /**
+     * Return login page.
+     *
+     * @return mixed
+     */
+    public function login(): mixed
     {
         return $this->render('auth/login.twig');
     }
 
-    public function register()
+    /**
+     * Return register page.
+     *
+     * @return mixed
+     */
+    public function register(): mixed
     {
         return $this->render('auth/register.twig');
     }
 
-    public function auth()
+    /**
+     * Verifed auth.
+     *
+     * @return mixed
+     */
+    public function auth(): mixed
     {
-        if (isset($_POST['email']) || isset($_POST['password'])  ) {
-            $error = 'Email ou le mot de passe est vide ! ';
-            return $this->render('auth/login.twig',['error' => $error]);
-        }
+        Validator::create([
+                "email" => 'Email ou le mot de passe est vide !',
+                "password" => 'Mot de passe n\'est pas renseigné !',
+            ]);
 
         $user =  new User();
-        $email = (string )$_POST['email'];
-        $password = (string )$_POST['password'];
-        $users = $user->where('email', '=', $email);
+        $email = (string)$_POST['email'];
+        $password = (string)$_POST['password'];
+        $user = $user->where('email', '=', $email)->first();
         
-        if (empty($users)) {
-            $error = 'Email ou le mot de passe est incorrect ! ';
-            return $this->render('auth/login.twig',['error' => $error]);
+        if (empty($user)) {
+            $_SESSION['error'] = 'Email ou le mot de passe est incorrect !' ;    
+            $_SESSION['error_delay'] = '1';
+
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $password = array_search($password, $users[0]);
+        if ($user->password !== $password ) {
+            $_SESSION['error'] = 'Email ou le mot de passe est incorrect !' ;    
+            $_SESSION['error_delay'] = '1';
 
-        if (!$password ) {
-            $error = 'Email ou le mot de passe est incorrect ! ';
-            return $this->render('auth/login.twig',['error' => $error]);
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
         
-        
-        $auth = new Auth($users[0]);
+        $_SESSION['auth'] = true;
+        $_SESSION['auth_id'] = $user->id;
 
-        session_start();
-        $_SESSION['auth'] = $auth;
-       
-        if ($auth->isAdmin()) {
+        if ($user->isAdmin()) {
+            $_SESSION['admin'] = true;
             return $this->dashboard();
         }
 
         return $this->redirect($_ENV['APP_URL'].'/blog');
-        
     }
 
-    public function dashboard()
+    /**
+     * Return dashboard page.
+     *
+     * @return mixed
+     */
+    public function dashboard(): mixed
     {
         return $this->redirect($_ENV['APP_URL'].'/dashboard');
     }
 
-    public function logout()
+    /**
+     * Logout auth.
+     *
+     * @return mixed
+     */
+    public function logout(): mixed
     {
-        session_start();
         session_destroy();
         return $this->redirect($_ENV['APP_URL'].'/');
     }
 
-    public function store()
+    /**
+     * Store new user.
+     *
+     * @return mixed
+     */
+    public function store(): mixed
     {
-        if (empty($_POST['lastname']) ) {
-            $error = 'Nom n\'est pas renseigné !';
-            return $this->render('auth/register.twig',['error' => $error]);
-        }
-        if (empty($_POST['firstname']) ) {
-            $error = 'Prénom n\'est pas renseigné!';
-            return $this->render('auth/register.twig',['error' => $error]);
-        }
-        if (empty($_POST['email']) ) {
-            $error = 'Email n\'est pas renseigné !';
-            return $this->render('auth/register.twig',['error' => $error]);
-        }
-        if (empty($_POST['password']) || empty($_POST['password_confirmation'])) {
-            $error = 'Mot de passe n\'est pas renseigné !';
-            return $this->render('auth/register.twig',['error' => $error]);
-        }
+        Validator::create([
+            "lastname" => 'Nom n\'est pas renseigné !',
+            "firstname" => 'Prénom n\'est pas renseigné !',
+            "email" => 'Email n\'est pas renseigné !',
+            "password" => 'Mot de passe n\'est pas renseigné !',
+            "password_confirmation" => 'Mot de passe n\'est pas renseigné !',
+        ]);
+
         if ($_POST['password'] !== $_POST['password_confirmation']) {
-            $error = 'Mot de passe n\'est pas renseigné !';
-            return $this->render('auth/register.twig',['error' => $error]);
+            $_SESSION['error'] = 'Mot de passe n\'est pas renseigné !' ;    
+            $_SESSION['error_delay'] = '1';
+
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
+
         if (!isset($_POST['rgpd']) || ($_POST['rgpd'] == false)) {
-            $error = 'Vous devez accepter les mentions légales !';
-            return $this->render('auth/register.twig',['error' => $error]);
+            $_SESSION['error'] = 'Vous devez accepter les mentions légales !' ;    
+            $_SESSION['error_delay'] = '1';
+
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $user  = new User();
+        $userObject  = new User();
         $email = (string)$_POST['email'];
-        $users = $user->where('email', '=', $email);
+        $user = $userObject->where('email', '=', $email)->first();
 
-        if (!empty($users)) {
-            $error = 'Utilisateur avec ce mail exist deja ! ';
-            return $this->render('auth/register.twig',['error' => $error]);
+        if (!empty($user)) {
+            $_SESSION['error'] = 'Utilisateur avec ce mail exist deja !' ;    
+            $_SESSION['error_delay'] = '1';
+            
+            return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $user->create([
+        $userObject->create([
             'firstname'  => (string)$_POST['firstname'],
             'lastname'   => (string)$_POST['lastname'],
             'email'      => (string)$_POST['email'],
@@ -116,11 +145,12 @@ class AuthController extends Controller
             'updated_at' => date("Y-m-d"),
         ]);
 
-        $users = $user->where('email', '=', $email);
-        $auth = new Auth($users[0]);
-
-        session_start();
-        $_SESSION['auth'] = $auth;
+        $_SESSION['auth'] = true;
+       
+        if ($user->isAdmin()) {
+            $_SESSION['admin'] = true;
+            return $this->dashboard();
+        }
        
         return $this->redirect($_ENV['APP_URL'].'/blog');
     }

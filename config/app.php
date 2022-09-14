@@ -4,7 +4,8 @@ namespace Config;
 
 use Dotenv\Dotenv;
 
-class App {
+class App
+{
 
     private $dbHost;
     private $dbName;
@@ -12,7 +13,8 @@ class App {
     private $dbPassword;
     private $getMailFrom;
 
-    public function __construct() {
+    public function __construct()
+    {
         
         $env = Dotenv::createImmutable(DIR);
         $env->load();
@@ -22,6 +24,7 @@ class App {
         $this->dbUsername = $_ENV['DB_USERNAME'];
         $this->dbPassword = $_ENV['DB_PASSWORD'];
         $this->getMailFrom = $_ENV['EMAIL_FROM'];
+   
     }
 
     public function getDbHost()

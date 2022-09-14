@@ -2,12 +2,13 @@
 
 namespace Src\Console\Printer;
 
-class Colors 
+class Colors
 {
     private array $foreground_colors = array();
     private array $background_colors = array();
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->foreground_colors['black'] = '0;30';
         $this->foreground_colors['dark_gray'] = '1;30';
         $this->foreground_colors['blue'] = '0;34';
@@ -40,9 +41,9 @@ class Colors
     /**
      * Returns colored string
      *
-     * @param string $string
-     * @param string $foreground_color
-     * @param string $background_color
+     * @param  string $string
+     * @param  string $foreground_color
+     * @param  string $background_color
      * @return string
      */
     public function getStringColor(string $string, string  $foreground_color = null, string $background_color = null): string

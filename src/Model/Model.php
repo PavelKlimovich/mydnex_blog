@@ -6,22 +6,33 @@ use Src\Database\DB;
 
 abstract class Model
 {
+
     public $db;
     public string $table;
+    public $request;
 
-    public function __construct() {
+    public function __construct($array = null)
+    {
         $this->db = DB::getInstance();
+
+        if (!is_null($array)) {
+            foreach(get_object_vars($this) as $attrName => $attrValue){
+                $this->{$attrName} = $array[$attrName];
+            }
+        }
     }
 
 
     /**
      * Prepare query request before send him.
      *
+     * @param string $sql
+     * @param array|null $attributes
      * @return object
      */
     public function request(string $sql, array $attributes = null): object
     {
-        if($attributes !== null){
+        if($attributes !== null) {
             $query = $this->db->getPDO()->prepare($sql);
             $query->execute($attributes);
             return $query;
@@ -34,27 +45,59 @@ abstract class Model
     /**
      * Return all entities in the model.
      *
-     * @return array
+     * @return mixed
      */
-    public function all(): array
+    public function all(): mixed
     {
-        return $this->request("SELECT * FROM {$this->table}")->fetchAll();
+        $this->request = $this->request("SELECT * FROM {$this->table}")->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this;
     }
+
+
     /**
      * Return all entities in the model.
      *
      * @return array
      */
-    public function first(int $start, int $finish): array
+    public function select(int $start, int $finish): array
     {
-        return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll();
+        return $this->request("SELECT * FROM {$this->table} ORDER BY created_at DESC LIMIT $start,$finish")->fetchAll(\PDO::FETCH_CLASS, $this::class);
     }
-    
+
+
+    /**
+     * Return first entity in the model.
+     *
+     * @return object
+     */
+    public function queryJoin(string $table, string $value): object
+    {
+        $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
+        $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this->$table[0];
+    }
+
+
+    /**
+     * Return all entities in the model.
+     *
+     * @return mixed
+     */
+    public function queryJoinAll(string $table, string $value): mixed
+    {
+        $sql = "SELECT * FROM $table WHERE `id` = '".$value."'";
+        $this->$table = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this->$table;
+    }
+
 
     /**
      * Insert new records into the database.
      *
-     * @param  array  $values
+     * @param  array $values
      * @return bool
      */
     public function create(array $values): bool
@@ -82,13 +125,13 @@ abstract class Model
 
 
      /**
-     * Update the selected records into the database.
-     *
-     * @param  int $id
-     * @param  array $values
-     * @return bool
-     */
-    public function update(int $id, array $values)
+      * Update the selected records into the database.
+      *
+      * @param  int   $id
+      * @param  array $values
+      * @return bool
+      */
+    public function update(int $id, array $values): bool
     {
         $insert_values = [];
 
@@ -112,12 +155,12 @@ abstract class Model
     /**
      * Delete element with element id in DB.
      *
-     * @param string $id
+     * @param  string $id
      * @return object
      */
-	public function delete(string $id): object
+    public function delete(string $id): object
     {
-        $sql = "DELETE FROM $this->table WHERE $id ";
+        $sql = "DELETE FROM $this->table WHERE `id` = $id";
         return $this->request($sql);
     }   
     
@@ -125,7 +168,7 @@ abstract class Model
     /**
      * Return the funded element with id.
      *
-     * @param string $id
+     * @param  string $id
      * @return array||bool
      */
     public function find(string $id): array | bool
@@ -136,17 +179,41 @@ abstract class Model
 
 
     /**
-     * Return the funded element.
+     * Execute query and return entities into the database.
      *
-     * @param string $culumn
-     * @param string $operator
-     * @param string $value
-     * @return array||bool
+     * @param  string $culumn
+     * @param  string $operator
+     * @param  string $value
+     * @return mixed
      */
-    public function where(string $culumn, string $operator, string $value): array | bool
+    public function where(string $culumn, string $operator, string $value): mixed
     {
         $sql = "SELECT * FROM $this->table WHERE $culumn $operator '".$value."'";
-        return $this->request($sql)->fetchAll();
+        $this->request = $this->request($sql)->fetchAll(\PDO::FETCH_CLASS, $this::class);
+
+        return $this;
+    }
+
+
+    /**
+     * Return first query element.
+     *
+     * @return object
+     */
+    public function first(): object
+    {
+        return $this->request[0];
+    }
+
+    /**
+     * Return all query elements.
+     *
+     * @return array
+     */
+    public function get(): array
+    {
+        return $this->request;
     }
 
 }
+
