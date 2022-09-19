@@ -63,15 +63,16 @@
                                 <h3>Les commentaire !</h3>
                                 {% if success %}
                                     <div class="col-12 p-1">
-                                        <p>{{ success |raw  }}</p> 
+                                        <h5 class="success">{{ success |raw  }}</h5> 
                                     </div>
                                 {% endif %}  
                                 {% if error %}
                                     <div class="col-12 p-1">
-                                        <p>{{ error |raw  }}</p> 
+                                        <h5 class="error">{{ error |raw  }}</h5> 
                                     </div>
                                 {% endif %}  
                                 <form class="mb-4 mt-4" method="POST" action='/store-comment'>
+                                    {{ form_token('/store-comment') }}
                                     <textarea class="form-control" rows="3" placeholder="Laisser un commentaire !" name='comment' required></textarea>
                                     <input name="post_id" type="hidden" value="{{ post.id }}">
                                     <button type="submit" class="btn bg-primary mt-2">Envoyer</button>

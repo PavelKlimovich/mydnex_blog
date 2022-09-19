@@ -17,33 +17,27 @@ class UserSeeder
         $faker = Factory::create();
         $user = new User();
         
-        $user->create(
-            [
+        $user->create([
             'firstname'  => 'Pavel',
             'lastname'   => 'Klimovich',
             'email'      => 'pavelklimovich@hotmail.fr',
-            'password'   => 'password',
-            'verified'   => 0,
+            'password'   => $user->createPassword('password'),
             'role'       => 'admin',
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
-            ]
-        );
+        ]);
     
 
         for ($i=0; $i < 5; $i++) { 
-            $user->create(
-                [
+            $user->create([
                 'firstname'  => $faker->firstName(),
                 'lastname'   => $faker->lastName(),
                 'email'      => $faker->email(),
-                'password'   => 'password',
-                'verified'   => 1,
+                'password'   => $user->createPassword('password'),
                 'role'       => 'user',
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
-                ]
-            );
+            ]);
         }
 
     }

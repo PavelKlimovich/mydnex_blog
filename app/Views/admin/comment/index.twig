@@ -26,6 +26,7 @@
                         <td><button type="button" onclick="location.href='/admin/valider-commentaire/{{ comment.id }}'" class="btn bg-primary">Valider</button></td>
                         <td>
                             <form method="POST" action="/admin/supprimer-commentaire">
+                                {{ form_token('/admin/supprimer-commentaire') }}
                                 <input name="id" type="hidden" value="{{ comment.id }}">
                                 <button type="submit" class="btn bg-danger">Supprimer</button>
                             </form>

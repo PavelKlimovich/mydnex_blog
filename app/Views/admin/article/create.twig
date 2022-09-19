@@ -10,10 +10,11 @@
     </div>
     <div class='row mt-5'>
         <form method="POST" enctype="multipart/form-data">
+            {{ form_token() }}
             <div class="row form-group">
                 {% if error %}
                     <div class="col-12 p-1">
-                        <p>{{ error |raw  }}</p> 
+                        <h5 class="error">{{ error |raw  }}</h5> 
                     </div>
                 {% endif %}  
                 <div class="col-12 m-3">

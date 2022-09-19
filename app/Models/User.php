@@ -21,4 +21,15 @@ class User extends Model
         }
         return false;
     }
+
+
+    /**
+     * Generate un password.
+     *
+     * @return string|false|null
+     */
+    public function createPassword($password): string|false|null
+    {
+        return password_hash($password, PASSWORD_BCRYPT, ['cost' => 12]);
+    }
 }

@@ -28,7 +28,8 @@
                         <td>{{ post.title }}</td>
                         <td><button type="button" onclick="location.href='/admin/modifier-article/{{ post.slug }}'" class="btn bg-primary">Modifier</button></td>
                         <td>
-                            <form method="POST" action="/adminv/supprimer-article" enctype="multipart/form-data">
+                            <form method="POST" action="/admin/supprimer-article" enctype="multipart/form-data">
+                                {{ form_token('/admin/supprimer-article') }}
                                 <input name="id" type="hidden" value="{{ post.id }}">
                                 <button type="submit" class="btn bg-danger">Supprimer</button>
                             </form>

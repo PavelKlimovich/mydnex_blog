@@ -55,7 +55,7 @@ class AuthController extends Controller
             return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        if ($user->password !== $password ) {
+        if (!password_verify($password, $user->password)) {
             $_SESSION['error'] = 'Email ou le mot de passe est incorrect !' ;    
             $_SESSION['error_delay'] = '1';
 
@@ -138,7 +138,7 @@ class AuthController extends Controller
             'firstname'  => (string)$_POST['firstname'],
             'lastname'   => (string)$_POST['lastname'],
             'email'      => (string)$_POST['email'],
-            'password'   => (string)$_POST['password'],
+            'password'   => $userObject->createPassword((string)$_POST['password']),
             'verified'   => 0,
             'role'       => 'user',
             'created_at' => date("Y-m-d"),
@@ -146,8 +146,8 @@ class AuthController extends Controller
         ]);
 
         $_SESSION['auth'] = true;
-       
-        if ($user->isAdmin()) {
+        
+        if ($userObject->isAdmin()) {
             $_SESSION['admin'] = true;
             return $this->dashboard();
         }

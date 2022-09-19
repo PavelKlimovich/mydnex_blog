@@ -80,7 +80,7 @@ class PageController extends Controller
      * Return post page.
      *
      * @param string $param
-     * @return void
+     * @return mixed
      */
     public function article($param): mixed
     {
@@ -90,7 +90,7 @@ class PageController extends Controller
             $post = $post->where('slug', '=', $param)->first();
 
             if (empty($post)) {
-                Route::abord();
+              return  Route::abord();
             }
 
             $comments = $comment->where('post_id', '=', $post->id)->get();
@@ -98,7 +98,7 @@ class PageController extends Controller
             return $this->render('article.twig', ['post' => $post, 'comments'=> $comments]);
         }
 
-        Route::abord();
+       return Route::abord();
     }
 
     /**
@@ -108,14 +108,12 @@ class PageController extends Controller
      */
     public function contact(): mixed
     {
-        Validator::create(
-            [
+        Validator::create([
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
             "email" => 'Email n\'est pas renseigné !',
             "message" => 'Message n\'est pas renseigné',
-            ]
-        );
+        ]);
 
         $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
         $mail->send();

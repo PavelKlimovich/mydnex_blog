@@ -47,14 +47,12 @@ class ArticleController extends Controller
         $category = new Category();
         $categories = $category->all()->get();
 
-        Validator::create(
-            [
+        Validator::create([
             "title" => 'Titre n\'est pas renseigné !',
             "category_id" => 'Categorie n\'est pas renseigné !',
             "description" => 'La description n\'est pas renseigné !',
             "content" => 'Le contenu n\'est pas renseigné !',
-            ]
-        );
+        ]);
 
         if (empty($_FILES['image']) ) {
             $_SESSION['error'] = 'Image n\'est pas renseigné !' ;    
@@ -69,8 +67,7 @@ class ArticleController extends Controller
         
         $post = new Post();
 
-        $post->create(
-            [
+        $post->create([
             'title'         => $_POST['title'],
             'slug'          => Str::slugify($_POST['title']),
             'description'   => $_POST['description'],
@@ -80,9 +77,7 @@ class ArticleController extends Controller
             'category_id'   => (int)$_POST['category_id'],
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
-
-            ]
-        );
+        ]);
 
         return $this->redirect($_ENV['APP_URL'].'/admin/mes-articles');
     }
@@ -112,14 +107,12 @@ class ArticleController extends Controller
      */
     public function update(string $slug): mixed
     {
-        Validator::create(
-            [
+        Validator::create([
             "title" => 'Titre n\'est pas renseigné !',
             "category_id" => 'Categorie n\'est pas renseigné !',
             "description" => 'La description n\'est pas renseigné !',
             "content" => 'Le contenu n\'est pas renseigné !',
-            ]
-        );
+        ]);
 
         $post = new Post();
         $thisPost = $post->where('slug', '=', $slug)->first();
@@ -132,8 +125,7 @@ class ArticleController extends Controller
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         }
         
-        $post->update(
-            $thisPost->id, [
+        $post->update($thisPost->id, [
             'title'         => $_POST['title'],
             'slug'          => Str::slugify($_POST['title']),
             'description'   => $_POST['description'],
@@ -143,8 +135,7 @@ class ArticleController extends Controller
             'category_id'   => (int)$_POST['category_id'],
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
-            ]
-        );
+        ]);
 
         return $this->redirect($_ENV['APP_URL'].'/admin/mes-articles');
     }
