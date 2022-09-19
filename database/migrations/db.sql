@@ -76,7 +76,6 @@ CREATE TABLE `user` (
   `lastname` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `verified` tinyint(1) NOT NULL DEFAULT '0',
   `role` enum('admin','user') NOT NULL,
   `created_at` timestamp NOT NULL,
   `updated_at` timestamp NOT NULL

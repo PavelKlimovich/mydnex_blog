@@ -198,11 +198,14 @@ abstract class Model
     /**
      * Return first query element.
      *
-     * @return object
+     * @return ?object
      */
-    public function first(): object
+    public function first(): ?object
     {
-        return $this->request[0];
+        if (!empty($this->request)) {
+            return $this->request[0];
+        }
+        return null;
     }
 
     /**

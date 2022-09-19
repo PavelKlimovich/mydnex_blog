@@ -17,7 +17,7 @@ Route::middleware(
         Route::post('/admin/ajouter-article', ArticleController::class, 'store');
         Route::get('/admin/modifier-article/{slug}', ArticleController::class, 'edit');
         Route::post('/admin/modifier-article/{slug}', ArticleController::class, 'update');
-        Route::post('/adminv/supprimer-article', ArticleController::class, 'delete');
+        Route::post('/admin/supprimer-article', ArticleController::class, 'delete');
 
         // Comment
         Route::get('/admin/les-commentaires', CommentController::class, 'index');

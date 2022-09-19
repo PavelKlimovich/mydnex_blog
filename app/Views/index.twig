@@ -139,7 +139,7 @@
                         <a href="/article/{{ post.slug }}" class="link-none-decoration">
                             <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
                         </a>    
-                        <p class="lead">{{ post.content }}</p>
+                        <p class="lead">{{ post.content |raw }}</p>
                         <a href="/article/{{ post.slug }}">Lire</a>
                     </div>
                     <div class="col-lg-4">
@@ -169,9 +169,10 @@
                     <div class="row d-flex justify-content-center">
                         <div class="wrap-contact100">
                             <form class="contact100-form validate-form" method="POST">
+                                {{ form_token() }}
                                 {% if error %}
                                     <div class="col-12 p-1">
-                                        <p>{{ error |raw  }}</p> 
+                                        <h5 class="error">{{ error |raw  }}</h5> 
                                     </div>
                                 {% endif %}  
                                 <div class="col-6 p-1">

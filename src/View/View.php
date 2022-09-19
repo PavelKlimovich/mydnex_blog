@@ -4,6 +4,7 @@ namespace Src\View;
 
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
+use \ParagonIE\AntiCSRF\AntiCSRF;
 
 abstract class View
 {
@@ -22,6 +23,21 @@ abstract class View
         $this->addSessionError();
         $this->addAuthSession('admin');
         $this->addAuthSession('auth');
+        $this->vefifyCSRF();
+        $this->twig->addFunction(new \Twig\TwigFunction('form_token',
+                function($lock_to = null) {
+                    $lock_to = $lock_to ?? $_SERVER['REQUEST_URI'];
+                    static $csrf;
+                    if ($csrf === null) {
+                        $csrf = new AntiCSRF;
+                    }
+                    return $csrf->insertToken($lock_to, false);
+                },
+                ['is_safe' => ['html']]
+            )
+        );
+
+        
     }
 
 
@@ -91,6 +107,24 @@ abstract class View
             $_SESSION['success_delay'] = '0';
             $this->twig->addGlobal('success', $_SESSION['success']);
         } 
+    }
+
+
+    /**
+     * Verify CRSF token.
+     *
+     * @return void
+     */
+    public function vefifyCSRF(): void
+    {
+        $csrf = new AntiCSRF;
+        if (!empty($_POST)) {
+            if (!$csrf->validateRequest()) {
+                http_response_code(419);
+                include '../app/Views/errors/419.php';
+                exit();
+            }
+        }
     }
 
 }
