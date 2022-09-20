@@ -18,9 +18,9 @@ class UserSeeder
         $user = new User();
         
         $user->create([
-            'firstname'  => 'Pavel',
-            'lastname'   => 'Klimovich',
-            'email'      => 'pavelklimovich@hotmail.fr',
+            'firstname'  => 'Jean',
+            'lastname'   => 'Dupont',
+            'email'      => 'admin@mydnex.com',
             'password'   => $user->createPassword('password'),
             'role'       => 'admin',
             'created_at' => date("Y-m-d"),
