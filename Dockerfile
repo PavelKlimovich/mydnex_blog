@@ -7,6 +7,6 @@ RUN curl -sS https://getcomposer.org/installer | php \
     && mv composer.phar /usr/local/bin/ \
     && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
 
-WORKDIR /home/pavel
+WORKDIR /home/www
 
-ENTRYPOINT ["php", "-S", "0.0.0.0:8090", "-t", "/home/pavel/public"]
+ENTRYPOINT ["php", "-S", "0.0.0.0:8090", "-t", "/home/www/public"]
