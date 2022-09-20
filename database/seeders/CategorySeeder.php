@@ -19,14 +19,12 @@ class CategorySeeder
         $categories = ['News','PHP & Laravel','Technologies','Web'];
 
         for ($i=0; $i < 4; $i++) { 
-            $category->create(
-                [
+            $category->create([
                 'name'       => $categories[$i],
                 'slug'       => Str::slugify($categories[$i]),
                 'created_at' => date("Y-m-d"),
                 'updated_at' => date("Y-m-d"),
-                ]
-            );
+            ]);
         }
     }
 }

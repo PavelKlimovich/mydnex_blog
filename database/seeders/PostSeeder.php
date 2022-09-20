@@ -24,8 +24,7 @@ class PostSeeder
         for ($i=0; $i < 15; $i++) { 
             $title = $faker->sentence($nbWords = 6, $variableNbWords = true);
 
-            $post->create(
-                [
+            $post->create([
                 'title'         => $title,
                 'slug'          => Str::slugify($title),
                 'description'   => $faker->text($maxNbChars = 200),
@@ -35,8 +34,7 @@ class PostSeeder
                 'category_id'   => $category->where('id', '=', random_int(1, count($categories)))->first()->id,
                 'created_at'    => date("Y-m-d"),
                 'updated_at'    => date("Y-m-d"),
-                ]
-            );
+            ]);
         }
 
     }
