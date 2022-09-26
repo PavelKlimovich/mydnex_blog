@@ -2,14 +2,15 @@
 
 namespace App\Controllers\Auth;
 
-use Dotenv\Dotenv;
-use Src\Auth\Auth;
+
+use Config\App;
 use App\Models\User;
 use Src\Validator\Validator;
 use App\Controllers\Controller;
 
 class AuthController extends Controller
 {
+
 
     /**
      * Return login page.
@@ -70,7 +71,8 @@ class AuthController extends Controller
             return $this->dashboard();
         }
 
-        return $this->redirect($_ENV['APP_URL'].'/blog');
+        $app = new App();
+        return $this->redirect($app->getAppUrl().'/blog');
     }
 
     /**
@@ -80,7 +82,8 @@ class AuthController extends Controller
      */
     public function dashboard(): mixed
     {
-        return $this->redirect($_ENV['APP_URL'].'/dashboard');
+        $app = new App();
+        return $this->redirect($app->getAppUrl().'/dashboard');
     }
 
     /**
@@ -91,7 +94,8 @@ class AuthController extends Controller
     public function logout(): mixed
     {
         session_destroy();
-        return $this->redirect($_ENV['APP_URL'].'/');
+        $app = new App();
+        return $this->redirect($app->getAppUrl().'/');
     }
 
     /**
@@ -151,8 +155,8 @@ class AuthController extends Controller
             $_SESSION['admin'] = true;
             return $this->dashboard();
         }
-       
-        return $this->redirect($_ENV['APP_URL'].'/blog');
+        $app = new App();
+        return $this->redirect($app->getAppUrl().'/blog');
     }
 
 }
