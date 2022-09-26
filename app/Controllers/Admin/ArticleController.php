@@ -2,11 +2,12 @@
 
 namespace App\Controllers\Admin;
 
+use Config\App;
 use App\Models\Post;
 use Src\Helpers\Str;
 use App\Models\Category;
-use App\Controllers\Controller;
 use Src\Validator\Validator;
+use App\Controllers\Controller;
 
 class ArticleController extends Controller
 {
@@ -78,8 +79,10 @@ class ArticleController extends Controller
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
         ]);
+        
+        $app = new App();
 
-        return $this->redirect($_ENV['APP_URL'].'/admin/mes-articles');
+        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
     }
 
     /**
@@ -136,8 +139,9 @@ class ArticleController extends Controller
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
         ]);
+        $app = new App();
 
-        return $this->redirect($_ENV['APP_URL'].'/admin/mes-articles');
+        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
     }
 
 
@@ -150,7 +154,8 @@ class ArticleController extends Controller
     {
         $post = new Post();
         $post->delete($_POST['id']);
+        $app = new App();
 
-        return $this->redirect($_ENV['APP_URL'].'/admin/mes-articles');
+        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
     }
 }

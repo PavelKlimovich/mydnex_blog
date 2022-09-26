@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use Config\App;
 use App\Models\Post;
 use Src\Mailer\Mail;
 use Src\Routing\Route;
@@ -117,7 +118,8 @@ class PageController extends Controller
 
         $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
         $mail->send();
+        $app = new App();
 
-        return $this->redirect($_ENV['APP_URL'].'/');
+        return $this->redirect($app->getAppUrl().'/');
     }
 }

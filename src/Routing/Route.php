@@ -30,8 +30,8 @@ class Route
 
     public static function on($url, $class, $action)
     {
+        $route = preg_replace("/(^\/)|(\/$)/", "", $url);
         if (!empty($_SERVER['REQUEST_URI'])) {
-            $route = preg_replace("/(^\/)|(\/$)/", "", $url);
             $request =  preg_replace("/(^\/)|(\/$)/", "", $_SERVER['REQUEST_URI']);
         } else {
             $request = "/";

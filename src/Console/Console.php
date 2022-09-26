@@ -72,27 +72,23 @@ class Console extends Printer
         case 'seed':
             new ExecuteSeeder();
             self::getSuccess('[Success] Addition to the database is successful ! ', true);
-            die();
-                break;
+            break;
                 
         case 'migrate':
             $migration = new ExecuteMigrate();
             $migration->create();
             self::getSuccess('[Success] Database is created ! ', true);
-            die();
-                break;
+            break;
 
         case 'migrate:fresh':
             $migration = new ExecuteMigrate();
             $migration->fresh();
             self::getSuccess('[Success] Database is refreshed !', true);
-            die();
-                break;
+            break;
 
         default:
             self::getError('[ERROR] Invalid argument !!! ', true);
-            exit(0);
-                break;
+            break;
         }
 
     }

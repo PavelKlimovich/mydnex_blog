@@ -2,6 +2,8 @@
 
 namespace App\Middlewares;
 
+use Config\App;
+
 class AdminMiddleware
 {
     public function __construct()
@@ -17,7 +19,8 @@ class AdminMiddleware
     public function redirectTo(): void
     {
         if (!$_SESSION['admin']) {
-            header('Location:' .$_ENV['APP_URL'].'/login');
+            $app = new App();
+            header('Location:' .$app->getAppUrl().'/login');
             exit();
         }
     }

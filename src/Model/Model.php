@@ -169,7 +169,7 @@ abstract class Model
      * Return the funded element with id.
      *
      * @param  string $id
-     * @return array||bool
+     * @return array|bool
      */
     public function find(string $id): array | bool
     {

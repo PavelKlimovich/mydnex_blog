@@ -12,6 +12,7 @@ class App
     private $dbUsername;
     private $dbPassword;
     private $getMailFrom;
+    private $getAppUrl;
 
     public function __construct()
     {
@@ -24,6 +25,7 @@ class App
         $this->dbUsername = $_ENV['DB_USERNAME'];
         $this->dbPassword = $_ENV['DB_PASSWORD'];
         $this->getMailFrom = $_ENV['EMAIL_FROM'];
+        $this->getAppUrl = $_ENV['APP_URL'];
    
     }
 
@@ -50,6 +52,11 @@ class App
     public function getMailFrom()
     {
         return $this->getMailFrom;
+    }
+
+    public function getAppUrl()
+    {
+        return $this->getAppUrl;
     }
 
 }

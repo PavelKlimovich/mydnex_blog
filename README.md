@@ -8,7 +8,7 @@ Create your first blog in php.
 1) Clone the project.
 2) Change the root directory of Apache `DocumentRoot /path/to/my/project`  or move the project to `/var/www/html`.
 3) Install composer with `composer install & composer dump-autoload` .
-4) Install npm with `npm install` .
+4) Install npm with `npm install & npm run dev` .
 5) Add in the root of the project a new file .env with 
 
     ```

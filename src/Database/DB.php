@@ -36,9 +36,9 @@ class DB
     /**
      * Return property PDO.
      *
-     * @return void
+     * @return mixed
      */
-    public function getPDO()
+    public function getPDO(): mixed
     {
         return $this->pdo;
     }
