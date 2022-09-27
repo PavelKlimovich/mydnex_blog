@@ -22,7 +22,7 @@ class Printer
      * @param  string $bgColor
      * @return void
      */
-    public function print(string $text, string $color, string $bgColor): void
+    public function printText(string $text, string $color, string $bgColor): void
     {
         print($this->string->getStringColor($text, $color, $bgColor));
     }

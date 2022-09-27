@@ -23,7 +23,7 @@ class PageController extends Controller
         $post = new Post();
         $posts = $post->select(0, 3);
         
-        return $this->render('index.twig', ['posts' => $posts]);
+        return $this->view('index.twig', ['posts' => $posts]);
     }
     
 
@@ -39,7 +39,7 @@ class PageController extends Controller
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
+        return $this->view('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     /**
@@ -53,7 +53,7 @@ class PageController extends Controller
         $post = new Post();
         $posts = $post->select($request, $request + 5);
         
-        return $this->render('data.twig', ['posts' => $posts]);
+        return $this->view('data.twig', ['posts' => $posts]);
     }
 
     /**
@@ -74,7 +74,7 @@ class PageController extends Controller
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('blog.twig', ['posts' => $posts, 'categories' => $categories]);
+        return $this->view('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     /**
@@ -96,7 +96,7 @@ class PageController extends Controller
 
             $comments = $comment->where('post_id', '=', $post->id)->get();
 
-            return $this->render('article.twig', ['post' => $post, 'comments'=> $comments]);
+            return $this->view('article.twig', ['post' => $post, 'comments'=> $comments]);
         }
 
        return Route::abord();

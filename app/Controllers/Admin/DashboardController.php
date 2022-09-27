@@ -13,6 +13,6 @@ class DashboardController extends Controller
      */
     public function index(): mixed
     {
-        return $this->render('admin/dashboard.twig');
+        return $this->view('admin/dashboard.twig');
     }
 }

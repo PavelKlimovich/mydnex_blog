@@ -20,7 +20,7 @@ class CommentController extends Controller
         $comment = new Comment();
         $comments = $comment->where('verified', '=', '0')->get();
         
-        return $this->render('admin/comment/index.twig', ['comments' => $comments]);
+        return $this->view('admin/comment/index.twig', ['comments' => $comments]);
     }
 
 

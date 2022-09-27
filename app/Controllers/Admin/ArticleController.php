@@ -22,7 +22,7 @@ class ArticleController extends Controller
         $post = new Post();
         $posts = $post->all()->get();
         
-        return $this->render('admin/article/index.twig', ['posts' => $posts]);
+        return $this->view('admin/article/index.twig', ['posts' => $posts]);
     }
 
     /**
@@ -35,7 +35,7 @@ class ArticleController extends Controller
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('admin/article/create.twig', ['categories'=> $categories]);
+        return $this->view('admin/article/create.twig', ['categories'=> $categories]);
     }
 
     /**
@@ -58,7 +58,7 @@ class ArticleController extends Controller
         if (empty($_FILES['image']) ) {
             $_SESSION['error'] = 'Image n\'est pas renseigné !' ;    
             $_SESSION['error_delay'] = '1';
-            return $this->render('admin/article/create.twig', ['categories'=> $categories]);
+            return $this->view('admin/article/create.twig', ['categories'=> $categories]);
         }
 
         $path = $_FILES["image"]["tmp_name"];
@@ -98,7 +98,7 @@ class ArticleController extends Controller
         $category = new Category();
         $categories = $category->all()->get();
 
-        return $this->render('admin/article/edit.twig', ['post' => $post, 'categories' => $categories]);  
+        return $this->view('admin/article/edit.twig', ['post' => $post, 'categories' => $categories]);  
     }
 
 
