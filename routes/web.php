@@ -13,7 +13,7 @@ use App\Controllers\PageController;
 Route::get('/', PageController::class, 'index');
 Route::post('/', PageController::class, 'contact');
 Route::get('/blog', PageController::class, 'blog');
-Route::get('/bb/{request}', PageController::class, 'blogAjax');
+Route::get('/get-post/{request}', PageController::class, 'blogAjax');
 Route::get('/blog/{slug}', PageController::class, 'category');
 Route::get('/article/{slug}', PageController::class, 'article');
 
@@ -26,7 +26,7 @@ Route::get('/article/{slug}', PageController::class, 'article');
 |
 */
 
-require __DIR__.'/auth.php';
+require_once __DIR__.'/auth.php';
 
 
 
@@ -37,7 +37,7 @@ require __DIR__.'/auth.php';
 |
 */
 
-require __DIR__.'/admin.php';
+require_once __DIR__.'/admin.php';
 
 
 
