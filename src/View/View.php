@@ -48,7 +48,7 @@ abstract class View
      * @param  array  $params
      * @return mixed
      */
-    public function render(string $template, array $params = []): mixed
+    public function view(string $template, array $params = []): mixed
     {
         echo $this->twig->render($template, $params);
         exit();

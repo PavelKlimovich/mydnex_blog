@@ -19,7 +19,7 @@ class AuthController extends Controller
      */
     public function login(): mixed
     {
-        return $this->render('auth/login.twig');
+        return $this->view('auth/login.twig');
     }
 
     /**
@@ -29,7 +29,7 @@ class AuthController extends Controller
      */
     public function register(): mixed
     {
-        return $this->render('auth/register.twig');
+        return $this->view('auth/register.twig');
     }
 
     /**
