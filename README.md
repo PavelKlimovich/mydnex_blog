@@ -1,5 +1,7 @@
 # Mydnex Blog
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4c3f8ce94e9446c588c230ca82705cbf)](https://app.codacy.com/gh/PavelKlimovich/mydnex_blog?utm_source=github.com&utm_medium=referral&utm_content=PavelKlimovich/mydnex_blog&utm_campaign=Badge_Grade_Settings)
+
 Create your first blog in php.
 
 
