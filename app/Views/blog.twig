@@ -80,47 +80,41 @@
     </footer>
      <script>
 
-        var page = 5;
+        var post = 5;
 
         $(window).scroll(function() { //detect page scroll
             if(($(document).height() - ($(window).height() + $(window).scrollTop())) / $(document).height()===0) { //if user scrolled from top to bottom of the page
-                page+5;
-                load_more(page); //load content   
+                post+5;
+                load_more(post); //load content   
             }
         });    
 
-        function load_more(page){
+        function load_more(post){
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
-                        url: '/bb/' + page,
-                        type: "get",
-                        beforeSend: function()
-                        {
-                            $('.ajax-loading').show();
-                        }
-                        
-                    })
-                    .done(function(data)
-                    {
-                    console.log(data);
-                        if(data == ""){
-                            //notify user if nothing to load
-                            $('.ajax-loading').html("Je n'ai plus d'articles disponible pour vous!");
-                            document.querySelector("#footer").style.display="block";
-                    
-                            return;
-                        }
-                        $('.ajax-loading').hide(); //hide loading animation once data is received
-                        $("#results").append(data); //append data into #results element          
-                    })
-                    .fail(function(jqXHR, ajaxOptions, thrownError)
-                    {
-                        //  alert('No response from server');
-                    });
+                    url: '/get-post/' + post,
+                    type: "get",
+                    beforeSend: function(){
+                        $('.ajax-loading').show();
+                    } 
+                })
+            .done(function(data){
+                if(data == ""){
+                    //notify user if nothing to load
+                    $('.ajax-loading').html("Je n'ai plus d'articles disponible pour vous!");
+                    document.querySelector("#footer").style.display="block";
+            
+                    return;
+                }
+                $('.ajax-loading').hide(); //hide loading animation once data is received
+                $("#results").append(data); //append data into #results element          
+                })
+            .fail(function(jqXHR, ajaxOptions, thrownError){
+            });
         }
 </script>
 {% endblock %}
