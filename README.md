@@ -1,7 +1,7 @@
 # Mydnex Blog
 
 Create your first blog in php.
-
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/e1094b082b3a4cca9845cb55c658739d)](https://www.codacy.com/gh/PavelKlimovich/mydnex_blog/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=PavelKlimovich/mydnex_blog&amp;utm_campaign=Badge_Grade)
 
 ## Installation
 
