@@ -34,12 +34,21 @@
                     </select>
                 </div>
                 <div class="col-12 m-3">
+                    <label for="content" class="form-control-label">Auteur</label>
+                    <select class="form-select form-select-lg mb-3" name='author'>
+                        <option selected="" value=''>Veuillez selectionner l'auteur</option>
+                        {% for author in authors %}
+                            <option value="{{ author.id }}">{{ author.firstname }} {{ author.lastname }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Description</label>
                     <textarea class="form-control form-control-lg" placeholder="Description" name="description">{{ post.description }}</textarea>
                 </div>
                 <div class="col-12 m-3">
                     <label for="content" class="form-control-label">Contenu</label>
-                    <textarea name="content" id="editor">{{ post.content }}</textarea>
+                    <textarea name="content" id="editor">{{ post.content |raw }}</textarea>
                 </div>
                 <div class="col-4 m-3">
                     <label for="content" class="form-control-label">Image actuelle</label>

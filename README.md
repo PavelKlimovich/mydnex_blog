@@ -5,11 +5,12 @@ Create your first blog in php.
 
 ## Installation
 
-1) Clone the project.
-2) Change the root directory of Apache `DocumentRoot /path/to/my/project`  or move the project to `/var/www/html`.
-3) Install composer with `composer install & composer dump-autoload` .
-4) Install npm with `npm install & npm run dev` .
-5) Add in the root of the project a new file .env with 
+1) Clone the project `git clone https://github.com/PavelKlimovich/mydnex_blog.git`.
+2) Move the project to `/var/www/html`.
+3) Change the root directory to `DocumentRoot /path/to_my_project/public` folder.
+4) Install composer with `composer install & composer dump-autoload` .
+5) Install npm with `npm install & npm run dev` .
+6) Copy in the root of the project a new file .env from .env.example with 
 
     ```
     APP_NAME=mydnex_blog
@@ -25,8 +26,8 @@ Create your first blog in php.
     EMAIL_FROM=
     ```
 
-6) Execute : `php kernel migrate` to init DATABASE.
-7)  If you want generate fake data in database execute : `php kernel seed`.
+7) Execute : `php kernel migrate` to init DATABASE.
+8) If you want generate fake data in database execute : `php kernel seed`.
     ```
     Admin : admin@mydnex.com
     Password : password

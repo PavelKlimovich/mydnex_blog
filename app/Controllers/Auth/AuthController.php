@@ -7,6 +7,7 @@ use Config\App;
 use App\Models\User;
 use Src\Validator\Validator;
 use App\Controllers\Controller;
+use Src\Request\Request;
 
 class AuthController extends Controller
 {
@@ -39,14 +40,16 @@ class AuthController extends Controller
      */
     public function auth(): mixed
     {
+        $request = new Request();
+
         Validator::create([
                 "email" => 'Email ou le mot de passe est vide !',
                 "password" => 'Mot de passe n\'est pas renseigné !',
             ]);
 
         $user =  new User();
-        $email = (string)$_POST['email'];
-        $password = (string)$_POST['password'];
+        $email = (string)$request->email;
+        $password = (string)$request->password;
         $user = $user->where('email', '=', $email)->first();
         
         if (empty($user)) {
@@ -105,6 +108,8 @@ class AuthController extends Controller
      */
     public function store(): mixed
     {
+        $request = new Request();
+
         Validator::create([
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
@@ -113,14 +118,14 @@ class AuthController extends Controller
             "password_confirmation" => 'Mot de passe n\'est pas renseigné !',
         ]);
 
-        if ($_POST['password'] !== $_POST['password_confirmation']) {
+        if ($request->password !== $request->password_confirmation) {
             $_SESSION['error'] = 'Mot de passe n\'est pas renseigné !' ;    
             $_SESSION['error_delay'] = '1';
 
             return $this->redirect($_SERVER['HTTP_REFERER']);
         }
 
-        if (!isset($_POST['rgpd']) || ($_POST['rgpd'] == false)) {
+        if (!isset($request->rgpd) || ($request->rgpd == false)) {
             $_SESSION['error'] = 'Vous devez accepter les mentions légales !' ;    
             $_SESSION['error_delay'] = '1';
 
@@ -128,7 +133,7 @@ class AuthController extends Controller
         }
 
         $userObject  = new User();
-        $email = (string)$_POST['email'];
+        $email = (string)$request->email;
         $user = $userObject->where('email', '=', $email)->first();
 
         if (!empty($user)) {
@@ -139,10 +144,10 @@ class AuthController extends Controller
         }
 
         $userObject->create([
-            'firstname'  => (string)$_POST['firstname'],
-            'lastname'   => (string)$_POST['lastname'],
-            'email'      => (string)$_POST['email'],
-            'password'   => $userObject->createPassword((string)$_POST['password']),
+            'firstname'  => (string)$request->firstname,
+            'lastname'   => (string)$request->lastname,
+            'email'      => (string)$request->email,
+            'password'   => $userObject->createPassword((string)$request->password),
             'verified'   => 0,
             'role'       => 'user',
             'created_at' => date("Y-m-d"),

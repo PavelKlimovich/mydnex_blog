@@ -3,9 +3,10 @@
 namespace App\Controllers\Admin;
 
 
-use App\Controllers\Controller;
 use App\Models\Comment;
+use Src\Request\Request;
 use Src\Validator\Validator;
+use App\Controllers\Controller;
 
 class CommentController extends Controller
 {
@@ -58,6 +59,7 @@ class CommentController extends Controller
      */
     public function store(): mixed
     { 
+        $request = new Request();
         Validator::create([
             "comment" => 'Le champ commentaire est vide !',
             "post_id" => 'Le champ post est vide !',
@@ -65,9 +67,9 @@ class CommentController extends Controller
 
         $comment = new Comment();
         $comment->create([
-            'message'    => $_POST['comment'],
-            'user_id'    => (int)$_SESSION['auth_id'],
-            'post_id'    => (int)$_POST['post_id'],
+            'message'    => $request->comment,
+            'user_id'    => (int)$request->auth_id,
+            'post_id'    => (int)$request->post_id,
             'verified'   => 0,
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
@@ -87,8 +89,9 @@ class CommentController extends Controller
      */
     public function delete(): mixed
     { 
+        $request = new Request();
         $comment = new Comment();
-        $comment->delete($_POST['id']);
+        $comment->delete($request->id);
 
         $_SESSION['success'] = 'Le commantairte est supprimé !' ;    
         $_SESSION['success_delay'] = '1';
