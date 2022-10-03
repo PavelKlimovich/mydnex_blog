@@ -4,8 +4,10 @@ namespace App\Controllers\Admin;
 
 use Config\App;
 use App\Models\Post;
+use App\Models\User;
 use Src\Helpers\Str;
 use App\Models\Category;
+use Src\Request\Request;
 use Src\Validator\Validator;
 use App\Controllers\Controller;
 
@@ -33,9 +35,11 @@ class ArticleController extends Controller
     public function create(): mixed
     {
         $category = new Category();
+        $user = new User();
         $categories = $category->all()->get();
+        $authors = $user->where('role', '=', 'admin')->get();
 
-        return $this->view('admin/article/create.twig', ['categories'=> $categories]);
+        return $this->view('admin/article/create.twig', ['categories'=> $categories, 'authors' => $authors]);
     }
 
     /**
@@ -45,6 +49,7 @@ class ArticleController extends Controller
      */
     public function store(): mixed
     {
+        $request = new Request();
         $category = new Category();
         $categories = $category->all()->get();
 
@@ -69,13 +74,13 @@ class ArticleController extends Controller
         $post = new Post();
 
         $post->create([
-            'title'         => $_POST['title'],
-            'slug'          => Str::slugify($_POST['title']),
-            'description'   => $_POST['description'],
-            'content'       => $_POST['content'],
+            'title'         => $request->title,
+            'slug'          => Str::slugify($request->title),
+            'description'   => $request->description,
+            'content'       => $request->content,
             'image'         => $base64,
-            'user_id'       => 1,
-            'category_id'   => (int)$_POST['category_id'],
+            'user_id'       => $request->author,
+            'category_id'   => (int)$request->category_id,
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
         ]);
@@ -95,10 +100,12 @@ class ArticleController extends Controller
     {
         $post = new Post();
         $post = $post->where('slug', '=', $slug)->first();
+        $user = new User();
         $category = new Category();
         $categories = $category->all()->get();
+        $authors = $user->where('role', '=', 'admin')->get();
 
-        return $this->view('admin/article/edit.twig', ['post' => $post, 'categories' => $categories]);  
+        return $this->view('admin/article/edit.twig', ['post' => $post, 'categories' => $categories, 'authors' => $authors]);  
     }
 
 
@@ -110,11 +117,14 @@ class ArticleController extends Controller
      */
     public function update(string $slug): mixed
     {
+        $request = new Request();
+
         Validator::create([
             "title" => 'Titre n\'est pas renseigné !',
             "category_id" => 'Categorie n\'est pas renseigné !',
             "description" => 'La description n\'est pas renseigné !',
             "content" => 'Le contenu n\'est pas renseigné !',
+            "author" => 'L\'author n\'est pas renseigné !',
         ]);
 
         $post = new Post();
@@ -129,13 +139,13 @@ class ArticleController extends Controller
         }
         
         $post->update($thisPost->id, [
-            'title'         => $_POST['title'],
-            'slug'          => Str::slugify($_POST['title']),
-            'description'   => $_POST['description'],
-            'content'       => $_POST['content'],
+            'title'         => $request->title,
+            'slug'          => Str::slugify($request->title),
+            'description'   => $request->description,
+            'content'       => $request->content,
             'image'         => $base64,
-            'user_id'       => 1,
-            'category_id'   => (int)$_POST['category_id'],
+            'user_id'       => $request->author,
+            'category_id'   => (int)$request->category_id,
             'created_at'    => date("Y-m-d"),
             'updated_at'    => date("Y-m-d"),
         ]);
@@ -153,7 +163,8 @@ class ArticleController extends Controller
     public function delete(): mixed
     {
         $post = new Post();
-        $post->delete($_POST['id']);
+        $request = new Request();
+        $post->delete($request->id);
         $app = new App();
 
         return $this->redirect($app->getAppUrl().'/admin/mes-articles');
