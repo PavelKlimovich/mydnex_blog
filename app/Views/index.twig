@@ -137,7 +137,7 @@
                     <div class="col-lg-7 m-5 ">
                     <div class="col-12 text-left">
                             <span class="badge text-primary">{{ post.category().name }}</span>
-                            <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                            <p class="badge text-dark ">{{ post.update_at|date('j F Y') }}</p>
                         </div>
                         <a href="/article/{{ post.slug }}" class="link-none-decoration">
                             <h1 class="fw-bold lh-1"> <span class='card__title'>{{ post.title }}</span></h1>
@@ -202,7 +202,7 @@
                                         <span class="focus-input100"></span>
                                     </div>
                                 </div>
-                                <div class="col-md-12">
+                                <div class="col-12">
                                     <div class="wrap-input100">
                                         <span class="label-input100">Objet</span>
                                         <input class="input100" type="text" name="objet" placeholder="Objet du message...">
@@ -214,7 +214,7 @@
                                         <span class="focus-input100"></span>
                                     </div>
                                     <div class="row d-flex justify-content-center">
-                                        <div class="col-md-12 d-flex justify-content-center">
+                                        <div class="col-12 d-flex justify-content-center">
                                             <button type="submit" class="button">Envoyer</button>
                                         </div>
                                     </div>

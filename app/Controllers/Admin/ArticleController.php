@@ -146,7 +146,7 @@ class ArticleController extends Controller
             'image'         => $base64,
             'user_id'       => $request->author,
             'category_id'   => (int)$request->category_id,
-            'created_at'    => date("Y-m-d"),
+            'created_at'    => $thisPost->created_at,
             'updated_at'    => date("Y-m-d"),
         ]);
         $app = new App();

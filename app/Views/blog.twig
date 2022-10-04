@@ -38,17 +38,16 @@
         <section class="blog">
             <div class="container mt-5">
                 <div class="row">
-                    <div class="col-2" > 
-                        <nav class="nav">
-                            <ul class="ul-none-decoration">
-                                <li><a class="nav-link fw-bold" href="/blog">Tous les articles</a></li>
-                                {% for category in categories %}
-                                    <li><a class="nav-link fw-bold" href="/blog/{{ category.slug }}">{{ category.name }}</a></li>
-                                {% endfor %}
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="col-10">
+                    <div class="col-12" > 
+                    <div class="container">
+                        <ul class="blog-navbar">
+                            <li><a class="nav-link fw-bold" href="/blog">Tous les articles</a></li>
+                            {% for category in categories %}
+                                <li><a class="nav-link fw-bold" href="/blog/{{ category.slug }}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div> 
+                    <div class="col-12">
                         {{ include('data.twig') }}
 
                         <div id="results"><!-- results appear here --></div>

@@ -165,6 +165,13 @@ body {
     font-size: 1.5rem;
   }
 
+  .blog-navbar{
+    display: flex;
+    flex-direction: inherit;
+    list-style: none;
+    align-items: center;
+    justify-content: center;
+  }
 
   .hero-wrap {
     height: 600px;
@@ -331,6 +338,7 @@ body::-webkit-scrollbar {
     background-repeat: no-repeat;
     background-size: cover;
     width: 100%;
+    height: 350px;
     object-fit: cover;
   }
 
