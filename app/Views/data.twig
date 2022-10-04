@@ -8,7 +8,7 @@
                 <div class="col-12 m-3">
                     <div class="col-12 text-left mt-3 p-2">
                         <span class="badge text-primary">{{ post.category().name }}</span>
-                        <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                        <p class="badge text-dark ">{{ post.update_at|date('j F Y') }}</p>
                     </div>
                     <div class="col-12 text-left p-2">
                         <a href="/article/{{ post.slug }}" class="link-none-decoration">
@@ -26,7 +26,7 @@
                 </div>
                 <div class="col-12 text-left mt-3 p-2">
                     <span class="badge text-primary">{{ post.category().name }}</span>
-                    <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                    <p class="badge text-dark ">{{ post.update_at|date('j F Y') }}</p>
                 </div>
                 <div class="col-12 text-left p-2">
                     <a href="/article/{{ post.slug }}" class="link-none-decoration">
