@@ -10,7 +10,7 @@ Create your first blog in php.
 3) Change the root directory to `DocumentRoot /path/to_my_project/public` folder.
 4) Install composer with `composer install & composer dump-autoload` .
 5) Install npm with `npm install & npm run dev` .
-6) Copy in the root of the project a new file .env from .env.example with 
+6) Copy in the root of the project a new file `.env` from `.env.example` with 
 
     ```
     APP_NAME=mydnex_blog
