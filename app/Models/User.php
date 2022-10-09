@@ -22,7 +22,6 @@ class User extends Model
         return false;
     }
 
-
     /**
      * Generate un password.
      *

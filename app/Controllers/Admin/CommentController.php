@@ -2,101 +2,104 @@
 
 namespace App\Controllers\Admin;
 
-
+use Src\View\View;
+use App\Models\User;
 use App\Models\Comment;
 use Src\Request\Request;
+use Src\Session\Session;
 use Src\Validator\Validator;
-use App\Controllers\Controller;
 
-class CommentController extends Controller
+class CommentController
 {
+    private $comment;
+    private $request;
+
+    public function __construct() 
+    {
+        $this->comment = new Comment();
+        $this->request = new Request();
+    }
 
      /**
       * Return comment index page.
       *
-      * @return mixed
+      * @return void
       */
-    public function index(): mixed
+    public function index(): void
     { 
-        $comment = new Comment();
-        $comments = $comment->where('verified', '=', '0')->get();
+        $comments = $this->comment->where('verified', '=', '0')->get();
         
-        return $this->view('admin/comment/index.twig', ['comments' => $comments]);
+       View::get('admin/comment/index.twig', ['comments' => $comments]);
     }
 
 
-     /**
-      * Valide selected comment.
-      *
-      * @param string $id
-      * @return mixed
-      */
-    public function valide(string $id): mixed
+    /**
+     * Valide selected comment.
+     *
+     * @param string $id
+     * @return void
+     */
+    public function valide(string $id): void
     { 
-        $comment = new Comment();
-        $thisComment = $comment->where('id', '=', $id)->first();
+        $comment = $this->comment->where('id', '=', $id)->first();
+        $comment->update($comment->id,['verified' => 1]);
 
-        $comment->update($thisComment->id, [
-                'message'    => $thisComment->message,
-                'user_id'    => $thisComment->user_id,
-                'post_id'    => $thisComment->post_id,
-                'verified'   => 1,
-                'created_at' => $thisComment->created_at,
-                'updated_at' => date("Y-m-d"),
-            ]);
-        
-        $_SESSION['success'] = 'Le commantaire est validé !' ;    
-        $_SESSION['success_delay'] = '1';
+        Session::success('Le commantaire est validé !');
 
-        return $this->redirect($_SERVER['HTTP_REFERER']);
+        View::redirect($_SERVER['HTTP_REFERER']);
     }
 
 
     /**
      * Store selected comment.
      *
-     * @return mixed
+     * @return void
      */
-    public function store(): mixed
+    public function store(): void
     { 
-        $request = new Request();
         Validator::create([
             "comment" => 'Le champ commentaire est vide !',
             "post_id" => 'Le champ post est vide !',
         ]);
+     
+        if (is_null(Session::get('auth'))) {
+            Session::error('L\'utilisateur n\'a pas été authentifié !');
+            View::redirect($_SERVER['HTTP_REFERER']);
+        }
 
-        $comment = new Comment();
-        $comment->create([
-            'message'    => $request->comment,
-            'user_id'    => (int)$request->auth_id,
-            'post_id'    => (int)$request->post_id,
+        $user = new User();
+        $user = $user->where('token','=', Session::get('auth'))->first();
+
+        if (!isset($user->id)) {
+            Session::error('L\'utilisateur n\'a pas été authentifié !');
+            View::redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        $this->comment->create([
+            'message'    => $this->request->post('comment'),
+            'user_id'    => (int)$user->id,
+            'post_id'    => $this->request->post('post_id'),
             'verified'   => 0,
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
         ]);
 
-        $_SESSION['success'] = 'Votre commentaire est en attente de modération !' ;    
-        $_SESSION['success_delay'] = '1';
+        Session::success('Votre commentaire est en attente de modération !');
 
-        return $this->redirect($_SERVER['HTTP_REFERER']);
+        View::redirect($_SERVER['HTTP_REFERER']);
     }
 
 
     /** 
      * Delete selected comment.
      *
-     * @return mixed
+     * @return void
      */
-    public function delete(): mixed
+    public function delete(): void
     { 
-        $request = new Request();
-        $comment = new Comment();
-        $comment->delete($request->id);
+        $this->comment->delete($this->request->post('id'));
+        Session::success('Le commantairte est supprimé !');
 
-        $_SESSION['success'] = 'Le commantairte est supprimé !' ;    
-        $_SESSION['success_delay'] = '1';
-
-        return $this->redirect($_SERVER['HTTP_REFERER']);
+        View::redirect($_SERVER['HTTP_REFERER']);
     }
-
 }

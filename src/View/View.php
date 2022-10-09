@@ -2,56 +2,22 @@
 
 namespace Src\View;
 
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
-use \ParagonIE\AntiCSRF\AntiCSRF;
+use Src\View\Twig\Twig;
 
-abstract class View
+class View
 {
-    protected $twig;
-
-    /**
-     * Init this class.
-     */
-    public function __construct()
-    {
-        $loader = new FilesystemLoader('../app/Views');
-        $this->twig   = new Environment($loader);
-        $this->twig->getExtension(\Twig\Extension\CoreExtension::class)->setTimezone('Europe/Paris'); 
-
-        $this->addSessionSuccess();
-        $this->addSessionError();
-        $this->addAuthSession('admin');
-        $this->addAuthSession('auth');
-        $this->vefifyCSRF();
-        $this->twig->addFunction(new \Twig\TwigFunction('form_token',
-                function($lock_to = null) {
-                    $lock_to = $lock_to ?? $_SERVER['REQUEST_URI'];
-                    static $csrf;
-                    if ($csrf === null) {
-                        $csrf = new AntiCSRF;
-                    }
-                    return $csrf->insertToken($lock_to, false);
-                },
-                ['is_safe' => ['html']]
-            )
-        );
-
-        
-    }
-
-
+    
     /**
      * Return twig view.
      *
      * @param  string $template
      * @param  array  $params
-     * @return mixed
+     * @return void
      */
-    public function view(string $template, array $params = []): mixed
-    {
-        echo $this->twig->render($template, $params);
-        exit();
+    public static function get(string $template, array $params = []): void
+    {   
+        $twig = new Twig();
+        $twig->initView($template, $params);
     }
 
 
@@ -59,9 +25,9 @@ abstract class View
      * Redirect to url.
      *
      * @param  string $route
-     * @return mixed
+     * @return void
      */
-    public function redirect(string $route): mixed
+    public static function redirect(string $route): void
     {
         header('Location:' .$route);
         exit();
@@ -69,62 +35,14 @@ abstract class View
 
 
     /**
-     * Add to twig class auth global variable.
-     *
-     * @param  string $session
-     * @return void
-     */
-    public function addAuthSession(string $session): void
-    {
-        if (isset($_SESSION[$session])) {
-            $this->twig->addGlobal($session, $_SESSION[$session]);
-        }
-    }
-
-
-    /**
-     * Add to twig class error global variable.
+     * Return error 404.
      *
      * @return void
      */
-    public function addSessionError(): void
+    public static function abord(): void
     {
-        if (isset($_SESSION['error_delay']) && $_SESSION['error_delay'] == '1') {
-            $_SESSION['error_delay'] = '0';
-            $this->twig->addGlobal('error', $_SESSION['error']);
-        } 
-    }
-
-
-    /**
-     * Add to twig class success global variable.
-     *
-     * @return void
-     */
-    public function addSessionSuccess(): void
-    {
-        if (isset($_SESSION['success_delay']) && $_SESSION['success_delay'] == '1') {
-            $_SESSION['success_delay'] = '0';
-            $this->twig->addGlobal('success', $_SESSION['success']);
-        } 
-    }
-
-
-    /**
-     * Verify CRSF token.
-     *
-     * @return void
-     */
-    public function vefifyCSRF(): void
-    {
-        $csrf = new AntiCSRF;
-        if (!empty($_POST)) {
-            if (!$csrf->validateRequest()) {
-                http_response_code(419);
-                include '../app/Views/errors/419.php';
-                exit();
-            }
-        }
+        http_response_code(404);
+        self::get('errors/404.html');
     }
 
 }

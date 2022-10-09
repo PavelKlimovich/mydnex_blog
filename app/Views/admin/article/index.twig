@@ -11,6 +11,11 @@
             <button type="button" onclick="location.href='/admin/ajouter-article'" class="btn btn-success">Ajouter un article</button>
         </div>
     </div>
+    {% if success %}
+        <div class="col-12 p-1">
+            <h5 class="success">{{ success |raw  }}</h5> 
+        </div>
+    {% endif %}  
     <div class='row mt-5'>
         <table class="table table-striped">
             <thead>

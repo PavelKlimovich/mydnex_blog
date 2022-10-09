@@ -2,123 +2,61 @@
 
 namespace App\Controllers\Admin;
 
-use Config\App;
+use Src\View\View;
 use App\Models\Post;
 use App\Models\User;
 use Src\Helpers\Str;
 use App\Models\Category;
 use Src\Request\Request;
+use Src\Session\Session;
 use Src\Validator\Validator;
-use App\Controllers\Controller;
 
-class ArticleController extends Controller
+class ArticleController
 {
+    private $post;
+    private $category;
+    private $request;
+
+    public function __construct() 
+    {
+        $this->post = new Post();
+        $this->category = new Category();;
+        $this->request = new Request();
+    }
 
     /**
      * Return article index page.
      *
-     * @return mixed
+     * @return void
      */
-    public function index(): mixed
+    public function index(): void
     { 
-        $post = new Post();
-        $posts = $post->all()->get();
+        $posts = $this->post->all()->get();
         
-        return $this->view('admin/article/index.twig', ['posts' => $posts]);
+        View::get('admin/article/index.twig', ['posts' => $posts]);
     }
 
     /**
      * Return article crete page.
      *
-     * @return mixed
+     * @return void
      */
-    public function create(): mixed
+    public function create(): void
     {
-        $category = new Category();
         $user = new User();
-        $categories = $category->all()->get();
+        $categories = $this->category->all()->get();
         $authors = $user->where('role', '=', 'admin')->get();
 
-        return $this->view('admin/article/create.twig', ['categories'=> $categories, 'authors' => $authors]);
+        View::get('admin/article/create.twig', ['categories'=> $categories, 'authors' => $authors]);
     }
 
     /**
      * Store new Post.
      *
-     * @return mixed
+     * @return void
      */
-    public function store(): mixed
+    public function store(): void
     {
-        $request = new Request();
-        $category = new Category();
-        $categories = $category->all()->get();
-
-        Validator::create([
-            "title" => 'Titre n\'est pas renseigné !',
-            "category_id" => 'Categorie n\'est pas renseigné !',
-            "description" => 'La description n\'est pas renseigné !',
-            "content" => 'Le contenu n\'est pas renseigné !',
-        ]);
-
-        if (empty($_FILES['image']) ) {
-            $_SESSION['error'] = 'Image n\'est pas renseigné !' ;    
-            $_SESSION['error_delay'] = '1';
-            return $this->view('admin/article/create.twig', ['categories'=> $categories]);
-        }
-
-        $path = $_FILES["image"]["tmp_name"];
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
-        $post = new Post();
-
-        $post->create([
-            'title'         => $request->title,
-            'slug'          => Str::slugify($request->title),
-            'description'   => $request->description,
-            'content'       => $request->content,
-            'image'         => $base64,
-            'user_id'       => $request->author,
-            'category_id'   => (int)$request->category_id,
-            'created_at'    => date("Y-m-d"),
-            'updated_at'    => date("Y-m-d"),
-        ]);
-        
-        $app = new App();
-
-        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
-    }
-
-    /**
-     * Return article edit page.
-     *
-     * @param string $slug
-     * @return mixed
-     */
-    public function edit(string $slug): mixed
-    {
-        $post = new Post();
-        $post = $post->where('slug', '=', $slug)->first();
-        $user = new User();
-        $category = new Category();
-        $categories = $category->all()->get();
-        $authors = $user->where('role', '=', 'admin')->get();
-
-        return $this->view('admin/article/edit.twig', ['post' => $post, 'categories' => $categories, 'authors' => $authors]);  
-    }
-
-
-    /**
-     * Update selected Post.
-     *
-     * @param string $slug
-     * @return mixed
-     */
-    public function update(string $slug): mixed
-    {
-        $request = new Request();
-
         Validator::create([
             "title" => 'Titre n\'est pas renseigné !',
             "category_id" => 'Categorie n\'est pas renseigné !',
@@ -127,9 +65,68 @@ class ArticleController extends Controller
             "author" => 'L\'author n\'est pas renseigné !',
         ]);
 
-        $post = new Post();
-        $thisPost = $post->where('slug', '=', $slug)->first();
-        $base64 = $thisPost->image;
+        if (!isset($_FILES['image']) || empty($_FILES['image']["tmp_name"]) ) {
+            Session::error('Image n\'est pas renseigné !');
+            View::redirect('/admin/ajouter-article');
+        }
+
+        $path = $_FILES["image"]["tmp_name"];
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $this->post->create([
+            'title'         => $this->request->post('title'),
+            'slug'          => Str::slugify($this->request->post('title')),
+            'description'   => $this->request->post('description'),
+            'content'       => $this->request->post('content'),
+            'image'         => $base64,
+            'user_id'       => (int)$this->request->post('author'),
+            'category_id'   => (int)$this->request->post('category_id'),
+            'created_at'    => date("Y-m-d"),
+            'updated_at'    => date("Y-m-d"),
+        ]);
+
+        Session::success('Article à bien été crée !');
+
+        View::redirect('/admin/mes-articles');
+    }
+
+    /**
+     * Return article edit page.
+     *
+     * @param string $slug
+     * @return void
+     */
+    public function edit(string $slug): void
+    {
+        $post = $this->post->where('slug', '=', $slug)->first();
+        $user = new User();
+        $categories = $this->category->all()->get();
+        $authors = $user->where('role', '=', 'admin')->get();
+
+        View::get('admin/article/edit.twig', ['post' => $post, 'categories' => $categories, 'authors' => $authors]);  
+    }
+
+
+    /**
+     * Update selected Post.
+     *
+     * @param string $slug
+     * @return void
+     */
+    public function update(string $slug): void
+    {
+        Validator::create([
+            "title" => 'Titre n\'est pas renseigné !',
+            "category_id" => 'Categorie n\'est pas renseigné !',
+            "description" => 'La description n\'est pas renseigné !',
+            "content" => 'Le contenu n\'est pas renseigné !',
+            "author" => 'L\'author n\'est pas renseigné !',
+        ]);
+
+        $post = $this->post->where('slug', '=', $slug)->first();
+        $base64 = $post->image;
 
         if (!empty($_FILES['image']["tmp_name"]) ) {
             $path = $_FILES["image"]["tmp_name"];
@@ -138,35 +135,33 @@ class ArticleController extends Controller
             $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
         }
         
-        $post->update($thisPost->id, [
-            'title'         => $request->title,
-            'slug'          => Str::slugify($request->title),
-            'description'   => $request->description,
-            'content'       => $request->content,
+        $post->update($post->id,[
+            'title'         => $this->request->post('title'),
+            'slug'          => Str::slugify($this->request->post('title')),
+            'description'   => $this->request->post('description'),
+            'content'       => $this->request->post('content'),
             'image'         => $base64,
-            'user_id'       => $request->author,
-            'category_id'   => (int)$request->category_id,
-            'created_at'    => $thisPost->created_at,
+            'user_id'       => (int)$this->request->post('author'),
+            'category_id'   => (int)$this->request->post('category_id'),
             'updated_at'    => date("Y-m-d"),
         ]);
-        $app = new App();
 
-        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
+        Session::success('Article à bien été modifié!');
+
+        View::redirect('/admin/mes-articles');
     }
 
 
     /**
      * Delete selected Post.
      *
-     * @return mixed
+     * @return void
      */
-    public function delete(): mixed
+    public function delete(): void
     {
-        $post = new Post();
-        $request = new Request();
-        $post->delete($request->id);
-        $app = new App();
-
-        return $this->redirect($app->getAppUrl().'/admin/mes-articles');
+        $this->post->delete($this->request->post('id'));
+        Session::success('Article à bien été supprimé !');
+        
+        View::redirect('/admin/mes-articles');
     }
 }

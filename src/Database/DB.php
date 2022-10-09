@@ -13,7 +13,7 @@ class DB
     {
         $config = new App();
 
-        $this->pdo = new \PDO('mysql:host=' . $config->getDbHost() . ';dbname=' . $config->getDbName()  . ';charset=utf8', $config->getDbUsername(), $config->getDbPassword());
+        $this->pdo = new \PDO('mysql:host='.$config->getDbHost().';port='.$config->getDbPort().';dbname='.$config->getDbName().';charset=utf8', $config->getDbUsername(), $config->getDbPassword());
         $this->pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     }
 

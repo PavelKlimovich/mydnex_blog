@@ -2,114 +2,93 @@
 
 namespace App\Controllers\Auth;
 
-
-use Config\App;
+use Src\View\View;
 use App\Models\User;
-use Src\Validator\Validator;
-use App\Controllers\Controller;
+use Src\Helpers\Str;
 use Src\Request\Request;
+use Src\Session\Session;
+use Src\Validator\Validator;
 
-class AuthController extends Controller
+class AuthController
 {
+    private $user;
+    private $request;
 
+    public function __construct() 
+    {
+        $this->user = new User();
+        $this->request = new Request();
+    }
 
     /**
      * Return login page.
      *
-     * @return mixed
+     * @return void
      */
-    public function login(): mixed
+    public function login(): void
     {
-        return $this->view('auth/login.twig');
+        View::get('auth/login.twig');
     }
 
     /**
      * Return register page.
      *
-     * @return mixed
+     * @return void
      */
-    public function register(): mixed
+    public function register(): void
     {
-        return $this->view('auth/register.twig');
+        View::get('auth/register.twig');
     }
 
     /**
      * Verifed auth.
      *
-     * @return mixed
+     * @return void
      */
-    public function auth(): mixed
+    public function auth(): void
     {
-        $request = new Request();
-
         Validator::create([
-                "email" => 'Email ou le mot de passe est vide !',
-                "password" => 'Mot de passe n\'est pas renseigné !',
-            ]);
+            "email" => 'Email ou le mot de passe est vide !',
+            "password" => 'Mot de passe n\'est pas renseigné !',
+        ]);
 
-        $user =  new User();
-        $email = (string)$request->email;
-        $password = (string)$request->password;
-        $user = $user->where('email', '=', $email)->first();
+        $user = $this->user->where('email', '=', $this->request->email)->first();
         
-        if (empty($user)) {
-            $_SESSION['error'] = 'Email ou le mot de passe est incorrect !' ;    
-            $_SESSION['error_delay'] = '1';
-
-            return $this->redirect($_SERVER['HTTP_REFERER']);
+        if (empty($user) || !password_verify($this->request->password, $user->password)) {
+            Session::error('Email ou le mot de passe est incorrect !' );
+            View::redirect($_SERVER['HTTP_REFERER']);
         }
 
-        if (!password_verify($password, $user->password)) {
-            $_SESSION['error'] = 'Email ou le mot de passe est incorrect !' ;    
-            $_SESSION['error_delay'] = '1';
-
-            return $this->redirect($_SERVER['HTTP_REFERER']);
-        }
-        
-        $_SESSION['auth'] = true;
-        $_SESSION['auth_id'] = $user->id;
+        $token = Str::token();
+        $this->user->update($user->id,['token' => $token]);
+        Session::addAuth($token);
 
         if ($user->isAdmin()) {
-            $_SESSION['admin'] = true;
-            return $this->dashboard();
+            Session::add('admin', 'true');
+            View::redirect('/dashboard');
         }
 
-        $app = new App();
-        return $this->redirect($app->getAppUrl().'/blog');
-    }
-
-    /**
-     * Return dashboard page.
-     *
-     * @return mixed
-     */
-    public function dashboard(): mixed
-    {
-        $app = new App();
-        return $this->redirect($app->getAppUrl().'/dashboard');
+        View::redirect('/blog');
     }
 
     /**
      * Logout auth.
      *
-     * @return mixed
+     * @return void
      */
-    public function logout(): mixed
+    public function logout(): void
     {
         session_destroy();
-        $app = new App();
-        return $this->redirect($app->getAppUrl().'/');
+        View::redirect('/');
     }
 
     /**
      * Store new user.
      *
-     * @return mixed
+     * @return void
      */
-    public function store(): mixed
+    public function store(): void
     {
-        $request = new Request();
-
         Validator::create([
             "lastname" => 'Nom n\'est pas renseigné !',
             "firstname" => 'Prénom n\'est pas renseigné !',
@@ -118,50 +97,34 @@ class AuthController extends Controller
             "password_confirmation" => 'Mot de passe n\'est pas renseigné !',
         ]);
 
-        if ($request->password !== $request->password_confirmation) {
-            $_SESSION['error'] = 'Mot de passe n\'est pas renseigné !' ;    
-            $_SESSION['error_delay'] = '1';
+        if ($this->request->post('password') !== $this->request->post('password_confirmation')) {
+            Session::error('Mot de passe n\'est pas renseigné !');
 
-            return $this->redirect($_SERVER['HTTP_REFERER']);
+            View::redirect($_SERVER['HTTP_REFERER']);
         }
 
-        if (!isset($request->rgpd) || ($request->rgpd == false)) {
-            $_SESSION['error'] = 'Vous devez accepter les mentions légales !' ;    
-            $_SESSION['error_delay'] = '1';
-
-            return $this->redirect($_SERVER['HTTP_REFERER']);
-        }
-
-        $userObject  = new User();
-        $email = (string)$request->email;
-        $user = $userObject->where('email', '=', $email)->first();
+        $user = $this->user->where('email', '=', $this->request->post('email'))->first();
 
         if (!empty($user)) {
-            $_SESSION['error'] = 'Utilisateur avec ce mail exist deja !' ;    
-            $_SESSION['error_delay'] = '1';
+            Session::error('Utilisateur avec ce mail exist deja !');
             
-            return $this->redirect($_SERVER['HTTP_REFERER']);
+            View::redirect($_SERVER['HTTP_REFERER']);
         }
 
-        $userObject->create([
-            'firstname'  => (string)$request->firstname,
-            'lastname'   => (string)$request->lastname,
-            'email'      => (string)$request->email,
-            'password'   => $userObject->createPassword((string)$request->password),
-            'verified'   => 0,
+        $token = Str::token();
+        $this->user->create([
+            'firstname'  => $this->request->post('firstname'),
+            'lastname'   => $this->request->post('lastname'),
+            'email'      => $this->request->post('email'),
+            'password'   => $this->user->createPassword($this->request->post('password')),
+            'token'      => $token,
             'role'       => 'user',
             'created_at' => date("Y-m-d"),
             'updated_at' => date("Y-m-d"),
         ]);
 
-        $_SESSION['auth'] = true;
-        
-        if ($userObject->isAdmin()) {
-            $_SESSION['admin'] = true;
-            return $this->dashboard();
-        }
-        $app = new App();
-        return $this->redirect($app->getAppUrl().'/blog');
-    }
+        Session::addAuth($token);
 
+        View::redirect('/blog');
+    }
 }

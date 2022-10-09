@@ -2,112 +2,112 @@
 
 namespace App\Controllers;
 
-use Config\App;
+use Src\View\View;
 use App\Models\Post;
 use Src\Mailer\Mail;
-use Src\Routing\Route;
 use App\Models\Comment;
 use App\Models\Category;
+use Src\Request\Request;
 use Src\Validator\Validator;
 
-class PageController extends Controller
+class PageController
 {
+    private $post;
+    private $category;
 
+    public function __construct() 
+    {
+        $this->post = new Post();
+        $this->category = new Category();
+    }
+    
     /**
      * Return index page.
      *
-     * @return mixed
+     * @return void
      */
-    public function index(): mixed
+    public function index(): void
     {
-        $post = new Post();
-        $posts = $post->select(0, 3);
+        $posts = $this->post->select(0, 3);
         
-        return $this->view('index.twig', ['posts' => $posts]);
+        View::get('index.twig', ['posts' => $posts]);
     }
     
 
     /**
      * Return blog page.
      *
-     * @return mixed
+     * @return void
      */
-    public function blog(): mixed
+    public function blog(): void
     {
-        $post = new Post();
-        $posts = $post->select(0, 5);
-        $category = new Category();
-        $categories = $category->all()->get();
+        $posts = $this->post->select(0, 5);
+        $categories = $this->category->all()->get();
 
-        return $this->view('blog.twig', ['posts' => $posts, 'categories' => $categories]);
+        View::get('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     /**
      * Return blog articl block.
      *
      * @param int|null $request
-     * @return mixed
+     * @return void
      */
-    public function blogAjax(int $request = null): mixed
+    public function blogAjax(int $request = null): void
     {
-        $post = new Post();
-        $posts = $post->select($request, $request + 5);
+        $posts = $this->post->select($request, $request + 5);
         
-        return $this->view('data.twig', ['posts' => $posts]);
+        View::get('data.twig', ['posts' => $posts]);
     }
 
     /**
      * Return category page.
      *
      * @param string $param
-     * @return mixed
+     * @return void
      */
-    public function category($param): mixed
+    public function category($param): void
     {
-        $post = new Post();
-        $category = new Category();
-        $category = $category->where('slug', '=', $param)->first();
-        if (empty($category)) {
-            Route::abord();
-        }
-        $posts = $post->where('category_id', '=', $category->id)->get();
-        $category = new Category();
-        $categories = $category->all()->get();
+        $category = $this->category->where('slug', '=', $param)->first();
 
-        return $this->view('blog.twig', ['posts' => $posts, 'categories' => $categories]);
+        if (empty($category)) {
+            View::abord();
+        }
+        
+        $posts = $this->post->where('category_id', '=', $category->id)->get();
+        $categories = $this->category->all()->get();
+
+        View::get('blog.twig', ['posts' => $posts, 'categories' => $categories]);
     }
 
     /**
      * Return post page.
      *
      * @param string $param
-     * @return mixed
+     * @return void
      */
-    public function article($param): mixed
+    public function article($param): void
     {
         if (!empty($param)) {
-            $post = new Post();
+            $post = $this->post->where('slug', '=', $param)->first();
+
+            if (empty($post)) { View::abord(); }
+            
             $comment = new Comment();
-            $post = $post->where('slug', '=', $param)->first();
-
-            if (empty($post)) {
-              return  Route::abord();
-            }
-
             $comments = $comment->where('post_id', '=', $post->id)->get();
 
-            return $this->view('article.twig', ['post' => $post, 'comments'=> $comments]);
+            View::get('article.twig', ['post' => $post, 'comments'=> $comments]);
         }
 
-       return Route::abord();
+       View::abord();
     }
 
     /**
      * Send contact mail.
      *
-     * @return mixed
+     * @return void
      */
-    public function contact(): mixed
+    public function contact(): void
     {
         Validator::create([
             "lastname" => 'Nom n\'est pas renseigné !',
@@ -116,10 +116,10 @@ class PageController extends Controller
             "message" => 'Message n\'est pas renseigné',
         ]);
 
-        $mail = new Mail("pavelklimovich@hotmail.fr", "Essai de PHP Mail", "PHP Mail fonctionne parfaitement");
+        $request = new Request();
+        $mail = new Mail("Mail de la part de : ".$request->post('firstname')." ".$request->post('lastname')."", $request->post('message'), null, $request->post('email'));
         $mail->send();
-        $app = new App();
 
-        return $this->redirect($app->getAppUrl().'/');
+        View::redirect('/');
     }
 }

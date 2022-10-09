@@ -34,12 +34,16 @@
                             <a id="link-cnx" href="/register">S'INSCRIRE</a>
                         </div>
                         <div style="margin-top: 25px; text-align: center;">
-                            <a style="color: #6c757d;" href="#">Mot de passe oublié ?</a>
+                            <button style="color: #6c757d;" onclick='getMessage()'>Mot de passe oublié ?</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </main>
-
+    <script>
+        function getMessage(){
+            window.alert('Pour récupérer votre mot de passe veuillez m\'envoyer un message depuis la page d\'accueil !');
+        }
+    </script>
 {% endblock %}

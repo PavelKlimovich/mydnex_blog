@@ -78,14 +78,14 @@ class Route
 
 
     /**
-     * Return error 400.
+     * Return error 404.
      *
      * @return mixed
      */
     public static function abord(): mixed
     {
         http_response_code(404);
-        include '../app/Views/errors/404.php';
+        include '../app/Views/errors/404.html';
         exit();
     }
 
