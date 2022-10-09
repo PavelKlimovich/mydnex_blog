@@ -8,6 +8,7 @@ class App
 {
 
     private $dbHost;
+    private $dbPort;
     private $dbName;
     private $dbUsername;
     private $dbPassword;
@@ -21,6 +22,7 @@ class App
         $env->load();
 
         $this->dbHost = $_ENV['DB_HOST'];
+        $this->dbPort = $_ENV['DB_PORT'];
         $this->dbName = $_ENV['DB_DATABASE'];
         $this->dbUsername = $_ENV['DB_USERNAME'];
         $this->dbPassword = $_ENV['DB_PASSWORD'];
@@ -32,6 +34,11 @@ class App
     public function getDbHost()
     {
         return $this->dbHost;
+    }
+
+    public function getDbPort()
+    {
+        return $this->dbPort;
     }
 
     public function getDbName()

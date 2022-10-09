@@ -2,12 +2,17 @@
 
 namespace App\Middlewares;
 
-use Config\App;
+use Src\View\View;
+use App\Models\User;
+use Src\Session\Session;
 
 class AdminMiddleware
 {
+    private $user;
+
     public function __construct()
     {
+        $this->user = new User();
         $this->redirectTo();
     }
 
@@ -18,10 +23,15 @@ class AdminMiddleware
      */
     public function redirectTo(): void
     {
-        if (!$_SESSION['admin']) {
-            $app = new App();
-            header('Location:' .$app->getAppUrl().'/login');
-            exit();
+        if (Session::get('auth')) {
+            $user = $this->user->where('token','=', Session::get('auth'))->first();
+
+            if (!isset($user->token) || !Session::user_agent_matches() || !$user->isAdmin()) {
+                View::abord();
+            }
+
+        }else{
+            View::abord();
         }
     }
 }

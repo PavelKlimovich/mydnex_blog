@@ -23,4 +23,16 @@ class Str
 
         return $text;
     }
+
+    /**
+     * Generate a token.
+     *
+     * @return string
+     */
+    public static function token(): string
+    {
+        $token = password_hash(random_bytes(5), PASSWORD_BCRYPT, ['cost' => 12]);
+      
+        return $token;
+    }
 }

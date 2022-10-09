@@ -2,17 +2,17 @@
 
 namespace App\Controllers\Admin;
 
-use App\Controllers\Controller;
+use Src\View\View;
 
-class DashboardController extends Controller
+class DashboardController
 {
     /**
      * Return admin page.
      *
-     * @return mixed
+     * @return void
      */
-    public function index(): mixed
+    public function index(): void
     {
-        return $this->view('admin/dashboard.twig');
+        View::get('admin/dashboard.twig');
     }
 }

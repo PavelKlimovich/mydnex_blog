@@ -41,7 +41,7 @@
                                 <div class="col-12" >
                                     <div class="col-12 text-center mt-3 p-2">
                                         <span class="badge text-primary">{{ post.category().name }}</span>
-                                        <p class="badge text-dark ">{{ post.created_at|date('j F Y') }}</p>
+                                        <p class="badge text-dark ">Publié le : {{ post.update_at|date('j/m/Y')  }}</p>
                                     </div>
                                     <img class="rounded-lg-3 rounded-3 article-cover" src="{{ post.image }}" alt="" height="350">
                                 </div>
@@ -51,7 +51,7 @@
                                     <h1 class="fw-bold lh-1">{{ post.title }}</h1>
                                     <p class="lead">{{ post.content |raw  }}</p>
                                 </div>
-                                <h6 class="fw-bold">{{ post.user().firstname }}  {{ post.user().lastname }}</h6>
+                                <h6 class="fw-bold">{{ post.user().firstname }} {{ post.user().lastname }}</h6>
                             </div>
                         </div>
                     </div>
