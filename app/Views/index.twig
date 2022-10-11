@@ -32,7 +32,7 @@
 	</nav>
     <!-- END nav -->
     <header>
-        <div class="hero-wrap m-5" style="background-image: url('images/bg_4.jpg');" >
+        <div class="hero-wrap m-md-5" style="background-image: url('images/bg_4.jpg');" >
             <div class="overlay"></div>
             <div class="container">
                 <div class="row no-gutters slider-text align-items-center justify-content-end">
@@ -50,13 +50,13 @@
         <section class="mt-1 mb-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-6 d-flex p-4">
-                        <div class="img-fluid p-4">
-                            <img class="img-fluid shadow" src="images/1.jpg" alt="">
+                    <div class="col-sm-6 d-flex p-md-4" id='my_image'>
+                        <div class="img-fluid p-md-4">
+                            <img class="img-fluid shadow" src="images/1.jpg"  alt="">
                         </div>
                     </div>
-                    <div class="col-6 d-flex p-5 mt-5">
-                        <div class="col-md-12 p-1">
+                    <div class="col-12 col-md-6 d-flex p-md-5 mt-5">
+                        <div class="col-md-12 p-md-1">
                             <h2 class="display-3 fw-bold text-dark lh-1 ">Qui suis-je ?</h2>
                             <div class="wrapper mb-4">
                                 <a href="https://www.linkedin.com/in/pavel-klimovich-a11a5217b/" target="_blank">
@@ -95,22 +95,22 @@
         <section class="mt-1 mb-5">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-12 d-flex p-5">
+                    <div class="col-sm-12 d-flex p-md-5">
                         <div class="col-md-12">
                             <h2 class="display-4 fw-bold lh-1 text-primary">Mon Expertise</h2>
                             <hr>
                             <p class="lead ">Je prends en charge toute la chaîne de production d’un site, depuis sa conception jusqu’à sa mise en ligne, assurant la maintenance technique et si besoin la formation nécessaire à son utilisation.</p>
                         </div>
                     </div>
-                    <div class="col-6 d-flex">
-                        <div class="col-12 p-5">
+                    <div class="col-12 col-md-6 d-flex">
+                        <div class="col-12 p-md-5">
                             <h2 class="display-6 fw-bold lh-1 mb-4"><span class='card__title'>PHP 8.1</span></h2>
                             <p class="lead ">PHP est le langage phare du développement web : presque 80% des sites en ligne dans le monde l'utilise. Le CMS le plus connu et le plus utilisé au monde, Wordpress, est écrit en PHP.</p>
                             <p class="lead ">PHP et nous, c'est une grande histoire d'amour. Dans nos locaux, vous trouverez pas moins de 15 ans d'expérience avec ce langage. On a vu passer plusieurs mises à jour majeures, et on est toujours excité à la sortie d'une nouvelle version. Chacun d'entre nous a travaillé avec de multiples frameworks PHP, et on continue de se former chaque semaine sur les nouveautés qui en découlent.</p>
                         </div>
                     </div>
-                    <div class="col-md-6 d-flex">
-                        <div class="col-md-12 p-5">
+                    <div class="col-12 col-md-6 d-flex">
+                        <div class="col-md-12 p-md-5">
                             <h2 class="display-6 fw-bold lh-1 mb-4"><span class='card__title'>Laravel 9</span></h2>
                             <p class="lead ">Laravel. C'est ce qu'on appelle un Framework PHP. Imaginons que le développement web ce soit comme le bricolage. Auquel cas, Laravel c'est une boîte à outil remplie à ras-bord avec beaucoup de ce qui se fait de mieux comme matériel ! Ça nous permet de créer l'architecture de base de nos sites très vite, et d'avoir rapidement accès à des fonctionnalités de base comme l'authentification ou l'envoi d'e-mails.</p>
                         </div>
@@ -120,8 +120,8 @@
         </section>
 
         <section class="contacter mb-5">
-            <div class="p-5">
-                <div class="container p-5">
+            <div class="p-md-5">
+                <div class="container p-md-5">
                     <div class="row justify-content-center">
                         <div class="col-md-10 text-center" >
                             <h2 class="display-3 fw-bold text-primary lh-1">Mes dernières publications</h2>
@@ -134,7 +134,7 @@
         {% for post in posts %}
             <div class="container my-5">
                 <div class="row p-4 align-items-center rounded-3 border shadow-lg">
-                    <div class="col-lg-7 m-5 ">
+                    <div class="col-lg-7 m-md-5 ">
                     <div class="col-12 text-left">
                             <span class="badge text-primary">{{ post.category().name }}</span>
                             <p class="badge text-dark ">Publié le : {{ post.update_at|date('j/m/Y') }}</p>
@@ -183,7 +183,7 @@
                                         <h5 class="error">{{ error |raw  }}</h5> 
                                     </div>
                                 {% endif %}  
-                                <div class="col-6 p-1">
+                                <div class="col-12 col-md-6 p-1">
                                     <div class="wrap-input100">
                                         <span class="label-input100">Prenom*</span>
                                         <input class="input100" type="text" name="firstname" placeholder="Votre Prénom ...">
@@ -195,7 +195,7 @@
                                         <span class="focus-input100"></span>
                                     </div>
                                 </div>
-                                <div class="col-6 p-1">
+                                <div class="col-12 col-md-6 p-1">
                                     <div class="wrap-input100">
                                         <span class="label-input100">Email*</span>
                                         <input class="input100" type="email" name="email" placeholder="Adresse Email ...">
@@ -229,17 +229,17 @@
     <footer class="pt-5 mt-5">
         <div class="container border-top mt-5">
             <div class="row mt-3 mb-3">
-                <div class="col-4 text-center">
+                <div class="col-12 col-md-4 text-center">
                     <ul class="nav justify-content-center">
                         <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Mentions légales <span class="text-primary">&</span> Gestion des cookies</a></li>
                     </ul>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-12 col-md-4 text-center">
                     <a href="/" class="align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
                         <img src='images/logo_black.png' class="bi me-2" width="50"></img>
                     </a>
                 </div>
-                <div class="col-4 text-center">
+                <div class="col-12 col-md-4 text-center">
                     <p class="mb-0 mt-2 text-muted"><span class="text-primary fw-bold">© </span> 2022 | Pavel Klimovich </p>
                 </div>
             </div>
