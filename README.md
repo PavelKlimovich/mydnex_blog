@@ -30,7 +30,7 @@ Create your first blog in php.
     EMAIL_FROM=
     ```
 7) Create DATABASE in your database management system.
-8) Execute : `php kernel migrate` to init DATABASE.
+8) Execute : `php kernel migrate` in directory root to initialize DATABASE.
 9) If you want generate fake data in database execute : `php kernel seed`.
     ```
     Admin : admin@mydnex.com
@@ -66,7 +66,7 @@ Create your first blog in php.
     ```
 
 7) Create DATABASE in your database management system.
-8) Execute : `php kernel migrate` to init DATABASE.
+8) Execute : `php kernel migrate` in directory root to initialize DATABASE.
 9) If you want generate fake data in database execute : `php kernel seed`.
     ```
     Admin : admin@mydnex.com
